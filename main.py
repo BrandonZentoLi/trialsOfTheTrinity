@@ -7,14 +7,14 @@ pygame.init()
 # display screen
 size = (800, 450)
 window = pygame.display.set_mode(size)
+screen_width, screen_height = pygame.display.get_surface().get_size()
+
 pygame.display.set_caption("Trials of the Trinity")
-button = pygame.Rect(50, 100, 200, 50)
 title_font = pygame.font.Font('fonts/pixel.ttf', 32)
 button_font = pygame.font.Font('fonts/pixel.ttf', 15)
 
 text = title_font.render('Trials of the Trinity', True, "#475F77")
-textRect = text.get_rect()
-textRect.center = (410, 100)
+textRect = text.get_rect(center = (screen_width // 2, 100))
 
 capture = cv2.VideoCapture('videos/titlescreen.mp4')
 _, image = capture.read()
@@ -61,7 +61,6 @@ def video_frames():
 
 def show_home():
     window.blit(text, textRect)
-
     instructionsButton.draw()
     lessonButton.draw()
     startButton.draw()
@@ -71,8 +70,8 @@ def show_home():
 
 def show_info():
     text = title_font.render('Info Page', True, "#475F77")
-    textRect = text.get_rect()
-    textRect.center = (350, 100)
+    textRect = text.get_rect(center = (screen_width // 2, 100))
+
     window.blit(text, textRect)
 
     homeButton.draw()
@@ -80,8 +79,8 @@ def show_info():
 
 def show_lesson():
     text = title_font.render('Lesson Page', True, "#475F77")
-    textRect = text.get_rect()
-    textRect.center = (350, 100)
+    textRect = text.get_rect(center = (screen_width // 2, 100))
+
     window.blit(text, textRect)
 
     homeButton.draw()
@@ -89,8 +88,8 @@ def show_lesson():
 
 def show_start():
     text = title_font.render('Start Page', True, "#475F77")
-    textRect = text.get_rect()
-    textRect.center = (350, 100)
+    textRect = text.get_rect(center = (screen_width // 2, 100))
+
     window.blit(text, textRect)
 
     homeButton.draw()
@@ -98,8 +97,7 @@ def show_start():
 
 def show_quiz():
     text = title_font.render('Quiz Page', True, "#475F77")
-    textRect = text.get_rect()
-    textRect.center = (350, 100)
+    textRect = text.get_rect(center = (screen_width // 2, 100))
     window.blit(text, textRect)
 
     homeButton.draw()
