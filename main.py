@@ -19,15 +19,16 @@ text_font = pygame.font.Font('fonts/pixel.ttf', 15)
 text = title_font.render('Trials of the Trinity', True, "#475F77")
 textRect = text.get_rect(center = (screen_width // 2, 100))
 
-capture = cv2.VideoCapture('videos/titlescreen.mp4')
+capture = cv2.VideoCapture('resources/titlescreen.mp4')
 _, image = capture.read()
 shape = image.shape[1::-1]
 
 # initialize variables
 red = 255, 0, 0
 fps = capture.get(cv2.CAP_PROP_FPS)
-# titlescreen = pygame.image.load("titlescreen.jpg")
-# titlescreen = pygame.transform.scale(titlescreen, size)
+
+bookofinsights = pygame.image.load("images/bookofinsights.jpg")
+#titlescreen = pygame.transform.scale(titlescreen, size)
 
 page_id = 'home'
 
@@ -54,7 +55,7 @@ quitButton = Button('Quit', 80, 40, (560, 350), 7, window,
 # functions
 
 
-def video_frames():
+def show_video():
     success, image = capture.read()
     if success:
         surface = pygame.image.frombuffer(image.tobytes(), shape, "BGR")
@@ -62,6 +63,8 @@ def video_frames():
     else:
         capture.set(cv2.CAP_PROP_POS_FRAMES, 0)
 
+def show_book_of_insights():
+  window.blit(bookofinsights, (0, 0))
 
 def show_home():
     window.blit(text, textRect)
@@ -118,14 +121,14 @@ def main():
             if event.type == pygame.QUIT:
                 run = False
 
-        video_frames()
-        # window.blit(titlescreen, (0, 0))
 
         if page_id == 'home':
+            show_video()
             show_home()
         elif page_id == 'info':
             show_info()
         elif page_id == 'lesson':
+            show_book_of_insights()
             show_lesson()
         elif page_id == 'start':
             show_start()
