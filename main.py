@@ -3,7 +3,7 @@ import pygame, sys, cv2
 
 # import our own logic from other ifles
 from button import Button
-from text_wrap import renderTextCenteredAt
+from textWrap import renderTextCenteredAt
 
 pygame.init()
 
@@ -28,6 +28,9 @@ red = 255, 0, 0
 fps = capture.get(cv2.CAP_PROP_FPS)
 
 bookOfInsights = pygame.image.load("images/bookofinsights.jpg")
+left_page_x_pos = 250
+left_page_y_pos = 125
+book_width = 210
 # titlescreen = pygame.image.load("titlescreen.jpg")
 # titlescreen = pygame.transform.scale(titlescreen, size)
 
@@ -78,8 +81,8 @@ def show_home():
 
 
 def show_info():
-    renderTextCenteredAt('Info Page', text_font, '#475F77', 250, 75, window, 200)
-    renderTextCenteredAt('Trials of the Trinity is an interactive story in which you are a mortal that has angered the Big Three of the Olympian gods.', text_font, '#475F77', 250, 150, window, 200)
+    renderTextCenteredAt('Info Page', text_font, '#475F77', left_page_x_pos, left_page_y_pos - 25, window, book_width,)
+    renderTextCenteredAt('Trials of the Trinity is an interactive story in which you are a mortal that has angered the Big Three of the Olympian gods.', text_font, '#475F77', left_page_x_pos, left_page_y_pos, window, book_width,)
     
 
     homeButton.draw()
