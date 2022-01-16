@@ -45,7 +45,7 @@ shape = image.shape[1::-1]
 red = 255, 0, 0
 fps = capture.get(cv2.CAP_PROP_FPS)
 
-bookOfInsights = pygame.image.load("resources/bookofinsights.jpg")
+bookOfInsights = pygame.image.load("resources/bookofinsights.png")
 left_page_x_pos = 250
 left_page_y_pos = 125
 right_page_x_pos = 550
