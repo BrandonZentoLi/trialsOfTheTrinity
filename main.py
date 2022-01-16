@@ -5,7 +5,7 @@ from pygame import mixer
 
 # import our own logic from other ifles
 from button import Button
-from text_wrap import renderTextCenteredAt
+from textWrap import renderTextCenteredAt
 
 pygame.init()
 
@@ -28,6 +28,8 @@ main_channel.play(main_music, loops=-1)
 click_channel = mixer.Channel(1)
 click_music = mixer.Sound('music/click.mp3')
 click_music.set_volume(0.4)
+
+
 
 # for the book of insight pages:
 header_font = pygame.font.Font('fonts/pixel.ttf', 20)
@@ -60,37 +62,37 @@ def update_page_id(id):
     page_id = id
 
 #Home Buttons
-homeButtonOne = Button('< Home', 80, 40, (20, 400), 7, window, text_font, 'home', update_page_id, click_channel, click_music)
-homeButtonTwo = Button('Home >', 80, 40, (700, 400), 7, window, text_font, 'home', update_page_id, click_channel, click_music)
+homeButtonOne = Button('< Home', 80, 40, (20, 400), 7, window, text_font, 'home', update_page_id,)
+homeButtonTwo = Button('Home >', 80, 40, (700, 400), 7, window, text_font, 'home', update_page_id,)
 
 #Info Buttons
-infoPageOneNextButton = Button('Info', 80, 40, (160, 350), 7, window, text_font, 'info_page_one', update_page_id, click_channel, click_music)
-infoPageOneBackButton = Button('< Back', 80, 40, (20, 400), 7, window, text_font, 'info_page_one', update_page_id, click_channel, click_music)
-infoPageTwoButton = Button('Next >', 80, 40, (700, 400), 7, window, text_font, 'info_page_two', update_page_id, click_channel, click_music)
+infoPageOneNextButton = Button('Info', 80, 40, (160, 350), 7, window, text_font, 'info_page_one', update_page_id)
+infoPageOneBackButton = Button('< Back', 80, 40, (20, 400), 7, window, text_font, 'info_page_one', update_page_id )
+infoPageTwoButton = Button('Next >', 80, 40, (700, 400), 7, window, text_font, 'info_page_two', update_page_id,)
 
 #Book of Insights 
-bookPageOneButton = Button('Lesson', 80, 40, (260, 350), 7, window, text_font, 'book_page_one', update_page_id, click_channel, click_music)
-bookPageOneBackButton = Button('< Back', 80, 40, (20, 400), 7, window, text_font, 'book_page_one', update_page_id, click_channel, click_music)
-bookPageTwoNextButton = Button('Next >', 80, 40, (700, 400), 7, window, text_font, 'book_page_two', update_page_id, click_channel, click_music)
-bookPageTwoBackButton = Button('< Back', 80, 40, (20, 400), 7, window, text_font, 'book_page_two', update_page_id, click_channel, click_music)
-bookPageThreeNextButton = Button('Next >', 80, 40, (700, 400), 7, window, text_font, 'book_page_three', update_page_id, click_channel, click_music)
-bookPageThreeBackButton = Button('< Back', 80, 40, (20, 400), 7, window, text_font, 'book_page_three', update_page_id, click_channel, click_music)
-bookPageFourNextButton = Button('Next >', 80, 40, (700, 400), 7, window, text_font, 'book_page_four', update_page_id, click_channel, click_music)
-bookPageFourBackButton = Button('< Back', 80, 40, (20, 400), 7, window, text_font, 'book_page_four', update_page_id, click_channel, click_music)
-bookPageFiveNextButton = Button('Next >', 80, 40, (700, 400), 7, window, text_font, 'book_page_five', update_page_id, click_channel, click_music)
-bookPageFiveBackButton = Button('< Back', 80, 40, (20, 400), 7, window, text_font, 'book_page_five', update_page_id, click_channel, click_music)
-bookPageSixNextButton = Button('Next >', 80, 40, (700, 400), 7, window, text_font, 'book_page_six', update_page_id, click_channel, click_music)
-bookPageSixBackButton = Button('< Back', 80, 40, (20, 400), 7, window, text_font, 'book_page_six', update_page_id, click_channel, click_music)
-bookPageSevenNextButton = Button('Next >', 80, 40, (700, 400), 7, window, text_font, 'book_page_seven', update_page_id, click_channel, click_music)
+bookPageOneButton = Button('Lesson', 80, 40, (260, 350), 7, window, text_font, 'book_page_one', update_page_id,)
+bookPageOneBackButton = Button('< Back', 80, 40, (20, 400), 7, window, text_font, 'book_page_one', update_page_id,)
+bookPageTwoNextButton = Button('Next >', 80, 40, (700, 400), 7, window, text_font, 'book_page_two', update_page_id)
+bookPageTwoBackButton = Button('< Back', 80, 40, (20, 400), 7, window, text_font, 'book_page_two', update_page_id )
+bookPageThreeNextButton = Button('Next >', 80, 40, (700, 400), 7, window, text_font, 'book_page_three', update_page_id)
+bookPageThreeBackButton = Button('< Back', 80, 40, (20, 400), 7, window, text_font, 'book_page_three', update_page_id)
+bookPageFourNextButton = Button('Next >', 80, 40, (700, 400), 7, window, text_font, 'book_page_four', update_page_id)
+bookPageFourBackButton = Button('< Back', 80, 40, (20, 400), 7, window, text_font, 'book_page_four', update_page_id)
+bookPageFiveNextButton = Button('Next >', 80, 40, (700, 400), 7, window, text_font, 'book_page_five', update_page_id)
+bookPageFiveBackButton = Button('< Back', 80, 40, (20, 400), 7, window, text_font, 'book_page_five', update_page_id )
+bookPageSixNextButton = Button('Next >', 80, 40, (700, 400), 7, window, text_font, 'book_page_six', update_page_id)
+bookPageSixBackButton = Button('< Back', 80, 40, (20, 400), 7, window, text_font, 'book_page_six', update_page_id)
+bookPageSevenNextButton = Button('Next >', 80, 40, (700, 400), 7, window, text_font, 'book_page_seven', update_page_id)
 
 #Game Buttons
-startButton = Button('Start', 80, 40, (360, 350), 7, window, text_font, 'start', update_page_id, click_channel, click_music)
+startButton = Button('Start', 80, 40, (360, 350), 7, window, text_font, 'start', update_page_id)
 
 #Quiz Buttons
-quizButton = Button('Quiz', 80, 40, (460, 350), 7, window, text_font, 'quiz', update_page_id, click_channel, click_music)
+quizButton = Button('Quiz', 80, 40, (460, 350), 7, window, text_font, 'quiz', update_page_id)
 
 #Quit Button
-quitButton = Button('Quit', 80, 40, (560, 350), 7, window, text_font, 'quit', update_page_id, click_channel, click_music)
+quitButton = Button('Quit', 80, 40, (560, 350), 7, window, text_font, 'quit', update_page_id)
 
 
 # functions
