@@ -1,8 +1,13 @@
 import pygame
 from pygame import mixer
 
+mixer.init()
+click_channel = mixer.Channel(1)
+click_sound = mixer.Sound('music/click.mp3')
+click_sound.set_volume(0.4)
+
 class Button:
-    def __init__(self, text, width, height, pos, elevation, window, font, page_id, update_page_id, click_channel, click_music):
+    def __init__(self, text, width, height, pos, elevation, window, font, page_id, update_page_id):
         # core attributes
         self.pressed = False
         self.elevation = elevation
@@ -13,7 +18,7 @@ class Button:
         self.page_id = page_id
         self.update_page_id = update_page_id
         self.click_channel = click_channel
-        self.click_music = click_music
+        self.click_music = click_sound
 
         # top rectangle
         self.top_rect = pygame.Rect(pos, (width, height))
@@ -47,11 +52,12 @@ class Button:
         mouse_pos = pygame.mouse.get_pos()
         if self.top_rect.collidepoint(mouse_pos):
             self.top_color = '#648db5'
+
             if pygame.mouse.get_pressed()[0]:
                 self.dynamic_elevation = 0
                 self.pressed = True
 
-                self.click_channel.play(self.click_music)
+                click_channel.play(self.click_sound)
             else:
                 self.dynamic_elevation = self.elevation
                 if self.pressed == True:
