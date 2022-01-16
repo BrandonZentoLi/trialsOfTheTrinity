@@ -20,9 +20,14 @@ text_font = pygame.font.Font('fonts/pixel.ttf', 15)
 
 # playing music
 mixer.init()
-mixer.music.load('music/celesteMenuMusic.mp3')
-mixer.music.play(-1)
-pygame.mixer.music.set_volume(0.5)
+main_channel = mixer.Channel(0)
+main_music = mixer.Sound('music/celesteMenuMusic.mp3')
+main_channel.set_volume(0.4)
+main_channel.play(main_music, loops=-1)
+
+click_channel = mixer.Channel(1)
+click_music = mixer.Sound('music/click.mp3')
+click_music.set_volume(0.4)
 
 # for the book of insight pages:
 header_font = pygame.font.Font('fonts/pixel.ttf', 20)
@@ -55,56 +60,37 @@ def update_page_id(id):
     page_id = id
 
 #Home Buttons
-homeButtonOne = Button('< Home', 80, 40, (20, 400), 7,
-                    window, text_font, 'home', update_page_id)
-homeButtonTwo = Button('Home >', 80, 40, (700, 400), 7, window,
-                           text_font, 'home', update_page_id)
+homeButtonOne = Button('< Home', 80, 40, (20, 400), 7, window, text_font, 'home', update_page_id, click_channel, click_music)
+homeButtonTwo = Button('Home >', 80, 40, (700, 400), 7, window, text_font, 'home', update_page_id, click_channel, click_music)
 
 #Info Buttons
-infoPageOneButton = Button('Info', 80, 40, (160, 350), 7,
-                            window, text_font, 'info_page_one', update_page_id)
-infoPageTwoButton = Button('Next >', 80, 40, (700, 400), 7, window,
-                        text_font, 'info_page_two', update_page_id)
+infoPageOneNextButton = Button('Info', 80, 40, (160, 350), 7, window, text_font, 'info_page_one', update_page_id, click_channel, click_music)
+infoPageOneBackButton = Button('< Back', 80, 40, (20, 400), 7, window, text_font, 'info_page_one', update_page_id, click_channel, click_music)
+infoPageTwoButton = Button('Next >', 80, 40, (700, 400), 7, window, text_font, 'info_page_two', update_page_id, click_channel, click_music)
 
 #Book of Insights 
-bookPageOneButton = Button('Lesson', 80, 40, (260, 350), 7,
-                      window, text_font, 'book_page_one', update_page_id)
-bookPageOneBackButton = Button('< Back', 80, 40, (20, 400), 7,
-                      window, text_font, 'book_page_one', update_page_id)
-bookPageTwoNextButton = Button('Next >', 80, 40, (700, 400), 7, window,
-                           text_font, 'book_page_two', update_page_id)
-bookPageTwoBackButton = Button('< Back', 80, 40, (20, 400), 7,
-                      window, text_font, 'book_page_two', update_page_id)
-bookPageThreeNextButton = Button('Next >', 80, 40, (700, 400), 7, window,
-                             text_font, 'book_page_three', update_page_id)
-bookPageThreeBackButton = Button('< Back', 80, 40, (20, 400), 7,
-                      window, text_font, 'book_page_three', update_page_id)
-bookPageFourNextButton = Button('Next >', 80, 40, (700, 400), 7, window,
-                             text_font, 'book_page_four', update_page_id)
-bookPageFourBackButton = Button('< Back', 80, 40, (20, 400), 7,
-                      window, text_font, 'book_page_four', update_page_id)
-bookPageFiveNextButton = Button('Next >', 80, 40, (700, 400), 7, window,
-                             text_font, 'book_page_five', update_page_id)
-bookPageFiveBackButton = Button('< Back', 80, 40, (20, 400), 7,
-                      window, text_font, 'book_page_five', update_page_id)
-bookPageSixNextButton = Button('Next >', 80, 40, (700, 400), 7, window,
-                             text_font, 'book_page_six', update_page_id)
-bookPageSixBackButton = Button('< Back', 80, 40, (20, 400), 7,
-                      window, text_font, 'book_page_six', update_page_id)
-bookPageSevenNextButton = Button('Next >', 80, 40, (700, 400), 7, window,
-                             text_font, 'book_page_seven', update_page_id)
+bookPageOneButton = Button('Lesson', 80, 40, (260, 350), 7, window, text_font, 'book_page_one', update_page_id, click_channel, click_music)
+bookPageOneBackButton = Button('< Back', 80, 40, (20, 400), 7, window, text_font, 'book_page_one', update_page_id, click_channel, click_music)
+bookPageTwoNextButton = Button('Next >', 80, 40, (700, 400), 7, window, text_font, 'book_page_two', update_page_id, click_channel, click_music)
+bookPageTwoBackButton = Button('< Back', 80, 40, (20, 400), 7, window, text_font, 'book_page_two', update_page_id, click_channel, click_music)
+bookPageThreeNextButton = Button('Next >', 80, 40, (700, 400), 7, window, text_font, 'book_page_three', update_page_id, click_channel, click_music)
+bookPageThreeBackButton = Button('< Back', 80, 40, (20, 400), 7, window, text_font, 'book_page_three', update_page_id, click_channel, click_music)
+bookPageFourNextButton = Button('Next >', 80, 40, (700, 400), 7, window, text_font, 'book_page_four', update_page_id, click_channel, click_music)
+bookPageFourBackButton = Button('< Back', 80, 40, (20, 400), 7, window, text_font, 'book_page_four', update_page_id, click_channel, click_music)
+bookPageFiveNextButton = Button('Next >', 80, 40, (700, 400), 7, window, text_font, 'book_page_five', update_page_id, click_channel, click_music)
+bookPageFiveBackButton = Button('< Back', 80, 40, (20, 400), 7, window, text_font, 'book_page_five', update_page_id, click_channel, click_music)
+bookPageSixNextButton = Button('Next >', 80, 40, (700, 400), 7, window, text_font, 'book_page_six', update_page_id, click_channel, click_music)
+bookPageSixBackButton = Button('< Back', 80, 40, (20, 400), 7, window, text_font, 'book_page_six', update_page_id, click_channel, click_music)
+bookPageSevenNextButton = Button('Next >', 80, 40, (700, 400), 7, window, text_font, 'book_page_seven', update_page_id, click_channel, click_music)
 
 #Game Buttons
-startButton = Button('Start', 80, 40, (360, 350), 7, window,
-                     text_font, 'start', update_page_id)
+startButton = Button('Start', 80, 40, (360, 350), 7, window, text_font, 'start', update_page_id, click_channel, click_music)
 
 #Quiz Buttons
-quizButton = Button('Quiz', 80, 40, (460, 350), 7, window,
-                    text_font, 'quiz', update_page_id)
+quizButton = Button('Quiz', 80, 40, (460, 350), 7, window, text_font, 'quiz', update_page_id, click_channel, click_music)
 
 #Quit Button
-quitButton = Button('Quit', 80, 40, (560, 350), 7, window,
-                    text_font, 'quit', update_page_id)
+quitButton = Button('Quit', 80, 40, (560, 350), 7, window, text_font, 'quit', update_page_id, click_channel, click_music)
 
 
 # functions
@@ -125,7 +111,7 @@ def show_book_of_insights():
 
 def show_home():
     window.blit(text, textRect)
-    infoPageOneButton.draw()
+    infoPageOneNextButton.draw()
     bookPageOneButton.draw()
     startButton.draw()
     quizButton.draw()
@@ -167,7 +153,8 @@ def info_page_two():
 
     renderTextCenteredAt("In addition to choosing the right choice, the user will be prompted with a special item of their choice, courtesy of the gods - they grant you a guaranteed pass to the next level. While you can use these items at any point during the game, it is crucial you use it at the appropriate level. There is a chance that the item does absolutely nothing, so be prepared for that as well.",  text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width,)
 
-    homeButtonOne.draw()
+    infoPageOneBackButton.draw()
+    homeButtonTwo.draw()
 
 
 #Book of Insights Pages
