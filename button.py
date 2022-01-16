@@ -18,7 +18,7 @@ class Button:
         self.page_id = page_id
         self.update_page_id = update_page_id
         self.click_channel = click_channel
-        self.click_music = click_sound
+        self.click_sound = click_sound
 
         # top rectangle
         self.top_rect = pygame.Rect(pos, (width, height))
