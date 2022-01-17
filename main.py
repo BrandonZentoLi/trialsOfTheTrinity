@@ -1,11 +1,12 @@
 # import modules
 import pygame
 import cv2
+import random
 from pygame import mixer
 
 # import our own logic from other ifles
 from button import Button
-from textWrap import renderTextCenteredAt
+from text_wrap import renderTextCenteredAt
 
 pygame.init()
 
@@ -22,14 +23,8 @@ text_font = pygame.font.Font('fonts/pixel.ttf', 15)
 mixer.init()
 main_channel = mixer.Channel(0)
 main_music = mixer.Sound('music/celesteMenuMusic.mp3')
-main_channel.set_volume(0.4)
+main_channel.set_volume(0.1)
 main_channel.play(main_music, loops=-1)
-
-click_channel = mixer.Channel(1)
-click_music = mixer.Sound('music/click.mp3')
-click_music.set_volume(0.4)
-
-
 
 # for the book of insight pages:
 header_font = pygame.font.Font('fonts/pixel.ttf', 20)
@@ -45,7 +40,13 @@ shape = image.shape[1::-1]
 red = 255, 0, 0
 fps = capture.get(cv2.CAP_PROP_FPS)
 
-bookOfInsights = pygame.image.load("resources/bookofinsights.png")
+itemPage = pygame.image.load('resources/items.jpg')
+stick = pygame.image.load('resources/stick.png')
+fence = pygame.image.load('resources/fence.png')
+vacuum = pygame.image.load('resources/vacuum.png')
+board = pygame.image.load('resources/skateboard.png')
+bubble = pygame.image.load('resources/bubble.png')
+bookOfInsights = pygame.image.load("resources/bookofinsights.jpg")
 left_page_x_pos = 250
 left_page_y_pos = 125
 right_page_x_pos = 550
@@ -61,32 +62,57 @@ def update_page_id(id):
     global page_id
     page_id = id
 
+
+def common():
+    pass
+
+def random_chance_20():
+    pass
+    common()
+
+
+def random_chance_30():
+    pass
+    common()
+
+
 #Home Buttons
-homeButtonOne = Button('< Home', 80, 40, (20, 400), 7, window, text_font, 'home', update_page_id,)
-homeButtonTwo = Button('Home >', 80, 40, (700, 400), 7, window, text_font, 'home', update_page_id,)
+homeButtonOne = Button('< Home', 80, 40, (20, 400), 7, window, text_font, 'home', update_page_id)
+homeButtonTwo = Button('Home >', 80, 40, (700, 400), 7, window, text_font, 'home', update_page_id)
 
 #Info Buttons
 infoPageOneNextButton = Button('Info', 80, 40, (160, 350), 7, window, text_font, 'info_page_one', update_page_id)
-infoPageOneBackButton = Button('< Back', 80, 40, (20, 400), 7, window, text_font, 'info_page_one', update_page_id )
-infoPageTwoButton = Button('Next >', 80, 40, (700, 400), 7, window, text_font, 'info_page_two', update_page_id,)
+infoPageOneBackButton = Button('< Back', 80, 40, (20, 400), 7, window, text_font, 'info_page_one', update_page_id)
+infoPageTwoButton = Button('Next >', 80, 40, (700, 400), 7, window, text_font, 'info_page_two', update_page_id)
 
 #Book of Insights 
-bookPageOneButton = Button('Lesson', 80, 40, (260, 350), 7, window, text_font, 'book_page_one', update_page_id,)
-bookPageOneBackButton = Button('< Back', 80, 40, (20, 400), 7, window, text_font, 'book_page_one', update_page_id,)
+bookPageOneButton = Button('Lesson', 80, 40, (260, 350), 7, window, text_font, 'book_page_one', update_page_id)
+bookPageOneBackButton = Button('< Back', 80, 40, (20, 400), 7, window, text_font, 'book_page_one', update_page_id)
 bookPageTwoNextButton = Button('Next >', 80, 40, (700, 400), 7, window, text_font, 'book_page_two', update_page_id)
-bookPageTwoBackButton = Button('< Back', 80, 40, (20, 400), 7, window, text_font, 'book_page_two', update_page_id )
+bookPageTwoBackButton = Button('< Back', 80, 40, (20, 400), 7, window, text_font, 'book_page_two', update_page_id)
 bookPageThreeNextButton = Button('Next >', 80, 40, (700, 400), 7, window, text_font, 'book_page_three', update_page_id)
 bookPageThreeBackButton = Button('< Back', 80, 40, (20, 400), 7, window, text_font, 'book_page_three', update_page_id)
 bookPageFourNextButton = Button('Next >', 80, 40, (700, 400), 7, window, text_font, 'book_page_four', update_page_id)
 bookPageFourBackButton = Button('< Back', 80, 40, (20, 400), 7, window, text_font, 'book_page_four', update_page_id)
 bookPageFiveNextButton = Button('Next >', 80, 40, (700, 400), 7, window, text_font, 'book_page_five', update_page_id)
-bookPageFiveBackButton = Button('< Back', 80, 40, (20, 400), 7, window, text_font, 'book_page_five', update_page_id )
+bookPageFiveBackButton = Button('< Back', 80, 40, (20, 400), 7, window, text_font, 'book_page_five', update_page_id)
 bookPageSixNextButton = Button('Next >', 80, 40, (700, 400), 7, window, text_font, 'book_page_six', update_page_id)
 bookPageSixBackButton = Button('< Back', 80, 40, (20, 400), 7, window, text_font, 'book_page_six', update_page_id)
 bookPageSevenNextButton = Button('Next >', 80, 40, (700, 400), 7, window, text_font, 'book_page_seven', update_page_id)
 
 #Game Buttons
 startButton = Button('Start', 80, 40, (360, 350), 7, window, text_font, 'start', update_page_id)
+stickButton = Button('Stick', 80, 40, (165, 230), 7, window, text_font, 'stick', update_page_id)
+fenceButton = Button('Fence', 80, 40, (268, 230), 7, window, text_font, 'fence', update_page_id)
+vacuumButton = Button('vacuum', 80, 40, (375, 230), 7, window, text_font, 'vacuum', update_page_id)
+boardButton = Button('Board', 80, 40, (480, 230), 7, window, text_font, 'board', update_page_id)
+bubbleButton = Button('Bubble', 80, 40, (585, 230), 7, window, text_font, 'bubble', update_page_id)
+
+#Level One Buttons
+levelOneButton = Button('Begin! >', 80, 40, (700, 400), 7, window, text_font, 'level one', update_page_id)
+choice1A = Button('', 250, 150, (200, 200), 7, window, text_font, 'level one', update_page_id)
+choice1B = Button('', 80, 40, (100, 400), 7, window, text_font, 'level one', update_page_id)
+choice1C = Button('', 80, 40, (300, 400), 7, window, text_font, 'level one', update_page_id)
 
 #Quiz Buttons
 quizButton = Button('Quiz', 80, 40, (460, 350), 7, window, text_font, 'quiz', update_page_id)
@@ -109,6 +135,9 @@ def video_frames():
 
 def show_book_of_insights():
     window.blit(bookOfInsights, (0, 0))
+
+def show_items():
+    window.blit(itemPage, (0, 0))
 
 
 def show_home():
@@ -173,7 +202,7 @@ def lessonOne():
     renderTextCenteredAt('Insights', header_font, '#475F77',
                          right_page_x_pos, right_page_y_pos - 40, window, book_width,)
 
-    renderTextCenteredAt("Here, you can learn all about natural disasters to help overcome obstacles in the interactive story. Let’s get started!",
+    renderTextCenteredAt("Here, you can learn all about natural disasters to help overcome obstacles in the interactive story. Let's get started!",
                          text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width,)
 
     homeButtonOne.draw()
@@ -187,7 +216,7 @@ def lessonTwo():
     renderTextCenteredAt('Surviving', header_font, '#475F77',
                          left_page_x_pos, left_page_y_pos - 40, window, book_width,)
 
-    renderTextCenteredAt("The tornado is the first natural disaster we’re going to explore. A violent rotating column of air, a tornado is deadly to anything that gets in the way. The column extends from the base of a thunderstorm down to the ground. Oftentimes, tornadoes are just a result of the four Anemoi having a fight amongst themselves. They have a pretty bad temper!",
+    renderTextCenteredAt("The tornado is the first natural disaster we're going to explore. A violent rotating column of air, a tornado is deadly to anything that gets in the way. The column extends from the base of a thunderstorm down to the ground. Oftentimes, tornadoes are just a result of the four Anemoi having a fight amongst themselves. They have a pretty bad temper!",
                          text_font, '#475F77', left_page_x_pos, left_page_y_pos, window, book_width,)
 
     renderTextCenteredAt('Tornados', header_font, '#475F77',
@@ -207,13 +236,13 @@ def lessonThree():
     renderTextCenteredAt('Surviving', header_font, '#475F77',
                          left_page_x_pos, left_page_y_pos - 40, window, book_width,)
 
-    renderTextCenteredAt("A volcano is an opening in the Earth’s crust through which an avalanche of lava, volcanic ash, and gases escape. One of the deadliest disasters, volcanoes are catastrophic during both the actual eruption phase, and the aftermath. Volcanic ash can cause damage thousands of kilometers away, including destroying crops, contaminating water supplies, while also causing respiratory problems for anyone with the misfortune of being caught in the ash.",
+    renderTextCenteredAt("A volcano is an opening in the Earth's crust through which an avalanche of lava, volcanic ash, and gases escape. One of the deadliest disasters, volcanoes are catastrophic during both the actual eruption phase, and the aftermath. Volcanic ash can cause damage thousands of kilometers away, including destroying crops, contaminating water supplies, while also causing respiratory problems for anyone with the misfortune of being caught in the ash.",
                          text_font, '#475F77', left_page_x_pos, left_page_y_pos, window, book_width,)
 
     renderTextCenteredAt('Volcanos', header_font, '#475F77',
                          right_page_x_pos, right_page_y_pos - 40, window, book_width,)
 
-    renderTextCenteredAt("If you are caught in the initial wave of pyroclastic flow, there is little you could do.  However, you should always be aware of the residing ash in the air, which can be lethal to humans when inhaled. It’s advised to wear a mask or to cover your mouth during and after a volcanic eruption. Also, geothermal lands are especially prone to collapsing during a volcanic eruption, so avoid those at all costs!",
+    renderTextCenteredAt("If you are caught in the initial wave of pyroclastic flow, there is little you could do.  However, you should always be aware of the residing ash in the air, which can be lethal to humans when inhaled. It's advised to wear a mask or to cover your mouth during and after a volcanic eruption. Also, geothermal lands are especially prone to collapsing during a volcanic eruption, so avoid those at all costs!",
                          text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width,)
 
     bookPageTwoBackButton.draw()
@@ -267,13 +296,13 @@ def lessonSix():
     renderTextCenteredAt('Surviving', header_font, '#475F77',
                          left_page_x_pos, left_page_y_pos - 40, window, book_width,)
 
-    renderTextCenteredAt("It’s not a good idea to make both Zeus and Poseidon mad! Forming over tropical waters, hurricanes (tropical cyclones) are a mixture of water and wind. They strengthen when it feeds on unstable air, such as turbulence and rising motion.",
+    renderTextCenteredAt("It's not a good idea to make both Zeus and Poseidon mad! Forming over tropical waters, hurricanes (tropical cyclones) are a mixture of water and wind. They strengthen when it feeds on unstable air, such as turbulence and rising motion.",
                          text_font, '#475F77', left_page_x_pos, left_page_y_pos, window, book_width,)
 
     renderTextCenteredAt('Hurricanes', header_font, '#475F77',
                          right_page_x_pos, right_page_y_pos - 40, window, book_width,)
 
-    renderTextCenteredAt("The safest place during a hurricane is the eye of the storm. It’s the calmest part during the storm, with light winds and fair weather. Stay away from any objects that can be lifted off the ground, and make sure to avoid drowning in water. That would be unfortunate.",
+    renderTextCenteredAt("The safest place during a hurricane is the eye of the storm. It's the calmest part during the storm, with light winds and fair weather. Stay away from any objects that can be lifted off the ground, and make sure to avoid drowning in water. That would be unfortunate.",
                          text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width,)
 
     bookPageFiveBackButton.draw()
@@ -300,15 +329,65 @@ def lessonSeven():
     homeButtonTwo.draw()
 
 
+#Story Pages
 def show_start():
-    text = title_font.render('Start Page', True, "#475F77")
-    textRect = text.get_rect(center=(screen_width // 2, 100))
 
-    window.blit(text, textRect)
+    show_items()
 
-    homeButtonOne.draw()
+    renderTextCenteredAt('Items', title_font, '#475F77',
+                         screen_width // 2, left_page_y_pos - 40, window, book_width,)
+
+    stickButton.draw()
+    fenceButton.draw()
+    vacuumButton.draw()
+    boardButton.draw()
+    bubbleButton.draw()
+
+def stick_page():
+    renderTextCenteredAt('Stick turns into... a Lightning Rod!', title_font, '#475F77',
+                         screen_width // 2, left_page_y_pos - 40, window, book_width,)  
+
+    levelOneButton.draw()
+    window.blit(stick, (200, 200))
 
 
+def fence_page():
+    renderTextCenteredAt('Fence turns into... a Durable Wall!', title_font, '#475F77',
+                         screen_width // 2, left_page_y_pos - 40, window, book_width,)  
+
+    levelOneButton.draw()
+    window.blit(fence, (200, 200))
+
+
+def vacuum_page():
+    renderTextCenteredAt('Vacuum turns into... a Powerful Broom!', title_font, '#475F77',
+                         screen_width // 2, left_page_y_pos - 40, window, book_width,)  
+
+    levelOneButton.draw()
+    window.blit(vacuum, (200, 200))
+
+
+def board_page():
+    renderTextCenteredAt('Board turns into... a Hoverboard!', title_font, '#475F77',
+                         screen_width // 2, left_page_y_pos - 40, window, book_width,)  
+
+    levelOneButton.draw()
+    window.blit(board, (200, 200))
+
+def bubble_page():
+    renderTextCenteredAt('Bubble turns into an... Indestructible Shield!', title_font, '#475F77',
+                         screen_width // 2, left_page_y_pos - 40, window, book_width,)  
+
+    levelOneButton.draw()
+    window.blit(bubble, (200, 200))
+
+def level_one():
+    renderTextCenteredAt("Welcome to the beginning of the end. Zeus, unhappy with your actions, sends an immense tornado hurtling your direction. What do you do?",
+                         text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width,)
+    choice1A.draw()
+    choice1B.draw()
+    choice1C.draw()
+                         
 def show_quiz():
     text = title_font.render('Quiz Page', True, "#475F77")
     textRect = text.get_rect(center=(screen_width // 2, 100))
@@ -353,10 +432,27 @@ def main():
             lessonSix()
         elif page_id == 'book_page_seven':
             lessonSeven()
+
+        #Game Pages
         elif page_id == 'start':
             show_start()
+        elif page_id == 'stick':
+            stick_page()
+        elif page_id == 'fence':
+            fence_page()
+        elif page_id == 'vacuum':
+            vacuum_page()
+        elif page_id == 'board':
+            board_page()
+        elif page_id == 'bubble':
+            bubble_page()
+        elif page_id == 'level one':
+            level_one()
+                   
+        #Quiz pages
         elif page_id == 'quiz':
             show_quiz()
+        #Quit Page
         elif page_id == 'quit':
             run = False
 
