@@ -58,7 +58,27 @@ right_page_y_pos = 125
 book_width = 210
 
 page_id = 'home'
+hide = False
 quiz_score = 0
+
+
+#define this at the top of the file
+rect_border_color = (71, 95, 119)
+rect_color = (115, 158, 201)
+
+# function
+def create_rect(width, height, border, color, border_color):
+    surf = pygame.Surface((width + border * 2, height + border * 2), pygame.SRCALPHA)
+    pygame.draw.rect(surf, color, (border, border, width, height), 0)
+    for i in range(1, border):
+        pygame.draw.rect(surf, border_color, (border - i, border - i, width + 5, height + 5), 1)
+    return surf
+
+#usage:
+background_rect = create_rect(750, 70, 5,  rect_color, rect_border_color)
+window.blit(background_rect, (6, 30))
+
+#This should work for every page, all u'll have to change is the width and height maybe^
 
 def update_quiz_score(score):
     global quiz_score
@@ -68,6 +88,13 @@ def update_quiz_score(score):
 def update_page_id(id):
     global page_id
     page_id = id
+
+
+def choice1B_chance():
+    global page_id 
+    global hide
+    hide = True
+    page_id = 'level two'
 
 
 def choice1C_chance():
@@ -100,6 +127,20 @@ def choice2B_chance():
 # FIX THIS
 def choice3A_chance():
     global page_id
+    global hide
+    chance = random.uniform(0, 1)
+    if hide:
+        if chance <= 0.6:
+            if chance <= 0.75:
+                page_id = 'level three'
+            else:
+                page_id = 'earthquake ending'
+        else:
+            page_id = 'level four'        
+    else:
+        page_id = 'level four'
+
+
     chance = random.uniform(0, 1)
     if chance <= 0.25:
         page_id = 'level four'
@@ -216,8 +257,15 @@ vacuumButton = Button('Vacuum', 80, 40, (375, 230), 7,
                       window, text_font, 'vacuum', update_page_id)
 boardButton = Button('Board', 80, 40, (480, 230), 7,
                      window, text_font, 'board', update_page_id)
-bubbleButton = Button('Bubble', 80, 40, (585, 230), 7,
+bubbleButton = Button('Bubble', 80, 40, (582, 230), 7,
                       window, text_font, 'bubble', update_page_id)
+tryAgainButton = Button('Try Again >', 80, 40, (505, 175), 7,
+                      window, text_font, 'start', update_page_id)
+homeButtonThree = Button('Home >', 80, 40, (505, 225), 7,
+                       window, text_font, 'home', update_page_id)
+leaveButton = Button('Quit >', 80, 40, (505, 275), 7,
+                      window, text_font, 'quit', update_page_id)
+
 
 # Level One Buttons
 levelOneButton = Button('Begin! >', 80, 40, (700, 400),
@@ -225,7 +273,7 @@ levelOneButton = Button('Begin! >', 80, 40, (700, 400),
 choice1A = Button('', 215, 150, (47, 250), 7, window,
                   text_font, 'tornado ending', update_page_id)
 choice1B = Button('', 215, 150, (297, 250), 7, window,
-                  text_font, 'level two', update_page_id)
+                  text_font, None, update_page_id, choice1B_chance)
 choice1C = Button('', 215, 150, (547, 250), 7, window, text_font,
                   None, update_page_id, choice1C_chance)
 
@@ -244,15 +292,15 @@ choice3C = Button('', 215, 150, (547, 250), 7, window,
                   text_font, None, update_page_id, choice3C_chance)
 
 # Level Four Buttons
-choice4A = Button('', 250, 150, (150, 125), 7, window,
+choice4A = Button('', 250, 150, (150, 130), 7, window,
                   text_font, None, update_page_id, choice4A_chance)
-choice4B = Button('', 250, 150, (410, 125), 7, window,
+choice4B = Button('', 250, 150, (410, 130), 7, window,
                   text_font, None, update_page_id, choice4B_chance)
-choice4C = Button('', 215, 150, (47, 280), 7, window,
+choice4C = Button('', 215, 150, (47, 290), 7, window,
                   text_font, None, update_page_id, choice4C_chance)
-choice4D = Button('', 215, 150, (297, 280), 7, window,
+choice4D = Button('', 215, 150, (297, 290), 7, window,
                   text_font, None, update_page_id)
-choice4E = Button('', 215, 150, (547, 280), 7, window,
+choice4E = Button('', 215, 150, (547, 290), 7, window,
                   text_font, None, update_page_id, choice4E_chance)
 
 # Quiz Buttons
@@ -530,13 +578,19 @@ def show_start():
     show_items()
 
     renderTextCenteredAt('Items', title_font, '#475F77',
-                         screen_width // 2, left_page_y_pos - 40, window, book_width)
+                         screen_width // 2, 75, window, 800)
 
     stickButton.draw()
     fenceButton.draw()
     vacuumButton.draw()
     boardButton.draw()
     bubbleButton.draw()
+
+    background_rect = create_rect(770, 70, 5,  rect_color, rect_border_color)
+    window.blit(background_rect, (10, 310))
+    renderTextCenteredAt(
+        "Each item is assigned to a specific disaster. When used during the correct level, you can skip that level and move onto the next. If the items are used for the wrong disaster, the item is discarded and you can no longer use it, so be careful, mortal. The item is displayed at the bottom right.",
+        text_font, '#475F77', 400, 325 , window, 700)
 
 
 def stick_page():
@@ -580,6 +634,9 @@ def bubble_page():
 
 
 def level_one():
+
+    background_rect = create_rect(770, 70, 5,  rect_color, rect_border_color)
+    window.blit(background_rect, (10, 30))
     renderTextCenteredAt(
         "Welcome to the beginning of the end. Zeus, unhappy with your actions, sends a large tornado hurtling your direction. What do you do?",
         header_font, '#475F77', 400, 50, window, 800)
@@ -594,9 +651,13 @@ def level_one():
 
 
 def level_two():
+
+    background_rect = create_rect(770, 70, 5,  rect_color, rect_border_color)
+    window.blit(background_rect, (10, 30))
     renderTextCenteredAt(
         "Woah! The volcano suddenly became active, and the ash hurries your way! Quick, make a choice!",
-        header_font, '#475F77', 400, 50, window, 800)
+        header_font, '#475F77', 400, 50, window, 750)
+
     choice2A.draw()
     choice2B.draw()
 
@@ -605,9 +666,12 @@ def level_two():
 
 
 def level_three():
+
+    background_rect = create_rect(770, 110, 5,  rect_color, rect_border_color)
+    window.blit(background_rect, (10, 30))
     renderTextCenteredAt(
         "That was close one. Gasping for air, you plead to the gods saying that you've learned your lesson, but no response comes. And to make matters worse, the ground below you starts shaking uncontrollably as you realize you are now being challenged with an earthquake.",
-        header_font, '#475F77', 400, 50, window, 800)
+        header_font, '#475F77', 400, 50, window, 775)
 
     choice3A.draw()
     choice3B.draw()
@@ -619,9 +683,12 @@ def level_three():
 
 
 def level_four():
+
+    background_rect = create_rect(785, 85, 5,  rect_color, rect_border_color)
+    window.blit(background_rect, (4, 10))
     renderTextCenteredAt(
-        "After the earthquake, the ensuing aftershocks create a tsunami. Without warning, the first wave of the tsunami comes and submerges the land, and you are caught in it. There is no telling if a main wave will still rush towards you. What do you do?",
-        header_font, '#475F77', 400, 50, window, 800)
+        "After the earthquake, the ensuing aftershocks create a tsunami. Crsah! A wave of  tsunami comes and submerges the land, and you are caught in it. There is no telling if another wave will still rush towards you. What do you do?",
+        header_font, '#475F77', 400, 30, window, 780)
 
     choice4A.draw()
     choice4B.draw()
@@ -629,84 +696,218 @@ def level_four():
     choice4D.draw()
     choice4E.draw()
 
-    renderTextCenteredAt('Swim to shore!', header_font, '#FFFFFF', 270, 175, window, 200)
-    renderTextCenteredAt('Hang onto a drifting wood piece', header_font, '#FFFFFF', 538, 175, window, 200)
-    renderTextCenteredAt('Climb to the top of a palm tree', header_font, '#FFFFFF', 154, 340, window, 200)
-    renderTextCenteredAt('Collect drifting materials', header_font, '#FFFFFF', 407, 340, window, 200)
-    renderTextCenteredAt('Crawl to peak of volcano!', header_font, '#FFFFFF', 655, 340, window, 200)
+    renderTextCenteredAt('Swim to shore!', header_font, '#FFFFFF', 274, 184, window, 200)
+    renderTextCenteredAt('Hang onto a drifting wood piece', header_font, '#FFFFFF', 538, 180, window, 200)
+    renderTextCenteredAt('Climb to the top of a palm tree', header_font, '#FFFFFF', 154, 350, window, 200)
+    renderTextCenteredAt('Collect drifting materials', header_font, '#FFFFFF', 407, 350, window, 200)
+    renderTextCenteredAt('Crawl to peak of volcano!', header_font, '#FFFFFF', 655, 350, window, 200)
 
 
 def tornado_ending():
+    show_book_of_insights()
+
+    tryAgainButton.draw()
+    homeButtonThree.draw()
+    leaveButton.draw()
+
+    renderTextCenteredAt('Results', header_font, '#475F77',
+                         left_page_x_pos, left_page_y_pos - 40, window, book_width)
+
     renderTextCenteredAt(
         "You chose to go save the monkey. As you reach him, you pick him up and also realize that you're being picked up. Turns out, the tornado had caught up to you guys, so as you're flying through the air while cuddling with the baby monkey, some final thoughts flow through your head. I hope you end up meeting the Wizard of Oz!",
-        header_font, '#475F77', 400, 50, window, 800)
+        text_font, '#475F77', left_page_x_pos, left_page_y_pos, window, book_width)
+
+    renderTextCenteredAt('Thanks for playing!', header_font, '#475F77',
+                         right_page_x_pos, right_page_y_pos - 40, window, book_width)
 
 
 def volcano_ending_one():
+    show_book_of_insights()
+
+    tryAgainButton.draw()
+    homeButtonThree.draw()
+    leaveButton.draw()
+
+    renderTextCenteredAt('Results', header_font, '#475F77',
+                         left_page_x_pos, left_page_y_pos - 40, window, book_width)
+
     renderTextCenteredAt(
         "After inhaling too much volcanic ash, you start coughing, and coughing, until you start losing consciousness. And slowly, as you leave this world, the last thought you will ever have is praying pathetically to the gods. A fiery blaze engulfs you, as the land below you reveals itself to be a dangerous geothermal area.",
-        header_font, '#475F77', 400, 50, window, 800)
+        text_font, '#475F77', left_page_x_pos, left_page_y_pos, window, book_width)
 
+    renderTextCenteredAt('Thanks for playing!', header_font, '#475F77',
+                         right_page_x_pos, right_page_y_pos - 40, window, book_width)
 
 def volcano_ending_two():
-    renderTextCenteredAt(
-        "You die a fiery death, but at least you went down in style, by drowning in a pool of burning lava! The lava was a comfortable 1250°, just a little over your average hot tub. Yet again, you realize you shouldn't have stolen the Hades's pet dog, Cerberus.",
-        header_font, '#475F77', 400, 50, window, 800)
+    show_book_of_insights()
 
+    tryAgainButton.draw()
+    homeButtonThree.draw()
+    leaveButton.draw()
+
+    renderTextCenteredAt('Results', header_font, '#475F77',
+                         left_page_x_pos, left_page_y_pos - 40, window, book_width)
+
+    renderTextCenteredAt(
+        "You die a fiery death, but at least you went down in style, by drowning in a pool of burning lava! The lava was a comfortable 1250 degrees, just a little over your average hot tub. Yet again, you realize you shouldn't have stolen the Hades's pet dog, Cerberus.",
+        text_font, '#475F77', left_page_x_pos, left_page_y_pos, window, book_width)
+
+    renderTextCenteredAt('Thanks for playing!', header_font, '#475F77',
+                         right_page_x_pos, right_page_y_pos - 40, window, book_width)
 
 def earthquake_ending():
+    show_book_of_insights()
+
+    tryAgainButton.draw()
+    homeButtonThree.draw()
+    leaveButton.draw()
+
+    renderTextCenteredAt('Results', header_font, '#475F77',
+                         left_page_x_pos, left_page_y_pos - 40, window, book_width)
+
     renderTextCenteredAt(
         "The ground below you cracks open and you fall into an endless pit. And that was when you realized you probably shouldn't have taken Hades' favourite helmet!",
-        header_font, '#475F77', 400, 50, window, 800)
+        text_font, '#475F77', left_page_x_pos, left_page_y_pos, window, book_width)
 
+    renderTextCenteredAt('Thanks for playing!', header_font, '#475F77',
+                         right_page_x_pos, right_page_y_pos - 40, window, book_width)
 
 def tsunami_ending():
+    show_book_of_insights()
+
+    tryAgainButton.draw()
+    homeButtonThree.draw()
+    leaveButton.draw()
+
+    renderTextCenteredAt('Results', header_font, '#475F77',
+                         left_page_x_pos, left_page_y_pos - 40, window, book_width)
+
     renderTextCenteredAt(
         "Navigating the fully submerged island, you hear a loud sound as you turn around and discover a huge wave of water building up. With one final look at the sun, you apologize to the gods as you choke on water.",
-        header_font, '#475F77', 400, 50, window, 800)
+        text_font, '#475F77', left_page_x_pos, left_page_y_pos, window, book_width)
+
+    renderTextCenteredAt('Thanks for playing!', header_font, '#475F77',
+                         right_page_x_pos, right_page_y_pos - 40, window, book_width)
 
 
 def hurricane_ending():
-    renderTextCenteredAt("The endless swirls of water, rain, and thunder eventually was too much for you to handle.",
-                         header_font, '#475F77', 400, 50, window, 800)
+    show_book_of_insights()
 
+    tryAgainButton.draw()
+    homeButtonThree.draw()
+    leaveButton.draw()
+
+    renderTextCenteredAt('Results', header_font, '#475F77',
+                         left_page_x_pos, left_page_y_pos - 40, window, book_width)
+
+    renderTextCenteredAt(
+        "The endless swirls of water, rain, and thunder eventually was too much for you to handle.",
+        text_font, '#475F77', left_page_x_pos, left_page_y_pos, window, book_width)
+
+    renderTextCenteredAt('Thanks for playing!', header_font, '#475F77',
+                         right_page_x_pos, right_page_y_pos - 40, window, book_width)
 
 def survival_ending_one():
+    show_book_of_insights()
+
+    tryAgainButton.draw()
+    homeButtonThree.draw()
+    leaveButton.draw()
+
+    renderTextCenteredAt('Results', header_font, '#475F77',
+                         left_page_x_pos, left_page_y_pos - 40, window, book_width)
+
     renderTextCenteredAt(
         "You reach the peak of the volcano, but also carefully avoid falling in. And suddenly, a plane flies past you. Waving your hands like a madman, the pilot sees you and picks you up. You survived!",
-        header_font, '#475F77', 400, 50, window, 800)
+        text_font, '#475F77', left_page_x_pos, left_page_y_pos, window, book_width)
 
+    renderTextCenteredAt('Thanks for playing!', header_font, '#475F77',
+                         right_page_x_pos, right_page_y_pos - 40, window, book_width)
 
 def survival_ending_two():
+    show_book_of_insights()
+
+    tryAgainButton.draw()
+    homeButtonThree.draw()
+    leaveButton.draw()
+
+    renderTextCenteredAt('Results', header_font, '#475F77',
+                         left_page_x_pos, left_page_y_pos - 40, window, book_width)
+
     renderTextCenteredAt(
         "The hurricane passes and you finally open your eyes. Hooray! You survived! The gods congratulate you and you go back to your normal life. This time, you shouldn't anger the gods.",
-        header_font, '#475F77', 400, 50, window, 800)
+        text_font, '#475F77', left_page_x_pos, left_page_y_pos, window, book_width)
 
+    renderTextCenteredAt('Thanks for playing!', header_font, '#475F77',
+                         right_page_x_pos, right_page_y_pos - 40, window, book_width)
 
 def secret_ending_one():
+    show_book_of_insights()
+
+    tryAgainButton.draw()
+    homeButtonThree.draw()
+    leaveButton.draw()
+
+    renderTextCenteredAt('Results', header_font, '#475F77',
+                         left_page_x_pos, left_page_y_pos - 40, window, book_width)
+
     renderTextCenteredAt(
         "Praying, you beg Zeus to spare you. And suddenly, you are at Mount Olympus. You get on your knees, thanking the gods when you realize Zeus had something else in mind.",
-        header_font, '#475F77', 400, 50, window, 800)
+        text_font, '#475F77', left_page_x_pos, left_page_y_pos, window, book_width)
 
+    renderTextCenteredAt('Thanks for playing!', header_font, '#475F77',
+                         right_page_x_pos, right_page_y_pos - 40, window, book_width)
 
 def secret_ending_two():
+    show_book_of_insights()
+
+    tryAgainButton.draw()
+    homeButtonThree.draw()
+    leaveButton.draw()
+
+    renderTextCenteredAt('Results', header_font, '#475F77',
+                         left_page_x_pos, left_page_y_pos - 40, window, book_width)
+
     renderTextCenteredAt(
         "Hiding in the cave, you think you are safe when you hear a low, grumbling voice behind you. Slowly turning around, you see the monstrosity which is the Minotaur. The two-horned creature grabs you and eats you for dinner. And that, kids, is why you should never enter a dark cave!",
-        header_font, '#475F77', 400, 50, window, 800)
+        text_font, '#475F77', left_page_x_pos, left_page_y_pos, window, book_width)
 
+    renderTextCenteredAt('Thanks for playing!', header_font, '#475F77',
+                         right_page_x_pos, right_page_y_pos - 40, window, book_width)
 
 def secret_ending_three():
+    show_book_of_insights()
+
+    tryAgainButton.draw()
+    homeButtonThree.draw()
+    leaveButton.draw()
+
+    renderTextCenteredAt('Results', header_font, '#475F77',
+                         left_page_x_pos, left_page_y_pos - 40, window, book_width)
+
     renderTextCenteredAt(
         "Wondering how water levels could rise so high, you are submerged underwater where it is revealed that Poseidon has taken a liking towards you. You are made into an immortal and forced to work for Poseidon for the rest of your eternal life.",
-        header_font, '#475F77', 400, 50, window, 800)
+        text_font, '#475F77', left_page_x_pos, left_page_y_pos, window, book_width)
 
+    renderTextCenteredAt('Thanks for playing!', header_font, '#475F77',
+                         right_page_x_pos, right_page_y_pos - 40, window, book_width)
 
 def secret_ending_four():
+    show_book_of_insights()
+
+    tryAgainButton.draw()
+    homeButtonThree.draw()
+    leaveButton.draw()
+
+    renderTextCenteredAt('Results', header_font, '#475F77',
+                         left_page_x_pos, left_page_y_pos - 40, window, book_width)
+
     renderTextCenteredAt(
         "You decided that you wanted to get revenge against the god, and with the supercharged lightning rod you attempted to attack Zeus. You realize at the last moment that Zeus is actually the god of lightning, and regret not taking the chance to live a peaceful life when you had the opportunity to.",
-        header_font, '#475F77', 400, 50, window, 800)
+        text_font, '#475F77', left_page_x_pos, left_page_y_pos, window, book_width)
 
-
+    renderTextCenteredAt('Thanks for playing!', header_font, '#475F77',
+                         right_page_x_pos, right_page_y_pos - 40, window, book_width)
 # Quiz Pages
 def show_quiz():
     # resetting the quiz score
