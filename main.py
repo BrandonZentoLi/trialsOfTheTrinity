@@ -44,7 +44,7 @@ shape = image.shape[1::-1]
 red = 255, 0, 0
 fps = capture.get(cv2.CAP_PROP_FPS)
 
-itemPage = pygame.image.load('resources/items.jpg')
+itemPage = pygame.image.load('resources/items.png')
 stick = pygame.image.load('resources/stick.png')
 fence = pygame.image.load('resources/fence.png')
 vacuum = pygame.image.load('resources/vacuum.png')
@@ -91,7 +91,7 @@ def update_page_id(id):
 
 
 def choice1B_chance():
-    global page_id 
+    global page_id
     global hide
     hide = True
     page_id = 'level two'
@@ -136,7 +136,7 @@ def choice3A_chance():
             else:
                 page_id = 'earthquake ending'
         else:
-            page_id = 'level four'        
+            page_id = 'level four'
     else:
         page_id = 'level four'
 
