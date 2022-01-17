@@ -44,7 +44,7 @@ shape = image.shape[1::-1]
 red = 255, 0, 0
 fps = capture.get(cv2.CAP_PROP_FPS)
 
-itemPage = pygame.image.load('resources/items.png')
+itemPage = pygame.image.load('resources/items.jpg')
 stick = pygame.image.load('resources/stick.png')
 fence = pygame.image.load('resources/fence.png')
 vacuum = pygame.image.load('resources/vacuum.png')
@@ -62,23 +62,29 @@ hide = False
 quiz_score = 0
 
 
-#define this at the top of the file
+# define this at the top of the file
 rect_border_color = (71, 95, 119)
 rect_color = (115, 158, 201)
 
 # function
+
+
 def create_rect(width, height, border, color, border_color):
-    surf = pygame.Surface((width + border * 2, height + border * 2), pygame.SRCALPHA)
+    surf = pygame.Surface(
+        (width + border * 2, height + border * 2), pygame.SRCALPHA)
     pygame.draw.rect(surf, color, (border, border, width, height), 0)
     for i in range(1, border):
-        pygame.draw.rect(surf, border_color, (border - i, border - i, width + 5, height + 5), 1)
+        pygame.draw.rect(surf, border_color, (border - i,
+                         border - i, width + 5, height + 5), 1)
     return surf
 
-#usage:
+
+# usage:
 background_rect = create_rect(750, 70, 5,  rect_color, rect_border_color)
 window.blit(background_rect, (6, 30))
 
-#This should work for every page, all u'll have to change is the width and height maybe^
+# This should work for every page, all u'll have to change is the width and height maybe^
+
 
 def update_quiz_score(score):
     global quiz_score
@@ -124,26 +130,18 @@ def choice2B_chance():
         page_id = 'level three'
 
 
-# FIX THIS
 def choice3A_chance():
     global page_id
-    global hide
     chance = random.uniform(0, 1)
     if hide:
         if chance <= 0.6:
+            chance = random.uniform(0, 1)            
             if chance <= 0.75:
                 page_id = 'level three'
             else:
                 page_id = 'earthquake ending'
         else:
             page_id = 'level four'
-    else:
-        page_id = 'level four'
-
-
-    chance = random.uniform(0, 1)
-    if chance <= 0.25:
-        page_id = 'level four'
     else:
         page_id = 'level four'
 
@@ -204,6 +202,14 @@ def choice4E_chance():
         page_id = 'survival ending one'
 
 
+def reset_quiz_score():
+    update_quiz_score(0)
+
+
+def increase_score():
+    update_quiz_score(quiz_score + 1)
+
+
 # Home Buttons
 homeButtonOne = Button('< Home', 80, 40, (20, 400), 7,
                        window, text_font, 'home', update_page_id)
@@ -260,11 +266,11 @@ boardButton = Button('Board', 80, 40, (480, 230), 7,
 bubbleButton = Button('Bubble', 80, 40, (582, 230), 7,
                       window, text_font, 'bubble', update_page_id)
 tryAgainButton = Button('Try Again >', 80, 40, (505, 175), 7,
-                      window, text_font, 'start', update_page_id)
+                        window, text_font, 'start', update_page_id)
 homeButtonThree = Button('Home >', 80, 40, (505, 225), 7,
-                       window, text_font, 'home', update_page_id)
+                         window, text_font, 'home', update_page_id)
 leaveButton = Button('Quit >', 80, 40, (505, 275), 7,
-                      window, text_font, 'quit', update_page_id)
+                     window, text_font, 'quit', update_page_id)
 
 
 # Level One Buttons
@@ -305,11 +311,11 @@ choice4E = Button('', 215, 150, (547, 290), 7, window,
 
 # Quiz Buttons
 quizButton = Button('Quiz', 80, 40, (460, 350), 7, window,
-                    text_font, 'quiz', update_page_id)
+                    text_font, 'quiz', update_page_id, reset_quiz_score)
 
 # Question 1 Options
 q1option1 = Button('Basement', 170, 30, (465, 150), 7, window,
-                   text_font, 'question_2', update_page_id)
+                   text_font, 'question_2', update_page_id, increase_score)
 q1option2 = Button('On top of a mountain', 170, 30, (465, 200),
                    7, window, text_font, 'question_2', update_page_id)
 q1option3 = Button('The Ocean', 170, 30, (465, 250), 7,
@@ -321,7 +327,7 @@ q1option4 = Button('Underwater', 170, 30, (465, 300), 7,
 q2option1 = Button('Go underwater', 170, 30, (465, 150), 7,
                    window, text_font, 'question_3', update_page_id)
 q2option2 = Button('Hold on to something', 170, 30, (465, 200),
-                   7, window, text_font, 'question_3', update_page_id)
+                   7, window, text_font, 'question_3', update_page_id, increase_score)
 q2option3 = Button('Swim away', 170, 30, (465, 250), 7,
                    window, text_font, 'question_3', update_page_id)
 
@@ -329,11 +335,11 @@ q2option3 = Button('Swim away', 170, 30, (465, 250), 7,
 q3option1 = Button('True', 170, 30, (465, 150), 7, window,
                    text_font, 'question_4', update_page_id)
 q3option2 = Button('False', 170, 30, (465, 200), 7, window,
-                   text_font, 'question_4', update_page_id)
+                   text_font, 'question_4', update_page_id, increase_score)
 
 # Question 4 Options
 q4option1 = Button('Yes', 170, 30, (465, 150), 7, window,
-                   text_font, 'question_5', update_page_id)
+                   text_font, 'question_5', update_page_id, increase_score)
 q4option2 = Button('No', 170, 30, (465, 200), 7, window,
                    text_font, 'question_5', update_page_id)
 q4option3 = Button('Maybe??', 170, 30, (465, 250), 7, window,
@@ -346,7 +352,7 @@ q5option1 = Button('Underwater again', 170, 30, (465, 250),
 q5option2 = Button('Through the hurricane', 170, 30, (465, 200),
                    7, window, text_font, 'results', update_page_id)
 q5option3 = Button('Eye of the Storm', 170, 30, (465, 150),
-                   7, window, text_font, 'results', update_page_id)
+                   7, window, text_font, 'results', update_page_id, increase_score)
 q5option4 = Button("I don't know??", 170, 30, (465, 300), 7,
                    window, text_font, 'results', update_page_id)
 
@@ -590,7 +596,7 @@ def show_start():
     window.blit(background_rect, (10, 310))
     renderTextCenteredAt(
         "Each item is assigned to a specific disaster. When used during the correct level, you can skip that level and move onto the next. If the items are used for the wrong disaster, the item is discarded and you can no longer use it, so be careful, mortal. The item is displayed at the bottom right.",
-        text_font, '#475F77', 400, 325 , window, 700)
+        text_font, '#475F77', 400, 325, window, 700)
 
 
 def stick_page():
@@ -645,9 +651,12 @@ def level_one():
     choice1B.draw()
     choice1C.draw()
 
-    renderTextCenteredAt('Save a monkey!', header_font, '#FFFFFF', 154, 310, window, 200)
-    renderTextCenteredAt('Explore a creepy shack', header_font, '#FFFFFF', 407, 310, window, 200)
-    renderTextCenteredAt('Hide in a hole', header_font, '#FFFFFF', 655, 310, window, 200)
+    renderTextCenteredAt('Save a monkey!', header_font,
+                         '#FFFFFF', 154, 310, window, 200)
+    renderTextCenteredAt('Explore a creepy shack',
+                         header_font, '#FFFFFF', 407, 310, window, 200)
+    renderTextCenteredAt('Hide in a hole', header_font,
+                         '#FFFFFF', 655, 310, window, 200)
 
 
 def level_two():
@@ -661,8 +670,10 @@ def level_two():
     choice2A.draw()
     choice2B.draw()
 
-    renderTextCenteredAt('Craft a mask!', header_font, '#FFFFFF', 208, 310, window, 200)
-    renderTextCenteredAt('Run from the ash', header_font, '#FFFFFF', 610, 310, window, 200)
+    renderTextCenteredAt('Craft a mask!', header_font,
+                         '#FFFFFF', 208, 310, window, 200)
+    renderTextCenteredAt('Run from the ash', header_font,
+                         '#FFFFFF', 610, 310, window, 200)
 
 
 def level_three():
@@ -677,9 +688,12 @@ def level_three():
     choice3B.draw()
     choice3C.draw()
 
-    renderTextCenteredAt('Hide in the shack', header_font, '#FFFFFF', 154, 310, window, 200)
-    renderTextCenteredAt('Go into the dark cave', header_font, '#FFFFFF', 407, 310, window, 200)
-    renderTextCenteredAt('Stop, drop, pray', header_font, '#FFFFFF', 655, 310, window, 200)
+    renderTextCenteredAt('Hide in the shack', header_font,
+                         '#FFFFFF', 154, 310, window, 200)
+    renderTextCenteredAt('Go into the dark cave', header_font,
+                         '#FFFFFF', 407, 310, window, 200)
+    renderTextCenteredAt('Stop, drop, pray', header_font,
+                         '#FFFFFF', 655, 310, window, 200)
 
 
 def level_four():
@@ -696,11 +710,16 @@ def level_four():
     choice4D.draw()
     choice4E.draw()
 
-    renderTextCenteredAt('Swim to shore!', header_font, '#FFFFFF', 274, 184, window, 200)
-    renderTextCenteredAt('Hang onto a drifting wood piece', header_font, '#FFFFFF', 538, 180, window, 200)
-    renderTextCenteredAt('Climb to the top of a palm tree', header_font, '#FFFFFF', 154, 350, window, 200)
-    renderTextCenteredAt('Collect drifting materials', header_font, '#FFFFFF', 407, 350, window, 200)
-    renderTextCenteredAt('Crawl to peak of volcano!', header_font, '#FFFFFF', 655, 350, window, 200)
+    renderTextCenteredAt('Swim to shore!', header_font,
+                         '#FFFFFF', 274, 184, window, 200)
+    renderTextCenteredAt('Hang onto a drifting wood piece',
+                         header_font, '#FFFFFF', 538, 180, window, 200)
+    renderTextCenteredAt('Climb to the top of a palm tree',
+                         header_font, '#FFFFFF', 154, 350, window, 200)
+    renderTextCenteredAt('Collect drifting materials',
+                         header_font, '#FFFFFF', 407, 350, window, 200)
+    renderTextCenteredAt('Crawl to peak of volcano!',
+                         header_font, '#FFFFFF', 655, 350, window, 200)
 
 
 def tornado_ending():
@@ -738,6 +757,7 @@ def volcano_ending_one():
     renderTextCenteredAt('Thanks for playing!', header_font, '#475F77',
                          right_page_x_pos, right_page_y_pos - 40, window, book_width)
 
+
 def volcano_ending_two():
     show_book_of_insights()
 
@@ -755,6 +775,7 @@ def volcano_ending_two():
     renderTextCenteredAt('Thanks for playing!', header_font, '#475F77',
                          right_page_x_pos, right_page_y_pos - 40, window, book_width)
 
+
 def earthquake_ending():
     show_book_of_insights()
 
@@ -771,6 +792,7 @@ def earthquake_ending():
 
     renderTextCenteredAt('Thanks for playing!', header_font, '#475F77',
                          right_page_x_pos, right_page_y_pos - 40, window, book_width)
+
 
 def tsunami_ending():
     show_book_of_insights()
@@ -807,6 +829,7 @@ def hurricane_ending():
     renderTextCenteredAt('Thanks for playing!', header_font, '#475F77',
                          right_page_x_pos, right_page_y_pos - 40, window, book_width)
 
+
 def survival_ending_one():
     show_book_of_insights()
 
@@ -823,6 +846,7 @@ def survival_ending_one():
 
     renderTextCenteredAt('Thanks for playing!', header_font, '#475F77',
                          right_page_x_pos, right_page_y_pos - 40, window, book_width)
+
 
 def survival_ending_two():
     show_book_of_insights()
@@ -841,6 +865,7 @@ def survival_ending_two():
     renderTextCenteredAt('Thanks for playing!', header_font, '#475F77',
                          right_page_x_pos, right_page_y_pos - 40, window, book_width)
 
+
 def secret_ending_one():
     show_book_of_insights()
 
@@ -857,6 +882,7 @@ def secret_ending_one():
 
     renderTextCenteredAt('Thanks for playing!', header_font, '#475F77',
                          right_page_x_pos, right_page_y_pos - 40, window, book_width)
+
 
 def secret_ending_two():
     show_book_of_insights()
@@ -875,6 +901,7 @@ def secret_ending_two():
     renderTextCenteredAt('Thanks for playing!', header_font, '#475F77',
                          right_page_x_pos, right_page_y_pos - 40, window, book_width)
 
+
 def secret_ending_three():
     show_book_of_insights()
 
@@ -891,6 +918,7 @@ def secret_ending_three():
 
     renderTextCenteredAt('Thanks for playing!', header_font, '#475F77',
                          right_page_x_pos, right_page_y_pos - 40, window, book_width)
+
 
 def secret_ending_four():
     show_book_of_insights()
@@ -909,10 +937,9 @@ def secret_ending_four():
     renderTextCenteredAt('Thanks for playing!', header_font, '#475F77',
                          right_page_x_pos, right_page_y_pos - 40, window, book_width)
 # Quiz Pages
-def show_quiz():
-    # resetting the quiz score
-    update_quiz_score(quiz_score - quiz_score)
 
+
+def show_quiz():
     show_book_of_insights()
 
     renderTextCenteredAt('Question:', header_font, '#475F77',
@@ -932,8 +959,6 @@ def show_quiz():
     q1option3.draw()
     q1option4.draw()
 
-    if q1option1.pressed:
-        update_quiz_score(quiz_score+1)
     homeButtonOne.draw()
 
 
@@ -955,8 +980,6 @@ def show_question2():
     q2option1.draw()
     q2option2.draw()
     q2option3.draw()
-    if q2option2.pressed:
-        update_quiz_score(quiz_score+1)
 
 
 def show_question3():
@@ -976,9 +999,6 @@ def show_question3():
 
     q3option1.draw()
     q3option2.draw()
-
-    if q3option2.pressed:
-        update_quiz_score(quiz_score+1)
 
 
 def show_question4():
@@ -1001,9 +1021,6 @@ def show_question4():
     q4option2.draw()
     q4option3.draw()
 
-    if q4option1.pressed:
-        update_quiz_score(quiz_score+1)
-
 
 def show_question5():
     show_book_of_insights()
@@ -1024,9 +1041,6 @@ def show_question5():
     q5option2.draw()
     q5option3.draw()
     q5option4.draw()
-
-    if q5option3.pressed:
-        update_quiz_score(quiz_score+1)
 
 
 def show_quiz_results():
