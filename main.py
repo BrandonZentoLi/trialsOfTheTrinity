@@ -1,5 +1,4 @@
 # import modules
-from re import L
 import pygame
 import cv2
 import random
@@ -64,107 +63,30 @@ def update_page_id(id):
     page_id = id
 
 
-def choice1C_chance():
-    global page_id
-    chance = random.uniform(0, 1)
-    if chance <= 0.25:
-        page_id = 'secret ending one'
-    else:
-        page_id = 'level two'
-        
-
-def choice2A_chance():
-    global page_id
-    chance = random.uniform(0, 1)
-    if chance <= 0.15:
-        page_id = 'volcano ending one'
-    else:
-        page_id = 'level three'
+def common():
+    pass
 
 
-def choice2B_chance():
-    global page_id
-    chance = random.uniform(0, 1)
-    if chance <= 0.75:
-        page_id = 'volcano ending two'
-    else:
-        page_id = 'level three'
+def random_chance_20():
+    pass
+    common()
 
 
-def choice3A_chance():
-    global page_id
-    chance = random.uniform(0, 1)
-    if chance <= 0.25:
-        page_id = 'secret ending one'
-    else:
-        page_id = 'level four'
+def random_chance_30():
+    pass
+    common()
 
 
-def choice3B_chance():
-    global page_id
-    chance = random.uniform(0, 1)
-    if chance <= 0.30:
-        page_id = 'secret ending two'
-    else:
-        page_id = 'level four'
-
-
-def choice3C_chance():
-    global page_id
-    chance = random.uniform(0, 1)
-    if chance <= 0.25:
-        page_id = 'earthquake ending'
-    elif chance >= 0.50:
-        page_id = 'secret ending one'
-    else:
-        page_id = 'level four'
-
-
-def choice4A_chance():
-    global page_id
-    chance = random.uniform(0, 1)
-    if chance <= 0.50:
-        page_id = 'tsunami ending'
-    else:
-        page_id = 'level five'
-
-
-def choice4B_chance():
-    global page_id
-    chance = random.uniform(0, 1)
-    if chance <= 0.30:
-        page_id = 'tsunami ending'
-    else:
-        page_id = 'level five'
-
-
-def choice4C_chance():
-    global page_id
-    chance = random.uniform(0, 1)
-    if chance <= 0.25:
-        page_id = 'tsunami ending'
-    else:
-        page_id = 'level five'
-
-
-def choice4E_chance():
-    global page_id
-    chance = random.uniform(0, 1)
-    if chance <= 0.20:
-        page_id = 'secret ending three'
-    else:
-        page_id = 'survival ending one'
-
-#Home Buttons
+# Home Buttons
 homeButtonOne = Button('< Home', 80, 40, (20, 400), 7, window, text_font, 'home', update_page_id)
 homeButtonTwo = Button('Home >', 80, 40, (700, 400), 7, window, text_font, 'home', update_page_id)
 
-#Info Buttons
+# Info Buttons
 infoPageOneNextButton = Button('Info', 80, 40, (160, 350), 7, window, text_font, 'info_page_one', update_page_id)
 infoPageOneBackButton = Button('< Back', 80, 40, (20, 400), 7, window, text_font, 'info_page_one', update_page_id)
 infoPageTwoButton = Button('Next >', 80, 40, (700, 400), 7, window, text_font, 'info_page_two', update_page_id)
 
-#Book of Insights 
+# Book of Insights
 bookPageOneButton = Button('Lesson', 80, 40, (260, 350), 7, window, text_font, 'book_page_one', update_page_id)
 bookPageOneBackButton = Button('< Back', 80, 40, (20, 400), 7, window, text_font, 'book_page_one', update_page_id)
 bookPageTwoNextButton = Button('Next >', 80, 40, (700, 400), 7, window, text_font, 'book_page_two', update_page_id)
@@ -179,7 +101,7 @@ bookPageSixNextButton = Button('Next >', 80, 40, (700, 400), 7, window, text_fon
 bookPageSixBackButton = Button('< Back', 80, 40, (20, 400), 7, window, text_font, 'book_page_six', update_page_id)
 bookPageSevenNextButton = Button('Next >', 80, 40, (700, 400), 7, window, text_font, 'book_page_seven', update_page_id)
 
-#Game Buttons
+# Game Buttons
 startButton = Button('Start', 80, 40, (360, 350), 7, window, text_font, 'start', update_page_id)
 stickButton = Button('Stick', 80, 40, (165, 230), 7, window, text_font, 'stick', update_page_id)
 fenceButton = Button('Fence', 80, 40, (268, 230), 7, window, text_font, 'fence', update_page_id)
@@ -187,32 +109,16 @@ vacuumButton = Button('vacuum', 80, 40, (375, 230), 7, window, text_font, 'vacuu
 boardButton = Button('Board', 80, 40, (480, 230), 7, window, text_font, 'board', update_page_id)
 bubbleButton = Button('Bubble', 80, 40, (585, 230), 7, window, text_font, 'bubble', update_page_id)
 
-#Level One Buttons
+# Level One Buttons
 levelOneButton = Button('Begin! >', 80, 40, (700, 400), 7, window, text_font, 'level one', update_page_id)
-choice1A = Button('', 250, 150, (200, 200), 7, window, text_font, 'tornado ending', update_page_id)
-choice1B = Button('', 80, 40, (100, 400), 7, window, text_font, 'level two', update_page_id)
-choice1C = Button('', 80, 40, (300, 400), 7, window, text_font, None, update_page_id, choice1C_chance)
+choice1A = Button('', 250, 150, (200, 200), 7, window, text_font, 'level one', update_page_id)
+choice1B = Button('', 80, 40, (100, 400), 7, window, text_font, 'level one', update_page_id)
+choice1C = Button('', 80, 40, (300, 400), 7, window, text_font, 'level one', update_page_id)
 
-#Level Two Buttons
-choice2A = Button('', 250, 150, (200, 200), 7, window, text_font, 'tornado ending', update_page_id)
-choice2B = Button('', 250, 150, (200, 200), 7, window, text_font, 'tornado ending', update_page_id)
-
-#Level Three Buttons
-choice3A = Button('', 250, 150, (200, 200), 7, window, text_font, 'tornado ending', update_page_id)
-choice3B = Button('', 250, 150, (200, 200), 7, window, text_font, 'tornado ending', update_page_id)
-choice3C = Button('', 250, 150, (200, 200), 7, window, text_font, 'tornado ending', update_page_id)
-
-#Level Four Buttons
-choice4A = Button('', 250, 150, (200, 200), 7, window, text_font, 'tornado ending', update_page_id)
-choice4B = Button('', 250, 150, (200, 200), 7, window, text_font, 'tornado ending', update_page_id)
-choice4C = Button('', 250, 150, (200, 200), 7, window, text_font, 'tornado ending', update_page_id)
-choice4D = Button('', 250, 150, (200, 200), 7, window, text_font, 'tornado ending', update_page_id)
-choice4E = Button('', 250, 150, (200, 200), 7, window, text_font, 'tornado ending', update_page_id)
-
-#Quiz Buttons
+# Quiz Buttons
 quizButton = Button('Quiz', 80, 40, (460, 350), 7, window, text_font, 'quiz', update_page_id)
 
-#Quit Button
+# Quit Button
 quitButton = Button('Quit', 80, 40, (560, 350), 7, window, text_font, 'quit', update_page_id)
 
 
@@ -231,6 +137,7 @@ def video_frames():
 def show_book_of_insights():
     window.blit(bookOfInsights, (0, 0))
 
+
 def show_items():
     window.blit(itemPage, (0, 0))
 
@@ -243,194 +150,202 @@ def show_home():
     quizButton.draw()
     quitButton.draw()
 
-#Info Pages
-def info_page_one():
 
+# Info Pages
+def info_page_one():
     show_book_of_insights()
 
     renderTextCenteredAt('Info Page', header_font, '#475F77',
-                         left_page_x_pos, left_page_y_pos - 40, window, book_width,)
+                         left_page_x_pos, left_page_y_pos - 40, window, book_width, )
 
-    renderTextCenteredAt("Trials of the Trinity is an interactive story in which you are a mortal that has angered the Big Three of the Olympian gods. Zeus, the God of the Sky - Poseidon, the God of the Sea - and Hades, the God of the Underworld. To punish you for what you have done, they've decided to give you a trial, and have teleported you to an island.",
-                         text_font, '#475F77', left_page_x_pos, left_page_y_pos, window, book_width,)
+    renderTextCenteredAt(
+        "Trials of the Trinity is an interactive story in which you are a mortal that has angered the Big Three of the Olympian gods. Zeus, the God of the Sky - Poseidon, the God of the Sea - and Hades, the God of the Underworld. To punish you for what you have done, they've decided to give you a trial, and have teleported you to an island.",
+        text_font, '#475F77', left_page_x_pos, left_page_y_pos, window, book_width, )
 
     renderTextCenteredAt('Info Page', header_font, '#475F77',
-                         right_page_x_pos, right_page_y_pos - 40, window, book_width,)
+                         right_page_x_pos, right_page_y_pos - 40, window, book_width, )
 
-    renderTextCenteredAt("If you want to make it to tomorrow, you must survive the trials given to you by the gods. Pick your choices wisely, for your fate rests in your hands, mortal.",
-                         text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width,)
+    renderTextCenteredAt(
+        "If you want to make it to tomorrow, you must survive the trials given to you by the gods. Pick your choices wisely, for your fate rests in your hands, mortal.",
+        text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width, )
 
     homeButtonOne.draw()
     infoPageTwoButton.draw()
 
 
 def info_page_two():
-
     show_book_of_insights()
 
     renderTextCenteredAt('Info Page', header_font, '#475F77',
-                         left_page_x_pos, left_page_y_pos - 40, window, book_width,)
+                         left_page_x_pos, left_page_y_pos - 40, window, book_width, )
 
-    renderTextCenteredAt("There will be five different natural disasters you must conquer. Each disaster will ask for a choice. This decision will affect the overall outcome, sometimes with lasting effects.",
-                         text_font, '#475F77', left_page_x_pos, left_page_y_pos, window, book_width,)
+    renderTextCenteredAt(
+        "There will be five different natural disasters you must conquer. Each disaster will ask for a choice. This decision will affect the overall outcome, sometimes with lasting effects.",
+        text_font, '#475F77', left_page_x_pos, left_page_y_pos, window, book_width, )
 
     renderTextCenteredAt('Info Page', header_font, '#475F77',
-                         right_page_x_pos, right_page_y_pos - 40, window, book_width,)
+                         right_page_x_pos, right_page_y_pos - 40, window, book_width, )
 
-    renderTextCenteredAt("In addition to choosing the right choice, the user will be prompted with a special item of their choice, courtesy of the gods - they grant you a guaranteed pass to the next level. While you can use these items at any point during the game, it is crucial you use it at the appropriate level. There is a chance that the item does absolutely nothing, so be prepared for that as well.",  text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width,)
+    renderTextCenteredAt(
+        "In addition to choosing the right choice, the user will be prompted with a special item of their choice, courtesy of the gods - they grant you a guaranteed pass to the next level. While you can use these items at any point during the game, it is crucial you use it at the appropriate level. There is a chance that the item does absolutely nothing, so be prepared for that as well.",
+        text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width, )
 
     infoPageOneBackButton.draw()
     homeButtonTwo.draw()
 
 
-#Book of Insights Pages
+# Book of Insights Pages
 def lessonOne():
-
     show_book_of_insights()
 
     renderTextCenteredAt('Book of', header_font, '#475F77',
-                         left_page_x_pos, left_page_y_pos - 40, window, book_width,)
+                         left_page_x_pos, left_page_y_pos - 40, window, book_width, )
 
     renderTextCenteredAt("Welcome to the Book of Insights.", text_font,
-                         '#475F77', left_page_x_pos, left_page_y_pos, window, book_width,)
+                         '#475F77', left_page_x_pos, left_page_y_pos, window, book_width, )
 
     renderTextCenteredAt('Insights', header_font, '#475F77',
-                         right_page_x_pos, right_page_y_pos - 40, window, book_width,)
+                         right_page_x_pos, right_page_y_pos - 40, window, book_width, )
 
-    renderTextCenteredAt("Here, you can learn all about natural disasters to help overcome obstacles in the interactive story. Let's get started!",
-                         text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width,)
+    renderTextCenteredAt(
+        "Here, you can learn all about natural disasters to help overcome obstacles in the interactive story. Let's get started!",
+        text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width, )
 
     homeButtonOne.draw()
     bookPageTwoNextButton.draw()
 
 
 def lessonTwo():
-
     show_book_of_insights()
 
     renderTextCenteredAt('Surviving', header_font, '#475F77',
-                         left_page_x_pos, left_page_y_pos - 40, window, book_width,)
+                         left_page_x_pos, left_page_y_pos - 40, window, book_width, )
 
-    renderTextCenteredAt("The tornado is the first natural disaster we're going to explore. A violent rotating column of air, a tornado is deadly to anything that gets in the way. The column extends from the base of a thunderstorm down to the ground. Oftentimes, tornadoes are just a result of the four Anemoi having a fight amongst themselves. They have a pretty bad temper!",
-                         text_font, '#475F77', left_page_x_pos, left_page_y_pos, window, book_width,)
+    renderTextCenteredAt(
+        "The tornado is the first natural disaster we're going to explore. A violent rotating column of air, a tornado is deadly to anything that gets in the way. The column extends from the base of a thunderstorm down to the ground. Oftentimes, tornadoes are just a result of the four Anemoi having a fight amongst themselves. They have a pretty bad temper!",
+        text_font, '#475F77', left_page_x_pos, left_page_y_pos, window, book_width, )
 
     renderTextCenteredAt('Tornados', header_font, '#475F77',
-                         right_page_x_pos, right_page_y_pos - 40, window, book_width,)
+                         right_page_x_pos, right_page_y_pos - 40, window, book_width, )
 
-    renderTextCenteredAt("The best way to survive a tornado is to hide and stay in a sturdy building. Stay away from windows and doors, and get to the lowest floor (such as a basement). Always avoid being inside a vulnerable shelter, like a car or tent. In addition, get under something heavy within your shelter for extra protection.",
-                         text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width,)
+    renderTextCenteredAt(
+        "The best way to survive a tornado is to hide and stay in a sturdy building. Stay away from windows and doors, and get to the lowest floor (such as a basement). Always avoid being inside a vulnerable shelter, like a car or tent. In addition, get under something heavy within your shelter for extra protection.",
+        text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width, )
 
     bookPageOneBackButton.draw()
     bookPageThreeNextButton.draw()
 
 
 def lessonThree():
-
     show_book_of_insights()
 
     renderTextCenteredAt('Surviving', header_font, '#475F77',
-                         left_page_x_pos, left_page_y_pos - 40, window, book_width,)
+                         left_page_x_pos, left_page_y_pos - 40, window, book_width, )
 
-    renderTextCenteredAt("A volcano is an opening in the Earth's crust through which an avalanche of lava, volcanic ash, and gases escape. One of the deadliest disasters, volcanoes are catastrophic during both the actual eruption phase, and the aftermath. Volcanic ash can cause damage thousands of kilometers away, including destroying crops, contaminating water supplies, while also causing respiratory problems for anyone with the misfortune of being caught in the ash.",
-                         text_font, '#475F77', left_page_x_pos, left_page_y_pos, window, book_width,)
+    renderTextCenteredAt(
+        "A volcano is an opening in the Earth's crust through which an avalanche of lava, volcanic ash, and gases escape. One of the deadliest disasters, volcanoes are catastrophic during both the actual eruption phase, and the aftermath. Volcanic ash can cause damage thousands of kilometers away, including destroying crops, contaminating water supplies, while also causing respiratory problems for anyone with the misfortune of being caught in the ash.",
+        text_font, '#475F77', left_page_x_pos, left_page_y_pos, window, book_width, )
 
     renderTextCenteredAt('Volcanos', header_font, '#475F77',
-                         right_page_x_pos, right_page_y_pos - 40, window, book_width,)
+                         right_page_x_pos, right_page_y_pos - 40, window, book_width, )
 
-    renderTextCenteredAt("If you are caught in the initial wave of pyroclastic flow, there is little you could do.  However, you should always be aware of the residing ash in the air, which can be lethal to humans when inhaled. It's advised to wear a mask or to cover your mouth during and after a volcanic eruption. Also, geothermal lands are especially prone to collapsing during a volcanic eruption, so avoid those at all costs!",
-                         text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width,)
+    renderTextCenteredAt(
+        "If you are caught in the initial wave of pyroclastic flow, there is little you could do.  However, you should always be aware of the residing ash in the air, which can be lethal to humans when inhaled. It's advised to wear a mask or to cover your mouth during and after a volcanic eruption. Also, geothermal lands are especially prone to collapsing during a volcanic eruption, so avoid those at all costs!",
+        text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width, )
 
     bookPageTwoBackButton.draw()
     bookPageFourNextButton.draw()
 
 
 def lessonFour():
-
     show_book_of_insights()
 
     renderTextCenteredAt('Surviving', header_font, '#475F77',
-                         left_page_x_pos, left_page_y_pos - 40, window, book_width,)
+                         left_page_x_pos, left_page_y_pos - 40, window, book_width, )
 
-    renderTextCenteredAt("When the Earth rumbles and shakes, you know something is about to happen. Earthquakes are classified as days when the tectonic plates below us get into a fight. But one lingering question you might have is, who sent it? Was it Poseidon, the earthshaker - or was it Hades, the god of the underworld? It’s difficult to tell, so all you can do is flip a coin and hope you prayed to the right god!",
-                         text_font, '#475F77', left_page_x_pos, left_page_y_pos, window, book_width,)
+    renderTextCenteredAt(
+        "When the Earth rumbles and shakes, you know something is about to happen. Earthquakes are classified as days when the tectonic plates below us get into a fight. But one lingering question you might have is, who sent it? Was it Poseidon, the earthshaker - or was it Hades, the god of the underworld? It’s difficult to tell, so all you can do is flip a coin and hope you prayed to the right god!",
+        text_font, '#475F77', left_page_x_pos, left_page_y_pos, window, book_width, )
 
     renderTextCenteredAt('Earthquakes', header_font, '#475F77',
-                         right_page_x_pos, right_page_y_pos - 40, window, book_width,)
+                         right_page_x_pos, right_page_y_pos - 40, window, book_width, )
 
-    renderTextCenteredAt("Earthquakes are destructive natural disasters that are deadliest in a dense and civilized area. Buildings topple, cracks form - and you are left to wonder what you have done. Get somewhere as low as possible, like a basement, and hide under something heavy so falling debris is unlikely to hit you.",
-                         text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width,)
+    renderTextCenteredAt(
+        "Earthquakes are destructive natural disasters that are deadliest in a dense and civilized area. Buildings topple, cracks form - and you are left to wonder what you have done. Get somewhere as low as possible, like a basement, and hide under something heavy so falling debris is unlikely to hit you.",
+        text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width, )
 
     bookPageThreeBackButton.draw()
     bookPageFiveNextButton.draw()
 
 
 def lessonFive():
-
     show_book_of_insights()
 
     renderTextCenteredAt('Surviving', header_font, '#475F77',
-                         left_page_x_pos, left_page_y_pos - 40, window, book_width,)
+                         left_page_x_pos, left_page_y_pos - 40, window, book_width, )
 
-    renderTextCenteredAt("The tsunami is a natural disaster that occurs when tectonic plates under water get into an argument. I know, these tectonic plates are so troublesome and naughty!",
-                         text_font, '#475F77', left_page_x_pos, left_page_y_pos, window, book_width,)
+    renderTextCenteredAt(
+        "The tsunami is a natural disaster that occurs when tectonic plates under water get into an argument. I know, these tectonic plates are so troublesome and naughty!",
+        text_font, '#475F77', left_page_x_pos, left_page_y_pos, window, book_width, )
 
     renderTextCenteredAt('Tsunamis', header_font, '#475F77',
-                         right_page_x_pos, right_page_y_pos - 40, window, book_width,)
+                         right_page_x_pos, right_page_y_pos - 40, window, book_width, )
 
-    renderTextCenteredAt("Tsunamis are a wall of water rushing towards the shore. So what do you do? Get as far away from the water as possible, even if you can’t outrun it. Getting to as high of an elevation as possible might also be helpful. If you are dragged into the current, your best chance at survival is to find something floating and cling onto it. Your fate’s been sealed if Poseidon is having a bad hair day!",
-                         text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width,)
+    renderTextCenteredAt(
+        "Tsunamis are a wall of water rushing towards the shore. So what do you do? Get as far away from the water as possible, even if you can’t outrun it. Getting to as high of an elevation as possible might also be helpful. If you are dragged into the current, your best chance at survival is to find something floating and cling onto it. Your fate’s been sealed if Poseidon is having a bad hair day!",
+        text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width, )
 
     bookPageFourBackButton.draw()
     bookPageSixNextButton.draw()
 
 
 def lessonSix():
-
     show_book_of_insights()
 
     renderTextCenteredAt('Surviving', header_font, '#475F77',
-                         left_page_x_pos, left_page_y_pos - 40, window, book_width,)
+                         left_page_x_pos, left_page_y_pos - 40, window, book_width, )
 
-    renderTextCenteredAt("It's not a good idea to make both Zeus and Poseidon mad! Forming over tropical waters, hurricanes (tropical cyclones) are a mixture of water and wind. They strengthen when it feeds on unstable air, such as turbulence and rising motion.",
-                         text_font, '#475F77', left_page_x_pos, left_page_y_pos, window, book_width,)
+    renderTextCenteredAt(
+        "It's not a good idea to make both Zeus and Poseidon mad! Forming over tropical waters, hurricanes (tropical cyclones) are a mixture of water and wind. They strengthen when it feeds on unstable air, such as turbulence and rising motion.",
+        text_font, '#475F77', left_page_x_pos, left_page_y_pos, window, book_width, )
 
     renderTextCenteredAt('Hurricanes', header_font, '#475F77',
-                         right_page_x_pos, right_page_y_pos - 40, window, book_width,)
+                         right_page_x_pos, right_page_y_pos - 40, window, book_width, )
 
-    renderTextCenteredAt("The safest place during a hurricane is the eye of the storm. It's the calmest part during the storm, with light winds and fair weather. Stay away from any objects that can be lifted off the ground, and make sure to avoid drowning in water. That would be unfortunate.",
-                         text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width,)
+    renderTextCenteredAt(
+        "The safest place during a hurricane is the eye of the storm. It's the calmest part during the storm, with light winds and fair weather. Stay away from any objects that can be lifted off the ground, and make sure to avoid drowning in water. That would be unfortunate.",
+        text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width, )
 
     bookPageFiveBackButton.draw()
     bookPageSevenNextButton.draw()
 
 
 def lessonSeven():
-    
     show_book_of_insights()
 
     renderTextCenteredAt('Book of', header_font, '#475F77',
-                         left_page_x_pos, left_page_y_pos - 40, window, book_width,)
+                         left_page_x_pos, left_page_y_pos - 40, window, book_width, )
 
     renderTextCenteredAt("Congratulations! You made it through the Book of Insights.",
-                         text_font, '#475F77', left_page_x_pos, left_page_y_pos, window, book_width,)
+                         text_font, '#475F77', left_page_x_pos, left_page_y_pos, window, book_width, )
 
     renderTextCenteredAt('Insights', header_font, '#475F77',
-                         right_page_x_pos, right_page_y_pos - 40, window, book_width,)
+                         right_page_x_pos, right_page_y_pos - 40, window, book_width, )
 
-    renderTextCenteredAt("The gods were betting you wouldn't be able to. By the way, Athena always had faith you would. She’s the goddess of wisdom for a reason.",
-                         text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width,)
+    renderTextCenteredAt(
+        "The gods were betting you wouldn't be able to. By the way, Athena always had faith you would. She’s the goddess of wisdom for a reason.",
+        text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width, )
 
     bookPageSixBackButton.draw()
     homeButtonTwo.draw()
 
 
-#Story Pages
+# Story Pages
 def show_start():
-
     show_items()
 
     renderTextCenteredAt('Items', title_font, '#475F77',
-                         screen_width // 2, left_page_y_pos - 40, window, book_width,)
+                         screen_width // 2, left_page_y_pos - 40, window, book_width, )
 
     stickButton.draw()
     fenceButton.draw()
@@ -438,9 +353,10 @@ def show_start():
     boardButton.draw()
     bubbleButton.draw()
 
+
 def stick_page():
     renderTextCenteredAt('Stick turns into... a Lightning Rod!', title_font, '#475F77',
-                         screen_width // 2, left_page_y_pos - 40, window, book_width,)  
+                         screen_width // 2, left_page_y_pos - 40, window, book_width, )
 
     levelOneButton.draw()
     window.blit(stick, (200, 200))
@@ -448,7 +364,7 @@ def stick_page():
 
 def fence_page():
     renderTextCenteredAt('Fence turns into... a Durable Wall!', title_font, '#475F77',
-                         screen_width // 2, left_page_y_pos - 40, window, book_width,)  
+                         screen_width // 2, left_page_y_pos - 40, window, book_width, )
 
     levelOneButton.draw()
     window.blit(fence, (200, 200))
@@ -456,7 +372,7 @@ def fence_page():
 
 def vacuum_page():
     renderTextCenteredAt('Vacuum turns into... a Powerful Broom!', title_font, '#475F77',
-                         screen_width // 2, left_page_y_pos - 40, window, book_width,)  
+                         screen_width // 2, left_page_y_pos - 40, window, book_width, )
 
     levelOneButton.draw()
     window.blit(vacuum, (200, 200))
@@ -464,115 +380,29 @@ def vacuum_page():
 
 def board_page():
     renderTextCenteredAt('Board turns into... a Hoverboard!', title_font, '#475F77',
-                         screen_width // 2, left_page_y_pos - 40, window, book_width,)  
+                         screen_width // 2, left_page_y_pos - 40, window, book_width, )
 
     levelOneButton.draw()
     window.blit(board, (200, 200))
 
+
 def bubble_page():
     renderTextCenteredAt('Bubble turns into an... Indestructible Shield!', title_font, '#475F77',
-                         screen_width // 2, left_page_y_pos - 40, window, book_width,)  
+                         screen_width // 2, left_page_y_pos - 40, window, book_width, )
 
     levelOneButton.draw()
     window.blit(bubble, (200, 200))
 
+
 def level_one():
-    renderTextCenteredAt("Welcome to the beginning of the end. Zeus, unhappy with your actions, sends an immense tornado hurtling your direction. What do you do?",
-                         text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width,)
+    renderTextCenteredAt(
+        "Welcome to the beginning of the end. Zeus, unhappy with your actions, sends an immense tornado hurtling your direction. What do you do?",
+        text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width, )
     choice1A.draw()
     choice1B.draw()
     choice1C.draw()
 
 
-def level_two():
-    renderTextCenteredAt("Welcome to the beginning of the end. Zeus, unhappy with your actions, sends an immense tornado hurtling your direction. What do you do?",
-                         text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width,)
-
-    choice2A.draw()
-    choice2B.draw()
-
-
-def level_three():
-    renderTextCenteredAt("Welcome to the beginning of the end. Zeus, unhappy with your actions, sends an immense tornado hurtling your direction. What do you do?",
-                         text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width,)
-
-    choice3A.draw()
-    choice3B.draw()
-    choice3C.draw()
-
-
-def level_four():
-    renderTextCenteredAt("Welcome to the beginning of the end. Zeus, unhappy with your actions, sends an immense tornado hurtling your direction. What do you do?",
-                         text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width,)
-
-    choice4A.draw()
-    choice4B.draw()
-    choice4C.draw()
-    choice4D.draw()
-    choice4E.draw()
-
-
-def tornado_ending():
-    renderTextCenteredAt("Welcome to the beginning of the end. Zeus, unhappy with your actions, sends an immense tornado hurtling your direction. What do you do?",
-                         text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width,)
-
-
-def volcano_ending_one():
-    renderTextCenteredAt("Welcome to the beginning of the end. Zeus, unhappy with your actions, sends an immense tornado hurtling your direction. What do you do?",
-                         text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width,)
-
-
-def volcano_ending_two():
-    renderTextCenteredAt("Welcome to the beginning of the end. Zeus, unhappy with your actions, sends an immense tornado hurtling your direction. What do you do?",
-                         text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width,)
-
-
-def earthquake_ending():
-    renderTextCenteredAt("Welcome to the beginning of the end. Zeus, unhappy with your actions, sends an immense tornado hurtling your direction. What do you do?",
-                         text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width,)
-
-
-def tsunami_ending():
-    renderTextCenteredAt("Welcome to the beginning of the end. Zeus, unhappy with your actions, sends an immense tornado hurtling your direction. What do you do?",
-                         text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width,)
-
-
-def hurricane_ending():
-    renderTextCenteredAt("Welcome to the beginning of the end. Zeus, unhappy with your actions, sends an immense tornado hurtling your direction. What do you do?",
-                         text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width,)
-
-
-def survival_ending_one():
-    renderTextCenteredAt("Welcome to the beginning of the end. Zeus, unhappy with your actions, sends an immense tornado hurtling your direction. What do you do?",
-                         text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width,)
-
-
-def survival_ending_two():
-    renderTextCenteredAt("Welcome to the beginning of the end. Zeus, unhappy with your actions, sends an immense tornado hurtling your direction. What do you do?",
-                         text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width,)
-
-
-def secret_ending_one():
-    renderTextCenteredAt("Welcome to the beginning of the end. Zeus, unhappy with your actions, sends an immense tornado hurtling your direction. What do you do?",
-                         text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width,)
-
-
-def secret_ending_two():
-    renderTextCenteredAt("Welcome to the beginning of the end. Zeus, unhappy with your actions, sends an immense tornado hurtling your direction. What do you do?",
-                         text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width,)
-
-
-def secret_ending_three():
-    renderTextCenteredAt("Welcome to the beginning of the end. Zeus, unhappy with your actions, sends an immense tornado hurtling your direction. What do you do?",
-                         text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width,)
-
-
-def secret_ending_four():
-    renderTextCenteredAt("Welcome to the beginning of the end. Zeus, unhappy with your actions, sends an immense tornado hurtling your direction. What do you do?",
-                         text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width,)
-
-
-#Quiz         
 def show_quiz():
     text = title_font.render('Quiz Page', True, "#475F77")
     textRect = text.get_rect(center=(screen_width // 2, 100))
@@ -596,13 +426,13 @@ def main():
         if page_id == 'home':
             show_home()
 
-        #Info Pages 
+        # Info Pages
         elif page_id == 'info_page_one':
             info_page_one()
         elif page_id == 'info_page_two':
             info_page_two()
-        
-        #Book of Insights Pages
+
+        # Book of Insights Pages
         elif page_id == 'book_page_one':
             lessonOne()
         elif page_id == 'book_page_two':
@@ -618,7 +448,7 @@ def main():
         elif page_id == 'book_page_seven':
             lessonSeven()
 
-        #Game Pages
+        # Game Pages
         elif page_id == 'start':
             show_start()
         elif page_id == 'stick':
@@ -633,42 +463,11 @@ def main():
             bubble_page()
         elif page_id == 'level one':
             level_one()
-        elif page_id == 'level two':
-            level_two()
-        elif page_id == 'level three':
-            level_three()
-        elif page_id == 'level four':
-            level_four()
-        elif page_id == 'level five':
-            pass
-        elif page_id == 'tornado ending':
-            tornado_ending()
-        elif page_id == 'volcano ending one':
-            volcano_ending_one()
-        elif page_id == 'volcano ending two':
-            volcano_ending_two()
-        elif page_id == 'earthquake ending':
-            earthquake_ending()
-        elif page_id == 'tsunami ending':
-            tsunami_ending()
-        elif page_id == 'hurricane ending':
-            hurricane_ending()
-        elif page_id == 'survival ending one':
-            survival_ending_one()
-        elif page_id == 'survival ending two':
-            survival_ending_two()
-        elif page_id == 'secret ending one':
-            secret_ending_one()
-        elif page_id == 'secret ending two':
-            secret_ending_two()
-        elif page_id == 'secret ending three':
-            secret_ending_three()
-        elif page_id == 'secret ending four':
-            secret_ending_four()
-        #Quiz pages
+
+        # Quiz pages
         elif page_id == 'quiz':
             show_quiz()
-        #Quit Page
+        # Quit Page
         elif page_id == 'quit':
             run = False
 
