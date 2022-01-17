@@ -7,7 +7,7 @@ click_sound = mixer.Sound('music/click.mp3')
 click_sound.set_volume(0.4)
 
 class Button:
-    def __init__(self, text, width, height, pos, elevation, window, font, page_id, update_page_id):
+    def __init__(self, text, width, height, pos, elevation, window, font, page_id, update_page_id, callback=None):
         # core attributes
         self.pressed = False
         self.elevation = elevation
@@ -17,8 +17,7 @@ class Button:
         self.font = font
         self.page_id = page_id
         self.update_page_id = update_page_id
-        self.click_channel = click_channel
-        self.click_sound = click_sound
+        self.callback = callback
 
         # top rectangle
         self.top_rect = pygame.Rect(pos, (width, height))
@@ -57,7 +56,10 @@ class Button:
                 self.dynamic_elevation = 0
                 self.pressed = True
 
-                click_channel.play(self.click_sound)
+                click_channel.play(click_sound)
+
+                if self.callback is not None:
+                    callable()
             else:
                 self.dynamic_elevation = self.elevation
                 if self.pressed == True:
