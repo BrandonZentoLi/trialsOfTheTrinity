@@ -58,13 +58,15 @@ class Button:
 
                 click_channel.play(click_sound)
 
-                if self.callback is not None:
-                    callable()
             else:
                 self.dynamic_elevation = self.elevation
                 if self.pressed == True:
-                    self.update_page_id(self.page_id)
                     self.pressed = False
+
+                    if self.page_id is not None:
+                        self.update_page_id(self.page_id)
+                    if self.callback is not None:
+                        self.callback()
         else:
             self.dynamic_elevation = self.elevation
             self.top_color = '#475F77'

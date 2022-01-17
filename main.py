@@ -1,4 +1,5 @@
 # import modules
+from re import L
 import pygame
 import cv2
 import random
@@ -63,18 +64,96 @@ def update_page_id(id):
     page_id = id
 
 
-def common():
-    pass
+def choice1C_chance():
+    global page_id
+    chance = random.uniform(0, 1)
+    if chance <= 0.25:
+        page_id = 'secret ending one'
+    else:
+        page_id = 'level two'
+        
 
-def random_chance_20():
-    pass
-    common()
+def choice2A_chance():
+    global page_id
+    chance = random.uniform(0, 1)
+    if chance <= 0.15:
+        page_id = 'volcano ending one'
+    else:
+        page_id = 'level three'
 
 
-def random_chance_30():
-    pass
-    common()
+def choice2B_chance():
+    global page_id
+    chance = random.uniform(0, 1)
+    if chance <= 0.75:
+        page_id = 'volcano ending two'
+    else:
+        page_id = 'level three'
 
+
+def choice3A_chance():
+    global page_id
+    chance = random.uniform(0, 1)
+    if chance <= 0.25:
+        page_id = 'secret ending one'
+    else:
+        page_id = 'level four'
+
+
+def choice3B_chance():
+    global page_id
+    chance = random.uniform(0, 1)
+    if chance <= 0.30:
+        page_id = 'secret ending two'
+    else:
+        page_id = 'level four'
+
+
+def choice3C_chance():
+    global page_id
+    chance = random.uniform(0, 1)
+    if chance <= 0.25:
+        page_id = 'earthquake ending'
+    elif chance >= 0.50:
+        page_id = 'secret ending one'
+    else:
+        page_id = 'level four'
+
+
+def choice4A_chance():
+    global page_id
+    chance = random.uniform(0, 1)
+    if chance <= 0.50:
+        page_id = 'tsunami ending'
+    else:
+        page_id = 'level five'
+
+
+def choice4B_chance():
+    global page_id
+    chance = random.uniform(0, 1)
+    if chance <= 0.30:
+        page_id = 'tsunami ending'
+    else:
+        page_id = 'level five'
+
+
+def choice4C_chance():
+    global page_id
+    chance = random.uniform(0, 1)
+    if chance <= 0.25:
+        page_id = 'tsunami ending'
+    else:
+        page_id = 'level five'
+
+
+def choice4E_chance():
+    global page_id
+    chance = random.uniform(0, 1)
+    if chance <= 0.20:
+        page_id = 'secret ending three'
+    else:
+        page_id = 'survival ending one'
 
 #Home Buttons
 homeButtonOne = Button('< Home', 80, 40, (20, 400), 7, window, text_font, 'home', update_page_id)
@@ -110,9 +189,25 @@ bubbleButton = Button('Bubble', 80, 40, (585, 230), 7, window, text_font, 'bubbl
 
 #Level One Buttons
 levelOneButton = Button('Begin! >', 80, 40, (700, 400), 7, window, text_font, 'level one', update_page_id)
-choice1A = Button('', 250, 150, (200, 200), 7, window, text_font, 'level one', update_page_id)
-choice1B = Button('', 80, 40, (100, 400), 7, window, text_font, 'level one', update_page_id)
-choice1C = Button('', 80, 40, (300, 400), 7, window, text_font, 'level one', update_page_id)
+choice1A = Button('', 250, 150, (200, 200), 7, window, text_font, 'tornado ending', update_page_id)
+choice1B = Button('', 80, 40, (100, 400), 7, window, text_font, 'level two', update_page_id)
+choice1C = Button('', 80, 40, (300, 400), 7, window, text_font, None, update_page_id, choice1C_chance)
+
+#Level Two Buttons
+choice2A = Button('', 250, 150, (200, 200), 7, window, text_font, 'tornado ending', update_page_id)
+choice2B = Button('', 250, 150, (200, 200), 7, window, text_font, 'tornado ending', update_page_id)
+
+#Level Three Buttons
+choice3A = Button('', 250, 150, (200, 200), 7, window, text_font, 'tornado ending', update_page_id)
+choice3B = Button('', 250, 150, (200, 200), 7, window, text_font, 'tornado ending', update_page_id)
+choice3C = Button('', 250, 150, (200, 200), 7, window, text_font, 'tornado ending', update_page_id)
+
+#Level Four Buttons
+choice4A = Button('', 250, 150, (200, 200), 7, window, text_font, 'tornado ending', update_page_id)
+choice4B = Button('', 250, 150, (200, 200), 7, window, text_font, 'tornado ending', update_page_id)
+choice4C = Button('', 250, 150, (200, 200), 7, window, text_font, 'tornado ending', update_page_id)
+choice4D = Button('', 250, 150, (200, 200), 7, window, text_font, 'tornado ending', update_page_id)
+choice4E = Button('', 250, 150, (200, 200), 7, window, text_font, 'tornado ending', update_page_id)
 
 #Quiz Buttons
 quizButton = Button('Quiz', 80, 40, (460, 350), 7, window, text_font, 'quiz', update_page_id)
@@ -387,7 +482,97 @@ def level_one():
     choice1A.draw()
     choice1B.draw()
     choice1C.draw()
-                         
+
+
+def level_two():
+    renderTextCenteredAt("Welcome to the beginning of the end. Zeus, unhappy with your actions, sends an immense tornado hurtling your direction. What do you do?",
+                         text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width,)
+
+    choice2A.draw()
+    choice2B.draw()
+
+
+def level_three():
+    renderTextCenteredAt("Welcome to the beginning of the end. Zeus, unhappy with your actions, sends an immense tornado hurtling your direction. What do you do?",
+                         text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width,)
+
+    choice3A.draw()
+    choice3B.draw()
+    choice3C.draw()
+
+
+def level_four():
+    renderTextCenteredAt("Welcome to the beginning of the end. Zeus, unhappy with your actions, sends an immense tornado hurtling your direction. What do you do?",
+                         text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width,)
+
+    choice4A.draw()
+    choice4B.draw()
+    choice4C.draw()
+    choice4D.draw()
+    choice4E.draw()
+
+
+def tornado_ending():
+    renderTextCenteredAt("Welcome to the beginning of the end. Zeus, unhappy with your actions, sends an immense tornado hurtling your direction. What do you do?",
+                         text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width,)
+
+
+def volcano_ending_one():
+    renderTextCenteredAt("Welcome to the beginning of the end. Zeus, unhappy with your actions, sends an immense tornado hurtling your direction. What do you do?",
+                         text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width,)
+
+
+def volcano_ending_two():
+    renderTextCenteredAt("Welcome to the beginning of the end. Zeus, unhappy with your actions, sends an immense tornado hurtling your direction. What do you do?",
+                         text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width,)
+
+
+def earthquake_ending():
+    renderTextCenteredAt("Welcome to the beginning of the end. Zeus, unhappy with your actions, sends an immense tornado hurtling your direction. What do you do?",
+                         text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width,)
+
+
+def tsunami_ending():
+    renderTextCenteredAt("Welcome to the beginning of the end. Zeus, unhappy with your actions, sends an immense tornado hurtling your direction. What do you do?",
+                         text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width,)
+
+
+def hurricane_ending():
+    renderTextCenteredAt("Welcome to the beginning of the end. Zeus, unhappy with your actions, sends an immense tornado hurtling your direction. What do you do?",
+                         text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width,)
+
+
+def survival_ending_one():
+    renderTextCenteredAt("Welcome to the beginning of the end. Zeus, unhappy with your actions, sends an immense tornado hurtling your direction. What do you do?",
+                         text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width,)
+
+
+def survival_ending_two():
+    renderTextCenteredAt("Welcome to the beginning of the end. Zeus, unhappy with your actions, sends an immense tornado hurtling your direction. What do you do?",
+                         text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width,)
+
+
+def secret_ending_one():
+    renderTextCenteredAt("Welcome to the beginning of the end. Zeus, unhappy with your actions, sends an immense tornado hurtling your direction. What do you do?",
+                         text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width,)
+
+
+def secret_ending_two():
+    renderTextCenteredAt("Welcome to the beginning of the end. Zeus, unhappy with your actions, sends an immense tornado hurtling your direction. What do you do?",
+                         text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width,)
+
+
+def secret_ending_three():
+    renderTextCenteredAt("Welcome to the beginning of the end. Zeus, unhappy with your actions, sends an immense tornado hurtling your direction. What do you do?",
+                         text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width,)
+
+
+def secret_ending_four():
+    renderTextCenteredAt("Welcome to the beginning of the end. Zeus, unhappy with your actions, sends an immense tornado hurtling your direction. What do you do?",
+                         text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width,)
+
+
+#Quiz         
 def show_quiz():
     text = title_font.render('Quiz Page', True, "#475F77")
     textRect = text.get_rect(center=(screen_width // 2, 100))
@@ -448,7 +633,38 @@ def main():
             bubble_page()
         elif page_id == 'level one':
             level_one()
-                   
+        elif page_id == 'level two':
+            level_two()
+        elif page_id == 'level three':
+            level_three()
+        elif page_id == 'level four':
+            level_four()
+        elif page_id == 'level five':
+            pass
+        elif page_id == 'tornado ending':
+            tornado_ending()
+        elif page_id == 'volcano ending one':
+            volcano_ending_one()
+        elif page_id == 'volcano ending two':
+            volcano_ending_two()
+        elif page_id == 'earthquake ending':
+            earthquake_ending()
+        elif page_id == 'tsunami ending':
+            tsunami_ending()
+        elif page_id == 'hurricane ending':
+            hurricane_ending()
+        elif page_id == 'survival ending one':
+            survival_ending_one()
+        elif page_id == 'survival ending two':
+            survival_ending_two()
+        elif page_id == 'secret ending one':
+            secret_ending_one()
+        elif page_id == 'secret ending two':
+            secret_ending_two()
+        elif page_id == 'secret ending three':
+            secret_ending_three()
+        elif page_id == 'secret ending four':
+            secret_ending_four()
         #Quiz pages
         elif page_id == 'quiz':
             show_quiz()
