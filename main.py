@@ -6,6 +6,7 @@ from pygame import mixer
 
 # import our own logic from other ifles
 from button import Button
+from text_box import InputBox
 from text_wrap import renderTextCenteredAt
 
 pygame.init()
@@ -45,7 +46,7 @@ shape = image.shape[1::-1]
 red = 255, 0, 0
 fps = capture.get(cv2.CAP_PROP_FPS)
 
-itemPage = pygame.image.load('resources/items.png')
+itemPage = pygame.image.load('resources/items.jpg')
 stick = pygame.image.load('resources/stick.png')
 fence = pygame.image.load('resources/fence.png')
 vacuum = pygame.image.load('resources/vacuum.png')
@@ -203,6 +204,26 @@ def choice4E_chance():
         page_id = 'survival ending one'
 
 
+newOrder = ['0', '0', '0', '0']
+def textOrder(index, text):
+    newOrder[index] = text
+    
+
+def submit_answers():
+    order = [3, 4, 2, 1]
+    success = False
+    for index in range(4):
+        if order[index] == newOrder[index]:
+            success = True
+        else: 
+            success = False
+            break
+
+    if success:
+        page_id == 'survival ending two'
+    else:
+        page_id == 'hurricane ending'   
+
 def reset_quiz_score():
     update_quiz_score(0)
 
@@ -306,9 +327,19 @@ choice4B = Button('', 250, 150, (410, 130), 7, window,
 choice4C = Button('', 215, 150, (47, 290), 7, window,
                   text_font, None, update_page_id, choice4C_chance)
 choice4D = Button('', 215, 150, (297, 290), 7, window,
-                  text_font, None, update_page_id)
+                  text_font, 'level five', update_page_id)
 choice4E = Button('', 215, 150, (547, 290), 7, window,
                   text_font, None, update_page_id, choice4E_chance)
+
+
+#Level Five Variables
+box5A = InputBox(80, 40, 200, 200, text_font, window, '', textOrder, 0)
+box5B = InputBox(80, 40, 300, 200, text_font, window, '', textOrder, 1)
+box5C = InputBox(80, 40, 400, 200, text_font, window, '', textOrder, 2)
+box5D = InputBox(80, 40, 500, 200, text_font, window, '', textOrder, 3)
+submitButton = Button(
+    'Submit >', 80, 40, (700, 400), 7, window, text_font, None, submit_answers)
+
 
 # Quiz Buttons
 quizButton = Button('Quiz', 80, 40, (460, 350), 7, window,
@@ -660,6 +691,10 @@ def level_one():
                          '#FFFFFF', 655, 310, window, 200)
 
 
+def choice1A_page():
+    pass
+
+
 def level_two():
 
     background_rect = create_rect(770, 70, 5,  rect_color, rect_border_color)
@@ -721,6 +756,18 @@ def level_four():
                          header_font, '#FFFFFF', 407, 350, window, 200)
     renderTextCenteredAt('Crawl to peak of volcano!',
                          header_font, '#FFFFFF', 655, 350, window, 200)
+
+
+def level_five():
+
+    background_rect = create_rect(770, 85, 5,  rect_color, rect_border_color)
+    window.blit(background_rect, (10, 30))
+    renderTextCenteredAt(
+        "Well, that was fun. The gods are pleased with you and offer one last challenge. A plane flies over you but fails to notice the screaming person below. Abruptly, a mixture of thunderstorms, wind and rain clashes onto you.",
+        header_font, '#475F77', 400, 50, window, 750)
+
+    box5A.draw_textbox()
+
 
 
 def tornado_ending():
@@ -1085,14 +1132,22 @@ def show_quiz_results():
 def main():
     clock = pygame.time.Clock()
     run = True
+    input_boxes = [box5A]
     while run:
         clock.tick(fps)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
 
+            if page_id == 'level five':
+                for box in input_boxes:
+                    box.handle_event(event)
+        
+        # if page_id == 'level five':
+        #     for box in input_boxes:
+        #         box.update()
+
         video_frames()
-        # window.blit(titlescreen, (0, 0))
 
         if page_id == 'home':
             show_home()
@@ -1141,7 +1196,7 @@ def main():
         elif page_id == 'level four':
             level_four()
         elif page_id == 'level five':
-            pass
+            level_five()
         elif page_id == 'tornado ending':
             tornado_ending()
         elif page_id == 'volcano ending one':
