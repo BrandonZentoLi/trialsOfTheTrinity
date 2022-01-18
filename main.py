@@ -102,7 +102,7 @@ def choice1B_chance():
     global page_id
     global hide
     hide = True
-    page_id = 'level two'
+    page_id = 'choice1B next'
 
 
 def choice1C_chance():
@@ -111,7 +111,7 @@ def choice1C_chance():
     if chance <= 0.25:
         page_id = 'secret ending one'
     else:
-        page_id = 'level two'
+        page_id = 'choice1C next'
 
 
 def choice2A_chance():
@@ -120,7 +120,7 @@ def choice2A_chance():
     if chance <= 0.15:
         page_id = 'volcano ending one'
     else:
-        page_id = 'level three'
+        page_id = 'choice2A next'
 
 
 def choice2B_chance():
@@ -129,7 +129,7 @@ def choice2B_chance():
     if chance <= 0.75:
         page_id = 'volcano ending two'
     else:
-        page_id = 'level three'
+        page_id = 'choice2B next'
 
 
 def choice3A_chance():
@@ -143,9 +143,9 @@ def choice3A_chance():
             else:
                 page_id = 'earthquake ending'
         else:
-            page_id = 'level four'
+            page_id = 'choice3A next'
     else:
-        page_id = 'level four'
+        page_id = 'choice3A next'
 
 
 def choice3B_chance():
@@ -154,7 +154,7 @@ def choice3B_chance():
     if chance <= 0.30:
         page_id = 'secret ending two'
     else:
-        page_id = 'level four'
+        page_id = 'choice3B next'
 
 
 def choice3C_chance():
@@ -165,7 +165,7 @@ def choice3C_chance():
     elif chance >= 0.50:
         page_id = 'secret ending one'
     else:
-        page_id = 'level four'
+        page_id = 'choice3C next'
 
 
 def choice4A_chance():
@@ -174,7 +174,7 @@ def choice4A_chance():
     if chance <= 0.50:
         page_id = 'tsunami ending'
     else:
-        page_id = 'level five'
+        page_id = 'choice4A next'
 
 
 def choice4B_chance():
@@ -183,7 +183,7 @@ def choice4B_chance():
     if chance <= 0.30:
         page_id = 'tsunami ending'
     else:
-        page_id = 'level five'
+        page_id = 'choice4B next'
 
 
 def choice4C_chance():
@@ -192,7 +192,7 @@ def choice4C_chance():
     if chance <= 0.25:
         page_id = 'tsunami ending'
     else:
-        page_id = 'level five'
+        page_id = 'choice4C next'
 
 
 def choice4E_chance():
@@ -210,7 +210,7 @@ def textOrder(index, text):
     
 
 def submit_answers():
-    order = [3, 4, 2, 1]
+    order = ['3', '2', '4', '1']
     success = False
     for index in range(4):
         if order[index] == newOrder[index]:
@@ -219,10 +219,11 @@ def submit_answers():
             success = False
             break
 
+    global page_id
     if success:
-        page_id == 'survival ending two'
+        page_id = 'survival ending two'
     else:
-        page_id == 'hurricane ending'   
+        page_id = 'hurricane ending'   
 
 def reset_quiz_score():
     update_quiz_score(0)
@@ -302,43 +303,67 @@ choice1A = Button('', 215, 150, (47, 250), 7, window,
                   text_font, 'tornado ending', update_page_id)
 choice1B = Button('', 215, 150, (297, 250), 7, window,
                   text_font, None, update_page_id, choice1B_chance)
+choice1BNext = Button('Level Two >', 215, 150, (307.5, 250), 7, window,
+                  header_font, 'level two', update_page_id)
 choice1C = Button('', 215, 150, (547, 250), 7, window, text_font,
                   None, update_page_id, choice1C_chance)
+choice1CNext = Button('Level Two >', 215, 150, (307.5, 250), 7, window,
+                  header_font, 'level two', update_page_id)
 
 # Level Two Buttons
 choice2A = Button('', 215, 150, (100, 250), 7, window,
                   text_font, None, update_page_id, choice2A_chance)
+choice2ANext = Button('Level Three >', 215, 150, (307.5, 250), 7, window,
+                  header_font, 'level three', update_page_id)
 choice2B = Button('', 215, 150, (500, 250), 7, window,
                   text_font, None, update_page_id, choice2B_chance)
-
+choice2BNext = Button('Level Three >', 215, 150, (307.5, 250), 7, window,
+                  header_font, 'level three', update_page_id)
 # Level Three Buttons
 choice3A = Button('', 215, 150, (47, 250), 7, window,
                   text_font, None, update_page_id, choice3A_chance)
+choice3ANext = Button('Level Four >', 215, 150, (307.5, 250), 7, window,
+                  header_font, 'level four', update_page_id)
 choice3B = Button('', 215, 150, (297, 250), 7, window,
                   text_font, None, update_page_id, choice3B_chance)
+choice3BNext = Button('Level Four >', 215, 150, (307.5, 250), 7, window,
+                  header_font, 'level four', update_page_id)
 choice3C = Button('', 215, 150, (547, 250), 7, window,
                   text_font, None, update_page_id, choice3C_chance)
+choice3CNext = Button('Level Four >', 215, 150, (307.5, 250), 7, window,
+                  header_font, 'level four', update_page_id)
+
 
 # Level Four Buttons
 choice4A = Button('', 250, 150, (150, 130), 7, window,
                   text_font, None, update_page_id, choice4A_chance)
+choice4ANext = Button('Level Five >', 215, 150, (307.5, 250), 7, window,
+                  header_font, 'level five', update_page_id)
 choice4B = Button('', 250, 150, (410, 130), 7, window,
                   text_font, None, update_page_id, choice4B_chance)
+choice4BNext = Button('Level Five >', 215, 150, (307.5, 250), 7, window,
+                  header_font, 'level five', update_page_id)
 choice4C = Button('', 215, 150, (47, 290), 7, window,
                   text_font, None, update_page_id, choice4C_chance)
+choice4CNext = Button('Level Five >', 215, 150, (307.5, 250), 7, window,
+                  header_font, 'level five', update_page_id)
 choice4D = Button('', 215, 150, (297, 290), 7, window,
-                  text_font, 'level five', update_page_id)
+                  text_font, 'choice4D next', update_page_id)
+choice4DNext = Button('Level Five >', 215, 150, (307.5, 250), 7, window,
+                  header_font, 'level five', update_page_id)
 choice4E = Button('', 215, 150, (547, 290), 7, window,
                   text_font, None, update_page_id, choice4E_chance)
+choice4ENext = Button('Level Five >', 215, 150, (307.5, 250), 7, window,
+                  header_font, 'level five', update_page_id)
 
 
 #Level Five Variables
-box5A = InputBox(80, 40, 200, 200, text_font, window, '', textOrder, 0)
-box5B = InputBox(80, 40, 300, 200, text_font, window, '', textOrder, 1)
-box5C = InputBox(80, 40, 400, 200, text_font, window, '', textOrder, 2)
-box5D = InputBox(80, 40, 500, 200, text_font, window, '', textOrder, 3)
+box5A = InputBox(55, 270, 160, 40, text_font, window, '', textOrder, 0)
+box5B = InputBox(235, 270, 160, 40, text_font, window, '', textOrder, 1)
+box5C = InputBox(415, 270, 160, 40, text_font, window, '', textOrder, 2)
+box5D = InputBox(595, 270, 160, 40, text_font, window, '', textOrder, 3)
 submitButton = Button(
-    'Submit >', 80, 40, (700, 400), 7, window, text_font, None, submit_answers)
+    'Submit >', 80, 40, (700, 400), 7, window, text_font, None, update_page_id, submit_answers)
 
 
 # Quiz Buttons
@@ -691,10 +716,6 @@ def level_one():
                          '#FFFFFF', 655, 310, window, 200)
 
 
-def choice1A_page():
-    pass
-
-
 def level_two():
 
     background_rect = create_rect(770, 70, 5,  rect_color, rect_border_color)
@@ -766,10 +787,99 @@ def level_five():
         "Well, that was fun. The gods are pleased with you and offer one last challenge. A plane flies over you but fails to notice the screaming person below. Abruptly, a mixture of thunderstorms, wind and rain clashes onto you.",
         header_font, '#475F77', 400, 50, window, 750)
 
+    background_rect = create_rect(150, 100, 5,  rect_color, rect_border_color)
+    window.blit(background_rect, (55, 150))
+    background_rect = create_rect(150, 100, 5,  rect_color, rect_border_color)
+    window.blit(background_rect, (235, 150))
+    background_rect = create_rect(150, 100, 5,  rect_color, rect_border_color)
+    window.blit(background_rect, (415, 150))
+    background_rect = create_rect(150, 100, 5,  rect_color, rect_border_color)
+    window.blit(background_rect, (595, 150))
+
+    renderTextCenteredAt('Take cover until the eye of the storm reaches you',
+                         header_font, '#FFFFFF', 137, 167, window, 125)
+    renderTextCenteredAt('Build a boat',
+                         header_font, '#FFFFFF', 316, 195, window, 125)
+    renderTextCenteredAt('Follow the eye of the storm',
+                         header_font, '#FFFFFF', 495, 176, window, 125)
+    renderTextCenteredAt('Find materials',
+                         header_font, '#FFFFFF', 676, 185, window, 125)
+
+
     box5A.draw_textbox()
+    box5B.draw_textbox()
+    box5C.draw_textbox()
+    box5D.draw_textbox()
+    submitButton.draw()
 
 
+def choice1B_page():
+    
+    background_rect = create_rect(770, 70, 5,  rect_color, rect_border_color)
+    window.blit(background_rect, (10, 30))
+    renderTextCenteredAt(
+        "You chose to exploroe the creepy shack. Luckily for you, it turned out to have a basement as you hide in there to wait out the tornado.",
+        header_font, '#475F77', 400, 50, window, 800)
+    
+    choice1BNext.draw()
+    
 
+def choice1C_page():
+    
+    choice1CNext.draw()
+
+
+def choice2A_page():
+    
+    choice2ANext.draw()
+
+
+def choice2B_page():
+    
+    choice2BNext.draw()
+
+
+def choice3A_page():
+    
+    choice3ANext.draw()
+
+
+def choice3B_page():
+    
+    choice3BNext.draw()
+
+
+def choice3C_page():
+    
+    choice3CNext.draw()
+
+
+def choice4A_page():
+    
+    choice4ANext.draw()
+
+
+def choice4B_page():
+    
+    choice4BNext.draw()
+
+
+def choice4C_page():
+    
+    choice4CNext.draw()
+
+
+def choice4D_page():
+    
+    choice4DNext.draw()
+
+
+def choice4E_page():
+    
+    choice4ENext.draw()
+
+
+# Ending Pages
 def tornado_ending():
     show_book_of_insights()
 
@@ -795,7 +905,7 @@ def volcano_ending_one():
     homeButtonThree.draw()
     leaveButton.draw()
 
-    renderTextCenteredAt('Results', header_font, '#475F77',
+    renderTextCenteredAt('Game Over', header_font, '#475F77',
                          left_page_x_pos, left_page_y_pos - 40, window, book_width)
 
     renderTextCenteredAt(
@@ -813,7 +923,7 @@ def volcano_ending_two():
     homeButtonThree.draw()
     leaveButton.draw()
 
-    renderTextCenteredAt('Results', header_font, '#475F77',
+    renderTextCenteredAt('Game Over', header_font, '#475F77',
                          left_page_x_pos, left_page_y_pos - 40, window, book_width)
 
     renderTextCenteredAt(
@@ -831,7 +941,7 @@ def earthquake_ending():
     homeButtonThree.draw()
     leaveButton.draw()
 
-    renderTextCenteredAt('Results', header_font, '#475F77',
+    renderTextCenteredAt('Game Over', header_font, '#475F77',
                          left_page_x_pos, left_page_y_pos - 40, window, book_width)
 
     renderTextCenteredAt(
@@ -849,7 +959,7 @@ def tsunami_ending():
     homeButtonThree.draw()
     leaveButton.draw()
 
-    renderTextCenteredAt('Results', header_font, '#475F77',
+    renderTextCenteredAt('Game Over', header_font, '#475F77',
                          left_page_x_pos, left_page_y_pos - 40, window, book_width)
 
     renderTextCenteredAt(
@@ -867,7 +977,7 @@ def hurricane_ending():
     homeButtonThree.draw()
     leaveButton.draw()
 
-    renderTextCenteredAt('Results', header_font, '#475F77',
+    renderTextCenteredAt('Game Over', header_font, '#475F77',
                          left_page_x_pos, left_page_y_pos - 40, window, book_width)
 
     renderTextCenteredAt(
@@ -885,7 +995,7 @@ def survival_ending_one():
     homeButtonThree.draw()
     leaveButton.draw()
 
-    renderTextCenteredAt('Results', header_font, '#475F77',
+    renderTextCenteredAt('Victory!', header_font, '#475F77',
                          left_page_x_pos, left_page_y_pos - 40, window, book_width)
 
     renderTextCenteredAt(
@@ -903,7 +1013,7 @@ def survival_ending_two():
     homeButtonThree.draw()
     leaveButton.draw()
 
-    renderTextCenteredAt('Results', header_font, '#475F77',
+    renderTextCenteredAt('Victory!', header_font, '#475F77',
                          left_page_x_pos, left_page_y_pos - 40, window, book_width)
 
     renderTextCenteredAt(
@@ -921,7 +1031,7 @@ def secret_ending_one():
     homeButtonThree.draw()
     leaveButton.draw()
 
-    renderTextCenteredAt('Results', header_font, '#475F77',
+    renderTextCenteredAt('* SECRET ENDING *', header_font, '#475F77',
                          left_page_x_pos, left_page_y_pos - 40, window, book_width)
 
     renderTextCenteredAt(
@@ -939,7 +1049,7 @@ def secret_ending_two():
     homeButtonThree.draw()
     leaveButton.draw()
 
-    renderTextCenteredAt('Results', header_font, '#475F77',
+    renderTextCenteredAt('* SECRET ENDING *', header_font, '#475F77',
                          left_page_x_pos, left_page_y_pos - 40, window, book_width)
 
     renderTextCenteredAt(
@@ -957,7 +1067,7 @@ def secret_ending_three():
     homeButtonThree.draw()
     leaveButton.draw()
 
-    renderTextCenteredAt('Results', header_font, '#475F77',
+    renderTextCenteredAt('* SECRET ENDING *', header_font, '#475F77',
                          left_page_x_pos, left_page_y_pos - 40, window, book_width)
 
     renderTextCenteredAt(
@@ -975,7 +1085,7 @@ def secret_ending_four():
     homeButtonThree.draw()
     leaveButton.draw()
 
-    renderTextCenteredAt('Results', header_font, '#475F77',
+    renderTextCenteredAt('* SECRET ENDING *', header_font, '#475F77',
                          left_page_x_pos, left_page_y_pos - 40, window, book_width)
 
     renderTextCenteredAt(
@@ -1132,7 +1242,7 @@ def show_quiz_results():
 def main():
     clock = pygame.time.Clock()
     run = True
-    input_boxes = [box5A]
+    input_boxes = [box5A, box5B, box5C, box5D]
     while run:
         clock.tick(fps)
         for event in pygame.event.get():
@@ -1142,10 +1252,6 @@ def main():
             if page_id == 'level five':
                 for box in input_boxes:
                     box.handle_event(event)
-        
-        # if page_id == 'level five':
-        #     for box in input_boxes:
-        #         box.update()
 
         video_frames()
 
@@ -1175,6 +1281,8 @@ def main():
             lessonSeven()
 
         # Game Pages
+        
+        # Items
         elif page_id == 'start':
             show_start()
         elif page_id == 'stick':
@@ -1187,16 +1295,52 @@ def main():
             board_page()
         elif page_id == 'bubble':
             bubble_page()
+            
+        # Level One
         elif page_id == 'level one':
             level_one()
+        elif page_id == 'choice1B next':
+            choice1B_page()
+        elif page_id == 'choice1C next':
+            choice1C_page()
+            
+        # Level Two
         elif page_id == 'level two':
             level_two()
+        elif page_id == 'choice2A next':
+            choice2A_page()
+        elif page_id == 'choice2B next':
+            choice2B_page()
+            
+        # Level Three
         elif page_id == 'level three':
             level_three()
+        elif page_id == 'choice3A next':
+            choice3A_page()
+        elif page_id == 'choice3B next':
+            choice3B_page()
+        elif page_id == 'choice3C next':
+            choice3C_page()
+        
+        # Level Four
         elif page_id == 'level four':
             level_four()
+        elif page_id == 'choice4A next':
+            choice4A_page()
+        elif page_id == 'choice4B next':
+            choice4B_page()
+        elif page_id == 'choice4C next':
+            choice4C_page()
+        elif page_id == 'choice4D next':
+            choice4D_page()
+        elif page_id == 'choice4E next':
+            choice4E_page()
+            
+        # Level Five
         elif page_id == 'level five':
             level_five()
+            
+        # Endings
         elif page_id == 'tornado ending':
             tornado_ending()
         elif page_id == 'volcano ending one':
