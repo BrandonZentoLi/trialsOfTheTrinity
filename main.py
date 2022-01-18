@@ -18,6 +18,7 @@ screen_width, screen_height = pygame.display.get_surface().get_size()
 pygame.display.set_caption("Trials of the Trinity")
 title_font = pygame.font.Font('fonts/pixel.ttf', 32)
 text_font = pygame.font.Font('fonts/pixel.ttf', 15)
+answer_font = pygame.font.Font('fonts/pixel.ttf', 12)
 
 # playing music
 mixer.init()
@@ -135,7 +136,7 @@ def choice3A_chance():
     chance = random.uniform(0, 1)
     if hide:
         if chance <= 0.6:
-            chance = random.uniform(0, 1)            
+            chance = random.uniform(0, 1)
             if chance <= 0.75:
                 page_id = 'level three'
             else:
@@ -1047,7 +1048,30 @@ def show_quiz_results():
     show_book_of_insights()
 
     renderTextCenteredAt('Congrats and thanks for finishing the quiz!', header_font, '#475F77',
-                         left_page_x_pos, left_page_y_pos + 20, window, book_width)
+                         left_page_x_pos, left_page_y_pos - 40, window, book_width)
+
+    renderTextCenteredAt("Q1: Where is the best place to when there's a tornado? Ans: The Basement", answer_font,
+                         '#475F77',
+                         left_page_x_pos, left_page_y_pos + 15, window, book_width)
+
+    renderTextCenteredAt(
+        "Q2: When in water during a tsunami, what's the best course of action? Ans: Hold on to something.", answer_font,
+        '#475F77',
+        left_page_x_pos, left_page_y_pos + 55, window, book_width)
+
+    renderTextCenteredAt("Q3: Geothermal land is safe to cross during a volcanic eruption. Ans:  False", answer_font,
+                         '#475F77',
+                         left_page_x_pos, left_page_y_pos + 95, window, book_width)
+
+    renderTextCenteredAt(
+        "Q4: In the event of an Earthquake, is it safe to take cover underneath a sturdy table? Ans: Yes", answer_font,
+        '#475F77',
+        left_page_x_pos, left_page_y_pos + 135, window, book_width)
+
+    renderTextCenteredAt(
+        "Q5: If you're already caught in a hurricane, what’s the safest place to head towards? Ans: The eye of the hurricane",
+        answer_font, '#475F77',
+        left_page_x_pos, left_page_y_pos + 190, window, book_width)
 
     renderTextCenteredAt('Your result was: ', header_font, '#475F77',
                          right_page_x_pos, right_page_y_pos, window, book_width)
