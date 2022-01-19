@@ -93,7 +93,7 @@ class ItemButton:
 
         # text
         self.image = pygame.image.load(image)
-        self.image = pygame.transform.scale(self.image, (55, 55))
+        self.image = pygame.transform.scale(self.image, (100, 80))
         self.image_rect = self.image.get_rect(center=self.top_rect.center)
 
     def draw(self):
