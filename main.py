@@ -5,7 +5,7 @@ import random
 from pygame import mixer
 
 # import our own logic from other ifles
-from button import Button
+from button import Button, ItemButton
 from text_box import InputBox
 from text_wrap import renderTextCenteredAt
 
@@ -46,7 +46,7 @@ shape = image.shape[1::-1]
 red = 255, 0, 0
 fps = capture.get(cv2.CAP_PROP_FPS)
 
-itemPage = pygame.image.load('resources/items.jpg')
+itemPage = pygame.image.load('resources/items.png')
 stick = pygame.image.load('resources/stick.png')
 fence = pygame.image.load('resources/fence.png')
 vacuum = pygame.image.load('resources/vacuum.png')
@@ -62,14 +62,14 @@ book_width = 210
 page_id = 'home'
 hide = False
 quiz_score = 0
+item_chosen = "resources/bubble.png"
 
-
-# define this at the top of the file
+# Rect colors
 rect_border_color = (71, 95, 119)
 rect_color = (115, 158, 201)
 
-# function
 
+# function
 
 def create_rect(width, height, border, color, border_color):
     surf = pygame.Surface(
@@ -77,15 +77,13 @@ def create_rect(width, height, border, color, border_color):
     pygame.draw.rect(surf, color, (border, border, width, height), 0)
     for i in range(1, border):
         pygame.draw.rect(surf, border_color, (border - i,
-                         border - i, width + 5, height + 5), 1)
+                                              border - i, width + 5, height + 5), 1)
     return surf
 
 
-# usage:
-background_rect = create_rect(750, 70, 5,  rect_color, rect_border_color)
-window.blit(background_rect, (6, 30))
-
-# This should work for every page, all u'll have to change is the width and height maybe^
+def update_item_button(item):
+    global itemButton
+    itemButton = ItemButton(item, 60, 60, (20, 380), 7, window)
 
 
 def update_quiz_score(score):
@@ -134,12 +132,16 @@ def choice2B_chance():
 
 def choice3A_chance():
     global page_id
+    chance = random.uniform(0, 1)
     if hide:
-        chance = random.uniform(0, 1)
-        if chance <= 0.75:
-                page_id = 'choice3A basement'
+        if chance <= 0.6:
+            chance = random.uniform(0, 1)
+            if chance <= 0.75:
+                page_id = 'level three'
+            else:
+                page_id = 'earthquake ending'
         else:
-            page_id = 'earthquake ending'
+            page_id = 'choice3A next'
     else:
         page_id = 'choice3A next'
 
@@ -201,9 +203,11 @@ def choice4E_chance():
 
 
 newOrder = ['0', '0', '0', '0']
+
+
 def textOrder(index, text):
     newOrder[index] = text
-    
+
 
 def submit_answers():
     order = ['3', '2', '4', '1']
@@ -211,7 +215,7 @@ def submit_answers():
     for index in range(4):
         if order[index] == newOrder[index]:
             success = True
-        else: 
+        else:
             success = False
             break
 
@@ -219,7 +223,8 @@ def submit_answers():
     if success:
         page_id = 'survival ending two'
     else:
-        page_id = 'hurricane ending'   
+        page_id = 'hurricane ending'
+
 
 def reset_quiz_score():
     update_quiz_score(0)
@@ -277,7 +282,7 @@ startButton = Button('Start', 80, 40, (360, 350), 7,
 stickButton = Button('Stick', 80, 40, (165, 230), 7,
                      window, text_font, 'stick', update_page_id)
 fenceButton = Button('Fence', 80, 40, (268, 230), 7,
-                     window, text_font, 'fence', update_page_id)
+                     window, text_font, 'fence', update_page_id, )
 vacuumButton = Button('Vacuum', 80, 40, (375, 230), 7,
                       window, text_font, 'vacuum', update_page_id)
 boardButton = Button('Board', 80, 40, (480, 230), 7,
@@ -291,79 +296,72 @@ homeButtonThree = Button('Home >', 80, 40, (505, 225), 7,
 leaveButton = Button('Quit >', 80, 40, (505, 275), 7,
                      window, text_font, 'quit', update_page_id)
 
-
 # Level One Buttons
 levelOneButton = Button('Begin! >', 80, 40, (700, 400),
                         7, window, text_font, 'level one', update_page_id)
-choice1A = Button('', 215, 150, (47, 250), 7, window,
+choice1A = Button('', 215, 150, (47, 200), 7, window,
                   text_font, 'tornado ending', update_page_id)
-choice1B = Button('', 215, 150, (297, 250), 7, window,
+choice1B = Button('', 215, 150, (297, 200), 7, window,
                   text_font, None, update_page_id, choice1B_chance)
-choice1BNext = Button('Level Two >', 215, 150, (307.5, 250), 7, window,
-                  header_font, 'level two', update_page_id)
-choice1C = Button('', 215, 150, (547, 250), 7, window, text_font,
+choice1BNext = Button('Level Two >', 215, 150, (307.5, 200), 7, window,
+                      header_font, 'level two', update_page_id)
+choice1C = Button('', 215, 150, (547, 200), 7, window, text_font,
                   None, update_page_id, choice1C_chance)
-choice1CNext = Button('Level Two >', 215, 150, (307.5, 250), 7, window,
-                  header_font, 'level two', update_page_id)
+choice1CNext = Button('Level Two >', 215, 150, (307.5, 200), 7, window,
+                      header_font, 'level two', update_page_id)
 
 # Level Two Buttons
 choice2A = Button('', 215, 150, (100, 250), 7, window,
                   text_font, None, update_page_id, choice2A_chance)
 choice2ANext = Button('Level Three >', 215, 150, (307.5, 250), 7, window,
-                  header_font, 'level three', update_page_id)
+                      header_font, 'level three', update_page_id)
 choice2B = Button('', 215, 150, (500, 250), 7, window,
                   text_font, None, update_page_id, choice2B_chance)
 choice2BNext = Button('Level Three >', 215, 150, (307.5, 250), 7, window,
-                  header_font, 'level three', update_page_id)
-
+                      header_font, 'level three', update_page_id)
 # Level Three Buttons
-choice3A = Button('', 215, 150, (47, 250), 7, window,
+choice3A = Button('', 215, 150, (47, 200), 7, window,
                   text_font, None, update_page_id, choice3A_chance)
-choice3BBasement = Button('Find Alternatives >', 215, 150, (307.5, 250), 7, window,
-                  header_font, 'excluding basement', update_page_id)
 choice3ANext = Button('Level Four >', 215, 150, (307.5, 250), 7, window,
-                  header_font, 'level four', update_page_id)
-choice3B = Button('', 215, 150, (297, 250), 7, window,
+                      header_font, 'level four', update_page_id)
+choice3B = Button('', 215, 150, (297, 200), 7, window,
                   text_font, None, update_page_id, choice3B_chance)
 choice3BNext = Button('Level Four >', 215, 150, (307.5, 250), 7, window,
-                  header_font, 'level four', update_page_id)
-choice3C = Button('', 215, 150, (547, 250), 7, window,
+                      header_font, 'level four', update_page_id)
+choice3C = Button('', 215, 150, (547, 200), 7, window,
                   text_font, None, update_page_id, choice3C_chance)
 choice3CNext = Button('Level Four >', 215, 150, (307.5, 250), 7, window,
-                  header_font, 'level four', update_page_id)
-
+                      header_font, 'level four', update_page_id)
 
 # Level Four Buttons
-choice4A = Button('', 250, 150, (150, 130), 7, window,
+choice4A = Button('', 180, 150, (100, 130), 7, window,
                   text_font, None, update_page_id, choice4A_chance)
 choice4ANext = Button('Level Five >', 215, 150, (307.5, 250), 7, window,
-                  header_font, 'level five', update_page_id)
-choice4B = Button('', 250, 150, (410, 130), 7, window,
+                      header_font, 'level five', update_page_id)
+choice4B = Button('', 180, 150, (300, 130), 7, window,
                   text_font, None, update_page_id, choice4B_chance)
 choice4BNext = Button('Level Five >', 215, 150, (307.5, 250), 7, window,
-                  header_font, 'level five', update_page_id)
-choice4C = Button('', 215, 150, (47, 290), 7, window,
+                      header_font, 'level five', update_page_id)
+choice4C = Button('', 180, 150, (500, 130), 7, window,
                   text_font, None, update_page_id, choice4C_chance)
 choice4CNext = Button('Level Five >', 215, 150, (307.5, 250), 7, window,
-                  header_font, 'level five', update_page_id)
-choice4D = Button('', 215, 150, (297, 290), 7, window,
+                      header_font, 'level five', update_page_id)
+choice4D = Button('', 180, 150, (190, 290), 7, window,
                   text_font, 'choice4D next', update_page_id)
 choice4DNext = Button('Level Five >', 215, 150, (307.5, 250), 7, window,
-                  header_font, 'level five', update_page_id)
-choice4E = Button('', 215, 150, (547, 290), 7, window,
+                      header_font, 'level five', update_page_id)
+choice4E = Button('', 180, 150, (390, 290), 7, window,
                   text_font, None, update_page_id, choice4E_chance)
 choice4ENext = Button('Level Five >', 215, 150, (307.5, 250), 7, window,
-                  header_font, 'level five', update_page_id)
+                      header_font, 'level five', update_page_id)
 
-
-#Level Five Variables
+# Level Five Variables
 box5A = InputBox(55, 270, 160, 40, text_font, window, '', textOrder, 0)
 box5B = InputBox(235, 270, 160, 40, text_font, window, '', textOrder, 1)
 box5C = InputBox(415, 270, 160, 40, text_font, window, '', textOrder, 2)
 box5D = InputBox(595, 270, 160, 40, text_font, window, '', textOrder, 3)
 submitButton = Button(
     'Submit >', 80, 40, (700, 400), 7, window, text_font, None, update_page_id, submit_answers)
-
 
 # Quiz Buttons
 quizButton = Button('Quiz', 80, 40, (460, 350), 7, window,
@@ -411,6 +409,7 @@ q5option3 = Button('Eye of the Storm', 170, 30, (465, 150),
                    7, window, text_font, 'results', update_page_id, increase_score)
 q5option4 = Button("I don't know??", 170, 30, (465, 300), 7,
                    window, text_font, 'results', update_page_id)
+
 
 # Quit Button
 quitButton = Button('Quit', 80, 40, (560, 350), 7, window,
@@ -587,7 +586,7 @@ def lessonFive():
                          right_page_x_pos, right_page_y_pos - 40, window, book_width)
 
     renderTextCenteredAt(
-        "Tsunamis are a wall of water rushing towards the shore. So what do you do? Get as far away from the water as possible, even if you can't outrun it. Getting to as high of an elevation as possible might also be helpful. If you are dragged into the current, your best chance at survival is to find something floating and cling onto it. Your fate's been sealed if Poseidon is having a bad hair day!",
+        "Tsunamis are a wall of water rushing towards the shore. So what do you do? Get as far away from the water as possible, even if you can’t outrun it. Getting to as high of an elevation as possible might also be helpful. If you are dragged into the current, your best chance at survival is to find something floating and cling onto it. Your fate’s been sealed if Poseidon is having a bad hair day!",
         text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width)
 
     bookPageFourBackButton.draw()
@@ -648,7 +647,20 @@ def show_start():
     boardButton.draw()
     bubbleButton.draw()
 
-    background_rect = create_rect(770, 70, 5,  rect_color, rect_border_color)
+    if stickButton.pressed:
+        update_item_button('resources/stick.png')
+        print(item_chosen)
+    elif fenceButton.pressed:
+        update_item_button('resources/fence.png')
+    elif vacuumButton.pressed:
+        update_item_button('resources/vacuum.png')
+    elif boardButton.pressed:
+        update_item_button('resources/skateboard.png')
+    elif bubbleButton.pressed:
+        update_item_button('resources/bubble.png')
+
+
+    background_rect = create_rect(770, 70, 5, rect_color, rect_border_color)
     window.blit(background_rect, (10, 310))
     renderTextCenteredAt(
         "Each item is assigned to a specific disaster. When used during the correct level, you can skip that level and move onto the next. If the items are used for the wrong disaster, the item is discarded and you can no longer use it, so be careful, mortal. The item is displayed at the bottom right.",
@@ -695,9 +707,11 @@ def bubble_page():
     window.blit(bubble, (250, 150))
 
 
-def level_one():
 
-    background_rect = create_rect(770, 70, 5,  rect_color, rect_border_color)
+
+
+def level_one():
+    background_rect = create_rect(770, 70, 5, rect_color, rect_border_color)
     window.blit(background_rect, (10, 30))
     renderTextCenteredAt(
         "Welcome to the beginning of the end. Zeus, unhappy with your actions, sends a large tornado hurtling your direction. What do you do?",
@@ -706,18 +720,17 @@ def level_one():
     choice1A.draw()
     choice1B.draw()
     choice1C.draw()
-
+    itemButton.draw()
     renderTextCenteredAt('Save a monkey!', header_font,
-                         '#FFFFFF', 154, 310, window, 200)
+                         '#FFFFFF', 154, 260, window, 200)
     renderTextCenteredAt('Explore a creepy shack',
-                         header_font, '#FFFFFF', 407, 310, window, 200)
+                         header_font, '#FFFFFF', 407, 250, window, 200)
     renderTextCenteredAt('Hide in a hole', header_font,
-                         '#FFFFFF', 655, 310, window, 200)
+                         '#FFFFFF', 655, 260, window, 200)
 
 
 def level_two():
-
-    background_rect = create_rect(770, 70, 5,  rect_color, rect_border_color)
+    background_rect = create_rect(770, 70, 5, rect_color, rect_border_color)
     window.blit(background_rect, (10, 30))
     renderTextCenteredAt(
         "Woah! The volcano suddenly became active, and the ash hurries your way! Quick, make a choice!",
@@ -725,6 +738,7 @@ def level_two():
 
     choice2A.draw()
     choice2B.draw()
+    itemButton.draw()
 
     renderTextCenteredAt('Craft a mask!', header_font,
                          '#FFFFFF', 208, 310, window, 200)
@@ -733,8 +747,7 @@ def level_two():
 
 
 def level_three():
-
-    background_rect = create_rect(770, 110, 5,  rect_color, rect_border_color)
+    background_rect = create_rect(770, 110, 5, rect_color, rect_border_color)
     window.blit(background_rect, (10, 30))
     renderTextCenteredAt(
         "That was close one. Gasping for air, you plead to the gods saying that you've learned your lesson, but no response comes. And to make matters worse, the ground below you starts shaking uncontrollably as you realize you are now being challenged with an earthquake.",
@@ -744,17 +757,18 @@ def level_three():
     choice3B.draw()
     choice3C.draw()
 
+    itemButton.draw()
+
     renderTextCenteredAt('Hide in the shack', header_font,
-                         '#FFFFFF', 154, 310, window, 200)
+                         '#FFFFFF', 154, 260, window, 200)
     renderTextCenteredAt('Go into the dark cave', header_font,
-                         '#FFFFFF', 407, 310, window, 200)
+                         '#FFFFFF', 407, 250, window, 200)
     renderTextCenteredAt('Stop, drop, pray', header_font,
-                         '#FFFFFF', 655, 310, window, 200)
+                         '#FFFFFF', 655, 260, window, 200)
 
 
 def level_four():
-
-    background_rect = create_rect(785, 85, 5,  rect_color, rect_border_color)
+    background_rect = create_rect(785, 85, 5, rect_color, rect_border_color)
     window.blit(background_rect, (4, 10))
     renderTextCenteredAt(
         "After the earthquake, the ensuing aftershocks create a tsunami. Crsah! A wave of  tsunami comes and submerges the land, and you are caught in it. There is no telling if another wave will still rush towards you. What do you do?",
@@ -766,33 +780,34 @@ def level_four():
     choice4D.draw()
     choice4E.draw()
 
+    itemButton.draw()
+
     renderTextCenteredAt('Swim to shore!', header_font,
-                         '#FFFFFF', 274, 184, window, 200)
+                         '#FFFFFF', 192, 184, window, 200)
     renderTextCenteredAt('Hang onto a drifting wood piece',
-                         header_font, '#FFFFFF', 538, 180, window, 200)
+                         header_font, '#FFFFFF', 390, 175, window, 150)
     renderTextCenteredAt('Climb to the top of a palm tree',
-                         header_font, '#FFFFFF', 154, 350, window, 200)
+                         header_font, '#FFFFFF', 593, 184, window, 175)
     renderTextCenteredAt('Collect drifting materials',
-                         header_font, '#FFFFFF', 407, 350, window, 200)
+                         header_font, '#FFFFFF', 280, 340, window, 200)
     renderTextCenteredAt('Crawl to peak of volcano!',
-                         header_font, '#FFFFFF', 655, 350, window, 200)
+                         header_font, '#FFFFFF', 480, 340, window, 190)
 
 
 def level_five():
-
-    background_rect = create_rect(770, 85, 5,  rect_color, rect_border_color)
+    background_rect = create_rect(770, 85, 5, rect_color, rect_border_color)
     window.blit(background_rect, (10, 30))
     renderTextCenteredAt(
         "Well, that was fun. The gods are pleased with you and offer one last challenge. A plane flies over you but fails to notice the screaming person below. Abruptly, a mixture of thunderstorms, wind and rain clashes onto you.",
         header_font, '#475F77', 400, 50, window, 750)
 
-    background_rect = create_rect(150, 100, 5,  rect_color, rect_border_color)
+    background_rect = create_rect(150, 100, 5, rect_color, rect_border_color)
     window.blit(background_rect, (55, 150))
-    background_rect = create_rect(150, 100, 5,  rect_color, rect_border_color)
+    background_rect = create_rect(150, 100, 5, rect_color, rect_border_color)
     window.blit(background_rect, (235, 150))
-    background_rect = create_rect(150, 100, 5,  rect_color, rect_border_color)
+    background_rect = create_rect(150, 100, 5, rect_color, rect_border_color)
     window.blit(background_rect, (415, 150))
-    background_rect = create_rect(150, 100, 5,  rect_color, rect_border_color)
+    background_rect = create_rect(150, 100, 5, rect_color, rect_border_color)
     window.blit(background_rect, (595, 150))
 
     renderTextCenteredAt('Take cover until the eye of the storm reaches you',
@@ -808,174 +823,63 @@ def level_five():
     box5B.draw_textbox()
     box5C.draw_textbox()
     box5D.draw_textbox()
+
+    itemButton.draw()
+
     submitButton.draw()
 
 
 def choice1B_page():
-    
-    background_rect = create_rect(770, 70, 5,  rect_color, rect_border_color)
+    background_rect = create_rect(770, 70, 5, rect_color, rect_border_color)
     window.blit(background_rect, (10, 30))
     renderTextCenteredAt(
-        "You chose to explore the creepy shack. Luckily for you, it turned out to have a basement as you hide in there to wait out the tornado.",
+        "You chose to exploroe the creepy shack. Luckily for you, it turned out to have a basement as you hide in there to wait out the tornado.",
         header_font, '#475F77', 400, 50, window, 800)
-    
+
     choice1BNext.draw()
-    
+
 
 def choice1C_page():
-    
-    background_rect = create_rect(770, 70, 5,  rect_color, rect_border_color)
-    window.blit(background_rect, (10, 30))
-    renderTextCenteredAt(
-        "Unsure what to do, you find a hole nearby to hide in and pray, waiting out the tornado.",
-        header_font, '#475F77', 400, 50, window, 800)
-    
     choice1CNext.draw()
 
 
 def choice2A_page():
-    
-    background_rect = create_rect(770, 70, 5,  rect_color, rect_border_color)
-    window.blit(background_rect, (10, 30))
-    renderTextCenteredAt(
-        "As the ash gets closer and closer to you, you scramble to find materials to craft a mask... successfully.",
-        header_font, '#475F77', 400, 50, window, 800)
-    
     choice2ANext.draw()
 
 
 def choice2B_page():
-    
-    background_rect = create_rect(770, 70, 5,  rect_color, rect_border_color)
-    window.blit(background_rect, (10, 30))
-    renderTextCenteredAt(
-        "Not knowing what to do, you run as far away from the coming dark cloud as possible, as you pray it goes away.",
-        header_font, '#475F77', 400, 50, window, 800)
-    
     choice2BNext.draw()
 
 
-def choice3A_basement():
-    
-    background_rect = create_rect(770, 70, 5,  rect_color, rect_border_color)
-    window.blit(background_rect, (10, 30))
-    renderTextCenteredAt(
-        "You arrive at the shack where you realize it has collapsed. You scramble for another way to survive.",
-        header_font, '#475F77', 400, 50, window, 800)
-
-    choice3BBasement.draw()
-    
-    
-def excluding_basement():
-    
-    background_rect = create_rect(770, 80, 5,  rect_color, rect_border_color)
-    window.blit(background_rect, (10, 30))
-    renderTextCenteredAt(
-        "As the earthquake situation worsens, you desperately pray to the gods, but still, no response. You look for alternative methods to survive.",
-        header_font, '#475F77', 400, 50, window, 775)
-
-    choice3B.draw()
-    choice3C.draw()
-    
-    renderTextCenteredAt('Go into the dark cave', header_font,
-                         '#FFFFFF', 407, 310, window, 200)
-    renderTextCenteredAt('Stop, drop, pray', header_font,
-                         '#FFFFFF', 655, 310, window, 200)
-    
-        
 def choice3A_page():
-    
-    background_rect = create_rect(770, 70, 5,  rect_color, rect_border_color)
-    window.blit(background_rect, (10, 30))
-    
-    renderTextCenteredAt(
-        "It turns out there is a basement in the shack! You go into it, to wait out the earthquake.",
-        header_font, '#475F77', 400, 50, window, 800)
-    
     choice3ANext.draw()
 
-    
+
 def choice3B_page():
-    
-    background_rect = create_rect(770, 70, 5,  rect_color, rect_border_color)
-    window.blit(background_rect, (10, 30))
-    
-    renderTextCenteredAt(
-        "You hurry into the dark, spooky cave. Each time the ground tremors, you pray, until it suddenly stops as you realize the earthquake is over. But is it?",
-        header_font, '#475F77', 400, 50, window, 800)
-    
     choice3BNext.draw()
 
 
 def choice3C_page():
-    
-    background_rect = create_rect(770, 70, 5,  rect_color, rect_border_color)
-    window.blit(background_rect, (10, 30))
-    
-    renderTextCenteredAt(
-        "As the earth tremors, you stop, drop, and cling onto anything you can, until the earthquake stops. But is it over?",
-        header_font, '#475F77', 400, 50, window, 800)
-    
     choice3CNext.draw()
 
 
 def choice4A_page():
-    
-    background_rect = create_rect(770, 70, 5,  rect_color, rect_border_color)
-    window.blit(background_rect, (10, 30))
-    
-    renderTextCenteredAt(
-        "You swim and swim and swim until finally, you've reached a non-submerged part of the island.",
-        header_font, '#475F77', 400, 50, window, 800)
-    
     choice4ANext.draw()
 
 
 def choice4B_page():
-    
-    background_rect = create_rect(770, 70, 5,  rect_color, rect_border_color)
-    window.blit(background_rect, (10, 30))
-    
-    renderTextCenteredAt(
-        "Treading in the water, you spot a floating piece of wood from the remains of the shack. You hold onto it, as you eventually float to shore.",
-        header_font, '#475F77', 400, 50, window, 800)
-    
     choice4BNext.draw()
 
 
 def choice4C_page():
-    
-    background_rect = create_rect(770, 70, 5,  rect_color, rect_border_color)
-    window.blit(background_rect, (10, 30))
-    
-    renderTextCenteredAt(
-        "A palm tree near you stands true and strong, as you climb onto it. You eventually build up enough courage to swim to shore.",
-        header_font, '#475F77', 400, 50, window, 800)
-    
     choice4CNext.draw()
 
 
 def choice4D_page():
-    
-    background_rect = create_rect(770, 70, 5,  rect_color, rect_border_color)
-    window.blit(background_rect, (10, 30))
-    
-    renderTextCenteredAt(
-        "Gathering miscellaneous materials in the water, you were able to build a treehouse on a palm tree nearby. After a bit, you build up enough strength to swim to shore.",
-        header_font, '#475F77', 400, 50, window, 800)
-    
     choice4DNext.draw()
 
 
 def choice4E_page():
-    
-    background_rect = create_rect(770, 70, 5,  rect_color, rect_border_color)
-    window.blit(background_rect, (10, 30))
-    
-    renderTextCenteredAt(
-        "With all your energy you climb to the top of the now dormant volcano, watching waves of water crash into the island below.",
-        header_font, '#475F77', 400, 50, window, 800)
-    
     choice4ENext.draw()
 
 
@@ -1194,6 +1098,8 @@ def secret_ending_four():
 
     renderTextCenteredAt('Thanks for playing!', header_font, '#475F77',
                          right_page_x_pos, right_page_y_pos - 40, window, book_width)
+
+
 # Quiz Pages
 
 
@@ -1381,7 +1287,7 @@ def main():
             lessonSeven()
 
         # Game Pages
-        
+
         # Items
         elif page_id == 'start':
             show_start()
@@ -1395,7 +1301,7 @@ def main():
             board_page()
         elif page_id == 'bubble':
             bubble_page()
-            
+
         # Level One
         elif page_id == 'level one':
             level_one()
@@ -1403,7 +1309,7 @@ def main():
             choice1B_page()
         elif page_id == 'choice1C next':
             choice1C_page()
-            
+
         # Level Two
         elif page_id == 'level two':
             level_two()
@@ -1411,21 +1317,17 @@ def main():
             choice2A_page()
         elif page_id == 'choice2B next':
             choice2B_page()
-            
+
         # Level Three
         elif page_id == 'level three':
             level_three()
-        elif page_id == 'choice3A basement':
-            choice3A_basement()
-        elif page_id == 'excluding basement':
-            excluding_basement()
         elif page_id == 'choice3A next':
             choice3A_page()
         elif page_id == 'choice3B next':
             choice3B_page()
         elif page_id == 'choice3C next':
             choice3C_page()
-        
+
         # Level Four
         elif page_id == 'level four':
             level_four()
@@ -1439,11 +1341,11 @@ def main():
             choice4D_page()
         elif page_id == 'choice4E next':
             choice4E_page()
-            
+
         # Level Five
         elif page_id == 'level five':
             level_five()
-            
+
         # Endings
         elif page_id == 'tornado ending':
             tornado_ending()
@@ -1457,6 +1359,10 @@ def main():
             tsunami_ending()
         elif page_id == 'hurricane ending':
             hurricane_ending()
+        elif page_id == 'survival ending one':
+            survival_ending_one()
+        elif page_id == 'survival ending two':
+            survival_ending_two()
         elif page_id == 'secret ending one':
             secret_ending_one()
         elif page_id == 'secret ending two':
@@ -1465,10 +1371,6 @@ def main():
             secret_ending_three()
         elif page_id == 'secret ending four':
             secret_ending_four()
-        elif page_id == 'survival ending one':
-            survival_ending_one()
-        elif page_id == 'survival ending two':
-            survival_ending_two()
 
         # Quiz pages
         elif page_id == 'quiz':
