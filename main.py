@@ -326,6 +326,7 @@ choice3ANext = Button('Level Four >', 215, 150, (307.5, 250), 7, window,
                       header_font, 'level four', update_page_id)
 choice3B = Button('', 215, 150, (297, 200), 7, window,
                   text_font, None, update_page_id, choice3B_chance)
+choice3BBasement = Button('Find Alternatives >', 215, 150, (307.5, 250), 7, window, header_font, 'excluding basement', update_page_id)
 choice3BNext = Button('Level Four >', 215, 150, (307.5, 250), 7, window,
                       header_font, 'level four', update_page_id)
 choice3C = Button('', 215, 150, (547, 200), 7, window,
@@ -648,16 +649,16 @@ def show_start():
     bubbleButton.draw()
 
     if stickButton.pressed:
-        update_item_button('resources/stick.png')
+        update_item_button('resources/lightning_rod.png')
         print(item_chosen)
     elif fenceButton.pressed:
-        update_item_button('resources/fence.png')
+        update_item_button('resources/wall.png')
     elif vacuumButton.pressed:
-        update_item_button('resources/vacuum.png')
+        update_item_button('resources/broomstick.png')
     elif boardButton.pressed:
-        update_item_button('resources/skateboard.png')
+        update_item_button('resources/hoverboard.png')
     elif bubbleButton.pressed:
-        update_item_button('resources/bubble.png')
+        update_item_button('resources/shield_bubble.png')
 
 
     background_rect = create_rect(770, 70, 5, rect_color, rect_border_color)
@@ -830,56 +831,170 @@ def level_five():
 
 
 def choice1B_page():
-    background_rect = create_rect(770, 70, 5, rect_color, rect_border_color)
+
+    background_rect = create_rect(770, 70, 5,  rect_color, rect_border_color)
     window.blit(background_rect, (10, 30))
     renderTextCenteredAt(
-        "You chose to exploroe the creepy shack. Luckily for you, it turned out to have a basement as you hide in there to wait out the tornado.",
+        "You chose to explore the creepy shack. Luckily for you, it turned out to have a basement as you hide in there to wait out the tornado.",
         header_font, '#475F77', 400, 50, window, 800)
-
+    
     choice1BNext.draw()
 
 
 def choice1C_page():
+
+    background_rect = create_rect(770, 70, 5,  rect_color, rect_border_color)
+    window.blit(background_rect, (10, 30))
+    renderTextCenteredAt(
+        "Unsure what to do, you find a hole nearby to hide in and pray, waiting out the tornado.",
+        header_font, '#475F77', 400, 50, window, 800)
+    
     choice1CNext.draw()
 
 
 def choice2A_page():
+
+    background_rect = create_rect(770, 70, 5,  rect_color, rect_border_color)
+    window.blit(background_rect, (10, 30))
+    renderTextCenteredAt(
+        "As the ash gets closer and closer to you, you scramble to find materials to craft a mask... successfully.",
+        header_font, '#475F77', 400, 55, window, 700)
+
     choice2ANext.draw()
 
 
 def choice2B_page():
+
+    background_rect = create_rect(770, 70, 5,  rect_color, rect_border_color)
+    window.blit(background_rect, (10, 30))
+    renderTextCenteredAt(
+        "Not knowing what to do, you run as far away from the coming dark cloud as possible, as you pray it goes away.",
+        header_font, '#475F77', 400, 50, window, 800)
+
     choice2BNext.draw()
 
 
+def choice3A_basement():
+
+    background_rect = create_rect(770, 70, 5,  rect_color, rect_border_color)
+    window.blit(background_rect, (10, 30))
+    renderTextCenteredAt(
+        "You arrive at the shack where you realize it has collapsed. You scramble for another way to survive.",
+        header_font, '#475F77', 400, 50, window, 800)
+
+    choice3BBasement.draw()
+
+
+def excluding_basement():
+    
+    background_rect = create_rect(770, 80, 5,  rect_color, rect_border_color)
+    window.blit(background_rect, (10, 30))
+    renderTextCenteredAt(
+        "As the earthquake situation worsens, you desperately pray to the gods, but still, no response. You look for alternative methods to survive.",
+        header_font, '#475F77', 400, 50, window, 775)
+
+    choice3B.draw()
+    choice3C.draw()
+    
+    renderTextCenteredAt('Go into the dark cave', header_font,
+                         '#FFFFFF', 407, 310, window, 200)
+    renderTextCenteredAt('Stop, drop, pray', header_font,
+                         '#FFFFFF', 655, 310, window, 200)
+
+
 def choice3A_page():
+    
+    background_rect = create_rect(770, 70, 5,  rect_color, rect_border_color)
+    window.blit(background_rect, (10, 30))
+    
+    renderTextCenteredAt(
+        "It turns out there is a basement in the shack! You go into it, to wait out the earthquake. But is it really over?",
+        header_font, '#475F77', 400, 50, window, 800)
     choice3ANext.draw()
 
 
 def choice3B_page():
+
+    background_rect = create_rect(770, 70, 5,  rect_color, rect_border_color)
+    window.blit(background_rect, (10, 30))
+    
+    renderTextCenteredAt(
+        "You hurry into the dark, spooky cave. Each time the ground tremors, you pray, until it suddenly stops as you realize the earthquake is over. But is it?",
+        header_font, '#475F77', 400, 50, window, 800)
+    
     choice3BNext.draw()
 
 
 def choice3C_page():
+    
+    background_rect = create_rect(770, 70, 5,  rect_color, rect_border_color)
+    window.blit(background_rect, (10, 30))
+    
+    renderTextCenteredAt(
+        "As the earth tremors, you stop, drop, and cling onto anything you can, until the earthquake stops. But is it over?",
+        header_font, '#475F77', 400, 50, window, 800)
+
     choice3CNext.draw()
 
 
 def choice4A_page():
+
+    background_rect = create_rect(770, 70, 5,  rect_color, rect_border_color)
+    window.blit(background_rect, (10, 30))
+    
+    renderTextCenteredAt(
+        "You swim and swim and swim until finally, you've reached a non-submerged part of the island.",
+        header_font, '#475F77', 400, 50, window, 700)
+    
+    
     choice4ANext.draw()
 
 
 def choice4B_page():
+    
+    background_rect = create_rect(770, 70, 5,  rect_color, rect_border_color)
+    window.blit(background_rect, (10, 30))
+    
+    renderTextCenteredAt(
+        "Treading in the water, you spot a floating piece of wood from the remains of the shack. You hold onto it, as you eventually float to shore.",
+        header_font, '#475F77', 400, 50, window, 700)
+
     choice4BNext.draw()
 
 
 def choice4C_page():
+    
+    background_rect = create_rect(770, 70, 5,  rect_color, rect_border_color)
+    window.blit(background_rect, (10, 30))
+    
+    renderTextCenteredAt(
+        "A palm tree near you stands true and strong, as you climb onto it. You eventually build up enough courage to swim to shore.",
+        header_font, '#475F77', 400, 50, window, 700)
+
     choice4CNext.draw()
 
 
 def choice4D_page():
+    
+    background_rect = create_rect(770, 90, 5,  rect_color, rect_border_color)
+    window.blit(background_rect, (10, 30))
+    
+    renderTextCenteredAt(
+        "Gathering miscellaneous materials in the water, you were able to build a treehouse on a palm tree nearby. After a bit, you build up enough strength to swim to shore.",
+        header_font, '#475F77', 400, 50, window, 710)
+    
     choice4DNext.draw()
 
 
 def choice4E_page():
+    
+    background_rect = create_rect(770, 70, 5,  rect_color, rect_border_color)
+    window.blit(background_rect, (10, 30))
+    
+    renderTextCenteredAt(
+        "With all your energy you climb to the top of the now dormant volcano, watching waves of water crash into the island below.",
+        header_font, '#475F77', 400, 50, window, 800)
+    
     choice4ENext.draw()
 
 
@@ -931,7 +1046,7 @@ def volcano_ending_two():
                          left_page_x_pos, left_page_y_pos - 40, window, book_width)
 
     renderTextCenteredAt(
-        "You die a fiery death, but at least you went down in style, by drowning in a pool of burning lava! The lava was a comfortable 1250 degrees, just a little over your average hot tub. Yet again, you realize you shouldn't have stolen the Hades's pet dog, Cerberus.",
+        "You die a fiery death, but at least you went down in style, by drowning in a pool of burning lava! The lava was a comfortable 1250 degrees, just a little over your average hot tub. Yet again, you realize you shouldn't have stolen Cerberus from Hades.",
         text_font, '#475F77', left_page_x_pos, left_page_y_pos, window, book_width)
 
     renderTextCenteredAt('Thanks for playing!', header_font, '#475F77',
@@ -1323,6 +1438,10 @@ def main():
             level_three()
         elif page_id == 'choice3A next':
             choice3A_page()
+        elif page_id == 'choice3A basement':
+            choice3A_basement()
+        elif page_id == 'excluding basement':
+            excluding_basement()
         elif page_id == 'choice3B next':
             choice3B_page()
         elif page_id == 'choice3C next':
