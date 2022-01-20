@@ -83,7 +83,9 @@ def create_rect(width, height, border, color, border_color):
 
 def update_item_button(item):
     global itemButton
-    itemButton = ItemButton(item, 60, 60, (20, 380), 7, window)
+    global item_chosen
+    item_chosen = item
+    itemButton = ItemButton(item_chosen, 60, 60, (20, 380), 7, window)
 
 
 def update_quiz_score(score):
@@ -326,7 +328,8 @@ choice3ANext = Button('Level Four >', 215, 150, (307.5, 250), 7, window,
                       header_font, 'level four', update_page_id)
 choice3B = Button('', 215, 150, (297, 200), 7, window,
                   text_font, None, update_page_id, choice3B_chance)
-choice3BBasement = Button('Find Alternatives >', 215, 150, (307.5, 250), 7, window, header_font, 'excluding basement', update_page_id)
+choice3BBasement = Button('Find Alternatives >', 215, 150, (307.5, 250), 7, window, header_font, 'excluding basement',
+                          update_page_id)
 choice3BNext = Button('Level Four >', 215, 150, (307.5, 250), 7, window,
                       header_font, 'level four', update_page_id)
 choice3C = Button('', 215, 150, (547, 200), 7, window,
@@ -410,7 +413,6 @@ q5option3 = Button('Eye of the Storm', 170, 30, (465, 150),
                    7, window, text_font, 'results', update_page_id, increase_score)
 q5option4 = Button("I don't know??", 170, 30, (465, 300), 7,
                    window, text_font, 'results', update_page_id)
-
 
 # Quit Button
 quitButton = Button('Quit', 80, 40, (560, 350), 7, window,
@@ -650,7 +652,6 @@ def show_start():
 
     if stickButton.pressed:
         update_item_button('resources/lightning_rod.png')
-        print(item_chosen)
     elif fenceButton.pressed:
         update_item_button('resources/wall.png')
     elif vacuumButton.pressed:
@@ -659,7 +660,6 @@ def show_start():
         update_item_button('resources/hoverboard.png')
     elif bubbleButton.pressed:
         update_item_button('resources/shield_bubble.png')
-
 
     background_rect = create_rect(770, 70, 5, rect_color, rect_border_color)
     window.blit(background_rect, (10, 310))
@@ -708,9 +708,6 @@ def bubble_page():
     window.blit(bubble, (250, 150))
 
 
-
-
-
 def level_one():
     background_rect = create_rect(770, 70, 5, rect_color, rect_border_color)
     window.blit(background_rect, (10, 30))
@@ -729,6 +726,12 @@ def level_one():
     renderTextCenteredAt('Hide in a hole', header_font,
                          '#FFFFFF', 655, 260, window, 200)
 
+    if itemButton.pressed:
+        if item_chosen == "resources/broomstick.png":
+            update_page_id('level two')
+        else:
+            update_page_id('tornado ending')
+
 
 def level_two():
     background_rect = create_rect(770, 70, 5, rect_color, rect_border_color)
@@ -745,6 +748,12 @@ def level_two():
                          '#FFFFFF', 208, 310, window, 200)
     renderTextCenteredAt('Run from the ash', header_font,
                          '#FFFFFF', 610, 310, window, 200)
+    print(item_chosen)
+    if itemButton.pressed:
+        if item_chosen == "resources/shield_bubble.png":
+            update_page_id('level three')
+        else:
+            update_page_id('volcano ending one')
 
 
 def level_three():
@@ -766,6 +775,12 @@ def level_three():
                          '#FFFFFF', 407, 250, window, 200)
     renderTextCenteredAt('Stop, drop, pray', header_font,
                          '#FFFFFF', 655, 260, window, 200)
+
+    if itemButton.pressed:
+        if item_chosen == "resources/hoverboard.png":
+            update_page_id('level four')
+        else:
+            update_page_id('earthquake ending')
 
 
 def level_four():
@@ -793,6 +808,12 @@ def level_four():
                          header_font, '#FFFFFF', 280, 340, window, 200)
     renderTextCenteredAt('Crawl to peak of volcano!',
                          header_font, '#FFFFFF', 480, 340, window, 190)
+
+    if itemButton.pressed:
+        if item_chosen == "resources/wall.png":
+            update_page_id('level five')
+        else:
+            update_page_id('volcano ending one')
 
 
 def level_five():
@@ -827,34 +848,37 @@ def level_five():
 
     itemButton.draw()
 
+    if itemButton.pressed:
+        if item_chosen == "resources/lightning_rod.png":
+            update_page_id('level two')
+        else:
+            update_page_id('volcano ending one')
+
     submitButton.draw()
 
 
 def choice1B_page():
-
-    background_rect = create_rect(770, 70, 5,  rect_color, rect_border_color)
+    background_rect = create_rect(770, 70, 5, rect_color, rect_border_color)
     window.blit(background_rect, (10, 30))
     renderTextCenteredAt(
         "You chose to explore the creepy shack. Luckily for you, it turned out to have a basement as you hide in there to wait out the tornado.",
         header_font, '#475F77', 400, 50, window, 800)
-    
+
     choice1BNext.draw()
 
 
 def choice1C_page():
-
-    background_rect = create_rect(770, 70, 5,  rect_color, rect_border_color)
+    background_rect = create_rect(770, 70, 5, rect_color, rect_border_color)
     window.blit(background_rect, (10, 30))
     renderTextCenteredAt(
         "Unsure what to do, you find a hole nearby to hide in and pray, waiting out the tornado.",
         header_font, '#475F77', 400, 50, window, 800)
-    
+
     choice1CNext.draw()
 
 
 def choice2A_page():
-
-    background_rect = create_rect(770, 70, 5,  rect_color, rect_border_color)
+    background_rect = create_rect(770, 70, 5, rect_color, rect_border_color)
     window.blit(background_rect, (10, 30))
     renderTextCenteredAt(
         "As the ash gets closer and closer to you, you scramble to find materials to craft a mask... successfully.",
@@ -864,8 +888,7 @@ def choice2A_page():
 
 
 def choice2B_page():
-
-    background_rect = create_rect(770, 70, 5,  rect_color, rect_border_color)
+    background_rect = create_rect(770, 70, 5, rect_color, rect_border_color)
     window.blit(background_rect, (10, 30))
     renderTextCenteredAt(
         "Not knowing what to do, you run as far away from the coming dark cloud as possible, as you pray it goes away.",
@@ -875,8 +898,7 @@ def choice2B_page():
 
 
 def choice3A_basement():
-
-    background_rect = create_rect(770, 70, 5,  rect_color, rect_border_color)
+    background_rect = create_rect(770, 70, 5, rect_color, rect_border_color)
     window.blit(background_rect, (10, 30))
     renderTextCenteredAt(
         "You arrive at the shack where you realize it has collapsed. You scramble for another way to survive.",
@@ -886,8 +908,7 @@ def choice3A_basement():
 
 
 def excluding_basement():
-    
-    background_rect = create_rect(770, 80, 5,  rect_color, rect_border_color)
+    background_rect = create_rect(770, 80, 5, rect_color, rect_border_color)
     window.blit(background_rect, (10, 30))
     renderTextCenteredAt(
         "As the earthquake situation worsens, you desperately pray to the gods, but still, no response. You look for alternative methods to survive.",
@@ -895,7 +916,7 @@ def excluding_basement():
 
     choice3B.draw()
     choice3C.draw()
-    
+
     renderTextCenteredAt('Go into the dark cave', header_font,
                          '#FFFFFF', 407, 310, window, 200)
     renderTextCenteredAt('Stop, drop, pray', header_font,
@@ -903,10 +924,9 @@ def excluding_basement():
 
 
 def choice3A_page():
-    
-    background_rect = create_rect(770, 70, 5,  rect_color, rect_border_color)
+    background_rect = create_rect(770, 70, 5, rect_color, rect_border_color)
     window.blit(background_rect, (10, 30))
-    
+
     renderTextCenteredAt(
         "It turns out there is a basement in the shack! You go into it, to wait out the earthquake. But is it really over?",
         header_font, '#475F77', 400, 50, window, 800)
@@ -914,22 +934,20 @@ def choice3A_page():
 
 
 def choice3B_page():
-
-    background_rect = create_rect(770, 70, 5,  rect_color, rect_border_color)
+    background_rect = create_rect(770, 70, 5, rect_color, rect_border_color)
     window.blit(background_rect, (10, 30))
-    
+
     renderTextCenteredAt(
         "You hurry into the dark, spooky cave. Each time the ground tremors, you pray, until it suddenly stops as you realize the earthquake is over. But is it?",
         header_font, '#475F77', 400, 50, window, 800)
-    
+
     choice3BNext.draw()
 
 
 def choice3C_page():
-    
-    background_rect = create_rect(770, 70, 5,  rect_color, rect_border_color)
+    background_rect = create_rect(770, 70, 5, rect_color, rect_border_color)
     window.blit(background_rect, (10, 30))
-    
+
     renderTextCenteredAt(
         "As the earth tremors, you stop, drop, and cling onto anything you can, until the earthquake stops. But is it over?",
         header_font, '#475F77', 400, 50, window, 800)
@@ -938,23 +956,20 @@ def choice3C_page():
 
 
 def choice4A_page():
-
-    background_rect = create_rect(770, 70, 5,  rect_color, rect_border_color)
+    background_rect = create_rect(770, 70, 5, rect_color, rect_border_color)
     window.blit(background_rect, (10, 30))
-    
+
     renderTextCenteredAt(
         "You swim and swim and swim until finally, you've reached a non-submerged part of the island.",
         header_font, '#475F77', 400, 50, window, 700)
-    
-    
+
     choice4ANext.draw()
 
 
 def choice4B_page():
-    
-    background_rect = create_rect(770, 70, 5,  rect_color, rect_border_color)
+    background_rect = create_rect(770, 70, 5, rect_color, rect_border_color)
     window.blit(background_rect, (10, 30))
-    
+
     renderTextCenteredAt(
         "Treading in the water, you spot a floating piece of wood from the remains of the shack. You hold onto it, as you eventually float to shore.",
         header_font, '#475F77', 400, 50, window, 700)
@@ -963,10 +978,9 @@ def choice4B_page():
 
 
 def choice4C_page():
-    
-    background_rect = create_rect(770, 70, 5,  rect_color, rect_border_color)
+    background_rect = create_rect(770, 70, 5, rect_color, rect_border_color)
     window.blit(background_rect, (10, 30))
-    
+
     renderTextCenteredAt(
         "A palm tree near you stands true and strong, as you climb onto it. You eventually build up enough courage to swim to shore.",
         header_font, '#475F77', 400, 50, window, 700)
@@ -975,26 +989,24 @@ def choice4C_page():
 
 
 def choice4D_page():
-    
-    background_rect = create_rect(770, 90, 5,  rect_color, rect_border_color)
+    background_rect = create_rect(770, 90, 5, rect_color, rect_border_color)
     window.blit(background_rect, (10, 30))
-    
+
     renderTextCenteredAt(
         "Gathering miscellaneous materials in the water, you were able to build a treehouse on a palm tree nearby. After a bit, you build up enough strength to swim to shore.",
         header_font, '#475F77', 400, 50, window, 710)
-    
+
     choice4DNext.draw()
 
 
 def choice4E_page():
-    
-    background_rect = create_rect(770, 70, 5,  rect_color, rect_border_color)
+    background_rect = create_rect(770, 70, 5, rect_color, rect_border_color)
     window.blit(background_rect, (10, 30))
-    
+
     renderTextCenteredAt(
         "With all your energy you climb to the top of the now dormant volcano, watching waves of water crash into the island below.",
         header_font, '#475F77', 400, 50, window, 800)
-    
+
     choice4ENext.draw()
 
 
