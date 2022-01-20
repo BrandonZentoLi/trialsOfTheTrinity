@@ -58,7 +58,6 @@ class Button:
                 self.pressed = True
 
                 click_channel.play(click_sound)
-
             else:
                 self.dynamic_elevation = self.elevation
                 if self.pressed:
@@ -97,7 +96,7 @@ class ItemButton:
         self.sprites = []
         for sprite in sprites:
             image = pygame.image.load(sprite)
-            size = (70, 50) if len(sprites) == 1 else (100, 80)
+            size = (50, 50) if len(sprites) == 1 else (100, 80)
             image = pygame.transform.scale(image, size)
             self.sprites.append(image)
         self.image_rect = self.sprites[0].get_rect(center=self.top_rect.center)
@@ -109,7 +108,7 @@ class ItemButton:
 
         self.bottom_rect.midtop = self.top_rect.midtop
         self.bottom_rect.height = self.top_rect.height + self.dynamic_elevation
-        
+
         if len(self.sprites) == 1:
             pygame.draw.rect(self.window, self.bottom_color,
                              self.bottom_rect, border_radius=12)
@@ -146,3 +145,6 @@ class ItemButton:
         else:
             self.dynamic_elevation = self.elevation
             self.top_color = '#57728c'
+
+    def release(self):
+        self.pressed = False

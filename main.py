@@ -2,9 +2,9 @@
 # Program Authors: Brandon Li and Lucas Fang
 # Program Name: Trials of the Trinity
 # Revision Date: January 19th, 2022
-# Description: Trials of the Trinity explores the consequences one 
-# might suffer after angering the big three of the Olympian gods. 
-# You must survive five trials thrown at you, in the form of 
+# Description: Trials of the Trinity explores the consequences one
+# might suffer after angering the big three of the Olympian gods.
+# You must survive five trials thrown at you, in the form of
 # natural disasters if you wish to make it to tomorrow. Good luck,
 # mortal.
 #*****************************************************************#
@@ -20,7 +20,7 @@ from button import Button, ItemButton
 from text_box import InputBox
 from text_wrap import render_text
 
-# initialize pygame 
+# initialize pygame
 pygame.init()
 
 # display screen
@@ -31,6 +31,7 @@ screen_width, screen_height = pygame.display.get_surface().get_size()
 pygame.display.set_caption("Trials of the Trinity")
 title_font = pygame.font.Font('fonts/pixel.ttf', 32)
 text_font = pygame.font.Font('fonts/pixel.ttf', 15)
+name_font = pygame.font.Font('fonts/pixel.ttf', 11)
 answer_font = pygame.font.Font('fonts/pixel.ttf', 12)
 
 # playing music
@@ -54,7 +55,7 @@ capture = cv2.VideoCapture('resources/titlescreen.mp4')
 _, image = capture.read()
 shape = image.shape[1::-1]
 
-# item pictures 
+# item pictures
 item_page = pygame.image.load('resources/items.png')
 stick = pygame.image.load('resources/stick.png')
 fence = pygame.image.load('resources/fence.png')
@@ -90,7 +91,7 @@ hide = False
 quiz_score = 0
 item_chosen = "resources/bubble.png"
 
-# background rectangle 
+# background rectangle
 rect_border_color = (71, 95, 119)
 rect_color = (115, 158, 201)
 def create_rect(width, height, border, color, border_color):
@@ -103,7 +104,7 @@ def create_rect(width, height, border, color, border_color):
     return surf
 
 
-# updating values 
+# updating values
 def update_item_button(item):
     global item_button
     global item_chosen
@@ -124,13 +125,13 @@ def update_book_button():
         'book_of_insights/book_9.png',
         'book_of_insights/book_10.png',
         'book_of_insights/book_11.png'
-    ], 60, 60, (700, 380), 7, 0.2, window) 
-    
+    ], 60, 60, (700, 380), 7, 0.2, window)
+
 def update_page_id(id):
     global page_id
     page_id = id
 
-  
+
 def update_quiz_score(score):
     global quiz_score
     quiz_score = score
@@ -142,8 +143,23 @@ def reset_quiz_score():
 
 def increase_score():
     update_quiz_score(quiz_score + 1)
-    
-    
+
+
+def update_return_button(page_id):
+    global return_button
+    return_button = Button('Return >', 80, 40, (700, 400), 7,
+                           window, text_font, page_id, update_page_id)
+
+def update_back_button(page_id):
+    global back_button
+    back_button = Button('< Back', 80, 40, (20, 400), 7,
+                           window, text_font, page_id, update_page_id)
+
+
+def set_page_button():
+    update_return_button('home')
+    update_back_button('home')
+
 # randomized chance to go to different pages
 # level one randomized chances
 def choice1B_chance():
@@ -251,8 +267,8 @@ def choice4E_chance():
         page_id = 'survival ending one'
 
 
-# level 5 
-new_order = ['0', '0', '0', '0']
+# level 5
+new_order = ['', '', '', '']
 def text_order(index, text):
     new_order[index] = text
 
@@ -266,6 +282,7 @@ def submit_answers():
         else:
             success = False
             break
+    reset_new_order()
 
     global page_id
     if success:
@@ -292,7 +309,7 @@ info_p2 = Button('Next >', 80, 40, (700, 400),
 
 # book of insights
 book_p1 = Button('Lesson', 80, 40, (260, 350),
-                           7, window, text_font, 'book_page_one', update_page_id)
+                           7, window, text_font, 'book_page_one', update_page_id, set_page_button)
 book_p1_back = Button(
     '< Back', 80, 40, (20, 400), 7, window, text_font, 'book_page_one', update_page_id)
 book_p2_next = Button(
@@ -338,7 +355,7 @@ leave_button = Button('Quit >', 80, 40, (505, 275), 7,
 
 # item skip buttons
 lightning_skip = Button('Next >', 80, 40, (700, 400),
-                                7, window, text_font, 'survival ending 1', update_page_id)
+                                7, window, text_font, 'survival ending one', update_page_id)
 
 wall_skip = Button('Next >', 80, 40, (700, 400),
                         7, window, text_font, 'level five', update_page_id)
@@ -418,7 +435,7 @@ box_5A = InputBox(55, 270, 160, 40, text_font, window, '', text_order, 0)
 box_5B = InputBox(235, 270, 160, 40, text_font, window, '', text_order, 1)
 box_5C = InputBox(415, 270, 160, 40, text_font, window, '', text_order, 2)
 box_5D = InputBox(595, 270, 160, 40, text_font, window, '', text_order, 3)
-submit_button = Button('Submit >', 80, 40, (695, 330), 7, window, 
+submit_button = Button('Submit >', 80, 40, (695, 330), 7, window,
                       text_font, None, update_page_id, submit_answers)
 
 # quiz buttons
@@ -473,7 +490,14 @@ quit_button = Button('Quit', 80, 40, (560, 350), 7, window,
                     text_font, 'quit', update_page_id)
 
 
-# background image/video 
+# new order
+def reset_new_order():
+    box_5A.reset()
+    box_5B.reset()
+    box_5C.reset()
+    box_5D.reset()
+
+# background image/video
 
 def video_frames():
     success, image = capture.read()
@@ -501,6 +525,14 @@ def show_home():
     quiz_button.draw()
     quit_button.draw()
 
+    render_text('Brandon Li and Lucas Fang ', name_font, '#475F77',
+                         90, 25, window, 225)
+    render_text('ICS207-01 ', name_font, '#475F77',
+                         90, 40, window, 225)
+    render_text('Laura Keras', name_font, '#475F77',
+                         90, 55, window, 225)
+    render_text('January 19th, 2022 ', name_font, '#475F77',
+                         90, 70, window, 225)
 
 # info pages
 def info_page_one():
@@ -546,7 +578,7 @@ def info_page_two():
 
 
 # book of insights pages
-def lessonOne():
+def lesson_one():
     show_book_of_insights()
 
     render_text('Book of', header_font, '#475F77',
@@ -562,11 +594,11 @@ def lessonOne():
         "Here, you can learn all about natural disasters to help overcome obstacles in the interactive story. Let's get started!",
         text_font, '#475F77', right_page_x_pos, right_page_y_pos, window, book_width)
 
-    home_button_one.draw()
+    back_button.draw()
     book_p2_next.draw()
 
 
-def lessonTwo():
+def lesson_two():
     show_book_of_insights()
 
     render_text('Surviving', header_font, '#475F77',
@@ -587,7 +619,7 @@ def lessonTwo():
     book_p3_next.draw()
 
 
-def lessonThree():
+def lesson_three():
     show_book_of_insights()
 
     render_text('Surviving', header_font, '#475F77',
@@ -608,7 +640,7 @@ def lessonThree():
     book_p4_next.draw()
 
 
-def lessonFour():
+def lesson_four():
     show_book_of_insights()
 
     render_text('Surviving', header_font, '#475F77',
@@ -629,7 +661,7 @@ def lessonFour():
     book_p5_next.draw()
 
 
-def lessonFive():
+def lesson_five():
     show_book_of_insights()
 
     render_text('Surviving', header_font, '#475F77',
@@ -650,7 +682,7 @@ def lessonFive():
     book_p6_next.draw()
 
 
-def lessonSix():
+def lesson_six():
     show_book_of_insights()
 
     render_text('Surviving', header_font, '#475F77',
@@ -671,7 +703,7 @@ def lessonSix():
     book_p7_next.draw()
 
 
-def lessonSeven():
+def lesson_seven():
     show_book_of_insights()
 
     render_text('Book of', header_font, '#475F77',
@@ -690,12 +722,6 @@ def lessonSeven():
     book_p6_back.draw()
     return_button.draw()
 
-def update_return_button(page_id):
-    global return_button
-    return_button = Button('Return >', 80, 40, (700, 400), 7,
-                           window, text_font, page_id, update_page_id)
-    
-    
 # story pages
 def show_start():
     show_items()
@@ -721,7 +747,7 @@ def show_start():
     elif bubble_button.pressed:
         update_item_button('resources/shield_bubble.png')
     update_book_button()
-    
+
     background_rect = create_rect(770, 70, 5, rect_color, rect_border_color)
     window.blit(background_rect, (10, 310))
     render_text(
@@ -762,14 +788,14 @@ def board_page():
 
 
 def bubble_page():
-    render_text('Bubble turns into an... Indestructible Shield!', title_font, '#475F77',
+    render_text('Bubble turns into a... Shield Bubble!', title_font, '#475F77',
                          screen_width // 2, 75, window, 800)
 
     level_one_button.draw()
-    window.blit(bubble, (300, 150))
+    window.blit(shield_bubble, (105, 80))
 
 def lightning_rod_skip_page():
-    background_rect = create_rect(770, 70, 5, rect_color, rect_border_color)
+    background_rect = create_rect(770, 85, 5, rect_color, rect_border_color)
     window.blit(background_rect, (10, 30))
     render_text(
         "You successfully used the lightning rod! Surprisingly this attracted the wrath of Zeus and Posiedon and deterred the hurricane away from you. Congratulations!",
@@ -779,7 +805,7 @@ def lightning_rod_skip_page():
 
 
 def broomstick_skip_page():
-    background_rect = create_rect(770, 70, 5, rect_color, rect_border_color)
+    background_rect = create_rect(770, 85, 5, rect_color, rect_border_color)
     window.blit(background_rect, (10, 30))
     render_text(
         "You successfully used the broomstick! Apparently some magic from Harry Potter is all you need to escape from Zephyrus. Congratulations!",
@@ -789,17 +815,17 @@ def broomstick_skip_page():
 
 
 def hoverboard_skip_page():
-    background_rect = create_rect(770, 70, 5, rect_color, rect_border_color)
+    background_rect = create_rect(770, 85, 5, rect_color, rect_border_color)
     window.blit(background_rect, (10, 30))
     render_text(
-        "You successfully used the hoverboard! Seems like modern technology is all you need to avoid the after effects of Hades throwing a tantrum. Congratulation!",
+        "You successfully used the hoverboard! Seems like modern technology is all you need to avoid the after effects of Hades throwing a tantrum. Congratulations!",
         header_font, '#475F77', 400, 50, window, 750)
 
     hoverboard_skip.draw()
 
 
 def bubble_skip_page():
-    background_rect = create_rect(770, 70, 5, rect_color, rect_border_color)
+    background_rect = create_rect(770, 85, 5, rect_color, rect_border_color)
     window.blit(background_rect, (10, 30))
     render_text(
         "You successfully used the bubble! Seems like even the flames from Hephaestus' forge weren't even able to graze it. Congratulations!",
@@ -809,7 +835,7 @@ def bubble_skip_page():
 
 
 def wall_skip_page():
-    background_rect = create_rect(770, 70, 5, rect_color, rect_border_color)
+    background_rect = create_rect(770, 85, 5, rect_color, rect_border_color)
     window.blit(background_rect, (10, 30))
     render_text(
         "You successfully used the wall! The wall must have been built different, and  completely blocked the incoming Tsunami. Turns out Poseidon's weakness are walls. Congratulations!",
@@ -831,7 +857,7 @@ def level_one():
     choice_1C.draw()
     item_button.draw()
     book_button.draw()
-    
+
     render_text('Save a monkey!', header_font,
                          '#FFFFFF', 154, 260, window, 200)
     render_text('Explore a creepy shack',
@@ -842,9 +868,11 @@ def level_one():
     if item_button.pressed and item_chosen == "resources/broomstick.png":
         update_page_id('broomstick skip page')
     if book_button.pressed:
+        book_button.release()
         update_return_button(page_id)
+        update_back_button(page_id)
         update_page_id('book_page_one')
-        
+
 
 def level_two():
     background_rect = create_rect(770, 70, 5, rect_color, rect_border_color)
@@ -857,17 +885,18 @@ def level_two():
     choice_2B.draw()
     item_button.draw()
     book_button.draw()
-    
+
     render_text('Craft a mask!', header_font,
                          '#FFFFFF', 238, 310, window, 200)
     render_text('Run from the ash', header_font,
                          '#FFFFFF', 570, 310, window, 200)
     if item_button.pressed and item_chosen == "resources/shield_bubble.png":
-      page_id == 'level three'
+        update_page_id('bubble skip page')
     if book_button.pressed:
+        book_button.release()
         update_return_button(page_id)
+        update_back_button(page_id)
         update_page_id('book_page_one')
-            
 
 
 def level_three():
@@ -882,7 +911,7 @@ def level_three():
     choice_3C.draw()
     item_button.draw()
     book_button.draw()
-    
+
     render_text('Hide in the shack', header_font,
                          '#FFFFFF', 154, 260, window, 200)
     render_text('Go into the dark cave', header_font,
@@ -890,15 +919,14 @@ def level_three():
     render_text('Stop, drop, pray', header_font,
                          '#FFFFFF', 655, 260, window, 200)
 
-    if item_button.pressed:
-        if item_chosen == "resources/hoverboard.png":
-            update_page_id('level four')
-        else:
-            update_page_id('earthquake ending')
+    if item_button.pressed and item_chosen == "resources/hoverboard.png":
+            update_page_id('hoverboard skip page')
     if book_button.pressed:
+        book_button.release()
         update_return_button(page_id)
+        update_back_button(page_id)
         update_page_id('book_page_one')
-        
+
 
 def level_four():
     background_rect = create_rect(785, 85, 5, rect_color, rect_border_color)
@@ -926,15 +954,14 @@ def level_four():
     render_text('Crawl to peak of volcano!',
                          header_font, '#FFFFFF', 480, 340, window, 190)
 
-    if item_button.pressed:
-        if item_chosen == "resources/wall.png":
-            update_page_id('level five')
-        else:
-            update_page_id('volcano ending one')
+    if item_button.pressed and item_chosen == "resources/wall.png":
+            update_page_id('wall skip page')
     if book_button.pressed:
+        book_button.release()
         update_return_button(page_id)
+        update_back_button(page_id)
         update_page_id('book_page_one')
-        
+
 
 def level_five():
     background_rect = create_rect(770, 85, 5, rect_color, rect_border_color)
@@ -961,6 +988,15 @@ def level_five():
     render_text('Find materials',
                          header_font, '#FFFFFF', 676, 185, window, 125)
 
+    background_rect = create_rect(150, 30, 5, rect_color, rect_border_color)
+    window.blit(background_rect, (55, 270))
+    background_rect = create_rect(150, 30, 5, rect_color, rect_border_color)
+    window.blit(background_rect, (235, 270))
+    background_rect = create_rect(150, 30, 5, rect_color, rect_border_color)
+    window.blit(background_rect, (415, 270))
+    background_rect = create_rect(150, 30, 5, rect_color, rect_border_color)
+    window.blit(background_rect, (595, 270))
+
     box_5A.draw_textbox()
     box_5B.draw_textbox()
     box_5C.draw_textbox()
@@ -969,20 +1005,19 @@ def level_five():
     background_rect = create_rect(350, 90, 5, rect_color, rect_border_color)
     window.blit(background_rect, (210, 340))
     render_text('You must type in the correct order of placement in the text boxes (ranging 1-4) below the options and submit the answers. ',
-                         header_font, '#FFFFFF', 400, 350, window, 325)
-    
+                         header_font, '#FFFFFF', 395, 350, window, 325)
+
     item_button.draw()
     book_button.draw()
-    
-    if item_button.pressed:
-        if item_chosen == "resources/lightning_rod.png":
-            update_page_id('level two')
-        else:
-            update_page_id('volcano ending one')
+
+    if item_button.pressed and item_chosen == "resources/lightning_rod.png":
+            update_page_id('lightning rod skip page')
     if book_button.pressed:
+        book_button.release()
         update_return_button(page_id)
+        update_back_button(page_id)
         update_page_id('book_page_one')
-        
+
     submit_button.draw()
 
 
@@ -1048,7 +1083,7 @@ def excluding_basement():
     choice_3C.draw()
     item_button.draw()
     book_button.draw()
-    
+
     render_text('Go into the dark cave', header_font,
                          '#FFFFFF', 407, 262, window, 200)
     render_text('Stop, drop, pray', header_font,
@@ -1062,8 +1097,8 @@ def excluding_basement():
     if book_button.pressed:
         update_return_button(page_id)
         update_page_id('book_page_one')
-        
-        
+
+
 def choice3A_page():
     background_rect = create_rect(770, 70, 5, rect_color, rect_border_color)
     window.blit(background_rect, (10, 30))
@@ -1309,7 +1344,7 @@ def secret_ending_one():
     render_text(
         "Praying, you beg Zeus to spare you. And suddenly, you are at Mount Olympus. You get on your knees, thanking the gods when you realize Zeus had something else in mind.",
         text_font, '#475F77', left_page_x_pos, left_page_y_pos, window, book_width)
-    
+
     window.blit(minotaur, (185, 230))
 
     render_text('Thanks for playing!', header_font, '#475F77',
@@ -1460,7 +1495,7 @@ def show_question5():
 def show_quiz_results():
     show_book_of_insights()
 
-    render_text('Congrats and thanks for finishing the quiz!', header_font, '#475F77',
+    render_text('Thanks for finishing the quiz!', header_font, '#475F77',
                          left_page_x_pos, left_page_y_pos - 40, window, book_width)
 
     render_text("Q1: Where is the best place to when there's a tornado? Ans: The Basement", answer_font,
@@ -1497,167 +1532,170 @@ def show_quiz_results():
 
 # pygame loop
 def main():
-    clock = pygame.time.Clock()
-    run = True
-    input_boxes = [box_5A, box_5B, box_5C, box_5D]
-    fps = capture.get(cv2.CAP_PROP_FPS)
-    while run:
-        clock.tick(fps)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+    try:
+        clock = pygame.time.Clock()
+        run = True
+        input_boxes = [box_5A, box_5B, box_5C, box_5D]
+        fps = capture.get(cv2.CAP_PROP_FPS)
+        while run:
+            clock.tick(fps)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    run = False
+
+                if page_id == 'level five':
+                    for box in input_boxes:
+                        box.handle_event(event)
+
+            video_frames()
+
+            if page_id == 'home':
+                show_home()
+
+            # info windows
+            elif page_id == 'info_page_one':
+                info_page_one()
+            elif page_id == 'info_page_two':
+                info_page_two()
+
+            # book of insights windows
+            elif page_id == 'book_page_one':
+                lesson_one()
+            elif page_id == 'book_page_two':
+                lesson_two()
+            elif page_id == 'book_page_three':
+                lesson_three()
+            elif page_id == 'book_page_four':
+                lesson_four()
+            elif page_id == 'book_page_five':
+                lesson_five()
+            elif page_id == 'book_page_six':
+                lesson_six()
+            elif page_id == 'book_page_seven':
+                lesson_seven()
+
+            # animation windows
+            # items
+            elif page_id == 'start':
+                show_start()
+            elif page_id == 'stick':
+                stick_page()
+            elif page_id == 'fence':
+                fence_page()
+            elif page_id == 'vacuum':
+                vacuum_page()
+            elif page_id == 'board':
+                board_page()
+            elif page_id == 'bubble':
+                bubble_page()
+
+            # item skip pages
+            elif page_id == 'lightning rod skip page':
+                lightning_rod_skip_page()
+            elif page_id == 'wall skip page':
+                wall_skip_page()
+            elif page_id == 'broomstick skip page':
+                broomstick_skip_page()
+            elif page_id == 'hoverboard skip page':
+                hoverboard_skip_page()
+            elif page_id == 'bubble skip page':
+                bubble_skip_page()
+
+
+            # level one
+            elif page_id == 'level one':
+                level_one()
+            elif page_id == 'choice1B next':
+                choice1B_page()
+            elif page_id == 'choice1C next':
+                choice1C_page()
+
+            # level two
+            elif page_id == 'level two':
+                level_two()
+            elif page_id == 'choice2A next':
+                choice2A_page()
+            elif page_id == 'choice2B next':
+                choice2B_page()
+
+            # level three
+            elif page_id == 'level three':
+                level_three()
+            elif page_id == 'choice3A next':
+                choice3A_page()
+            elif page_id == 'choice3A basement':
+                choice3A_basement()
+            elif page_id == 'excluding basement':
+                excluding_basement()
+            elif page_id == 'choice3B next':
+                choice3B_page()
+            elif page_id == 'choice3C next':
+                choice3C_page()
+
+            # level four
+            elif page_id == 'level four':
+                level_four()
+            elif page_id == 'choice4A next':
+                choice4A_page()
+            elif page_id == 'choice4B next':
+                choice4B_page()
+            elif page_id == 'choice4C next':
+                choice4C_page()
+            elif page_id == 'choice4D next':
+                choice4D_page()
+            elif page_id == 'choice4E next':
+                choice4E_page()
+
+            # level five
+            elif page_id == 'level five':
+                level_five()
+
+            # ending windows
+            elif page_id == 'tornado ending':
+                tornado_ending()
+            elif page_id == 'volcano ending one':
+                volcano_ending_one()
+            elif page_id == 'volcano ending two':
+                volcano_ending_two()
+            elif page_id == 'earthquake ending':
+                earthquake_ending()
+            elif page_id == 'tsunami ending':
+                tsunami_ending()
+            elif page_id == 'hurricane ending':
+                hurricane_ending()
+            elif page_id == 'survival ending one':
+                survival_ending_one()
+            elif page_id == 'survival ending two':
+                survival_ending_two()
+            elif page_id == 'secret ending one':
+                secret_ending_one()
+            elif page_id == 'secret ending two':
+                secret_ending_two()
+            elif page_id == 'secret ending three':
+                secret_ending_three()
+
+            # Quiz pages
+            elif page_id == 'quiz':
+                show_question1()
+            elif page_id == 'question_2':
+                show_question2()
+            elif page_id == 'question_3':
+                show_question3()
+            elif page_id == 'question_4':
+                show_question4()
+            elif page_id == 'question_5':
+                show_question5()
+            elif page_id == "results":
+                show_quiz_results()
+            # Quit Page
+            elif page_id == 'quit':
                 run = False
 
-            if page_id == 'level five':
-                for box in input_boxes:
-                    box.handle_event(event)
+            pygame.display.update()
 
-        video_frames()
-
-        if page_id == 'home':
-            show_home()
-
-        # info windows
-        elif page_id == 'info_page_one':
-            info_page_one()
-        elif page_id == 'info_page_two':
-            info_page_two()
-
-        # book of insights windows
-        elif page_id == 'book_page_one':
-            lessonOne()
-        elif page_id == 'book_page_two':
-            lessonTwo()
-        elif page_id == 'book_page_three':
-            lessonThree()
-        elif page_id == 'book_page_four':
-            lessonFour()
-        elif page_id == 'book_page_five':
-            lessonFive()
-        elif page_id == 'book_page_six':
-            lessonSix()
-        elif page_id == 'book_page_seven':
-            lessonSeven()
-
-        # animation windows
-        # items
-        elif page_id == 'start':
-            show_start()
-        elif page_id == 'stick':
-            stick_page()
-        elif page_id == 'fence':
-            fence_page()
-        elif page_id == 'vacuum':
-            vacuum_page()
-        elif page_id == 'board':
-            board_page()
-        elif page_id == 'bubble':
-            bubble_page()
-
-        # item skip pages
-        elif page_id == 'lightning rod skip page':
-            lightning_rod_skip_page()
-        elif page_id == 'wall skip page':
-            wall_skip_page()
-        elif page_id == 'broomstick skip page':
-            broomstick_skip_page()
-        elif page_id == 'hoverboard skip page':
-            hoverboard_skip_page()
-        elif page_id == 'bubble skip page':
-            bubble_skip_page()
-
-
-        # level one
-        elif page_id == 'level one':
-            level_one()
-        elif page_id == 'choice1B next':
-            choice1B_page()
-        elif page_id == 'choice1C next':
-            choice1C_page()
-
-        # level two
-        elif page_id == 'level two':
-            level_two()
-        elif page_id == 'choice2A next':
-            choice2A_page()
-        elif page_id == 'choice2B next':
-            choice2B_page()
-
-        # level three
-        elif page_id == 'level three':
-            level_three()
-        elif page_id == 'choice3A next':
-            choice3A_page()
-        elif page_id == 'choice3A basement':
-            choice3A_basement()
-        elif page_id == 'excluding basement':
-            excluding_basement()
-        elif page_id == 'choice3B next':
-            choice3B_page()
-        elif page_id == 'choice3C next':
-            choice3C_page()
-
-        # level four
-        elif page_id == 'level four':
-            level_four()
-        elif page_id == 'choice4A next':
-            choice4A_page()
-        elif page_id == 'choice4B next':
-            choice4B_page()
-        elif page_id == 'choice4C next':
-            choice4C_page()
-        elif page_id == 'choice4D next':
-            choice4D_page()
-        elif page_id == 'choice4E next':
-            choice4E_page()
-
-        # level five
-        elif page_id == 'level five':
-            level_five()
-
-        # ending windows
-        elif page_id == 'tornado ending':
-            tornado_ending()
-        elif page_id == 'volcano ending one':
-            volcano_ending_one()
-        elif page_id == 'volcano ending two':
-            volcano_ending_two()
-        elif page_id == 'earthquake ending':
-            earthquake_ending()
-        elif page_id == 'tsunami ending':
-            tsunami_ending()
-        elif page_id == 'hurricane ending':
-            hurricane_ending()
-        elif page_id == 'survival ending one':
-            survival_ending_one()
-        elif page_id == 'survival ending two':
-            survival_ending_two()
-        elif page_id == 'secret ending one':
-            secret_ending_one()
-        elif page_id == 'secret ending two':
-            secret_ending_two()
-        elif page_id == 'secret ending three':
-            secret_ending_three()
-
-        # Quiz pages
-        elif page_id == 'quiz':
-            show_question1()
-        elif page_id == 'question_2':
-            show_question2()
-        elif page_id == 'question_3':
-            show_question3()
-        elif page_id == 'question_4':
-            show_question4()
-        elif page_id == 'question_5':
-            show_question5()
-        elif page_id == "results":
-            show_quiz_results()
-        # Quit Page
-        elif page_id == 'quit':
-            run = False
-
-        pygame.display.update()
-
-    pygame.quit()
+        pygame.quit()
+    except:
+        print("System Error Detected.")
 
 
 if __name__ == '__main__':
