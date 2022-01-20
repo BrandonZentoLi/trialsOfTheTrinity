@@ -74,12 +74,14 @@ class Button:
 
 
 class ItemButton:
-    def __init__(self, image, width, height, pos, elevation, window, callback=None):
+    def __init__(self, sprites, width, height, pos, elevation, speed, window, callback=None):
         # core attributes
         self.pressed = False
         self.elevation = elevation
         self.dynamic_elevation = elevation
         self.original_y_pos = pos[1]
+        self.speed = speed
+        self.current_sprite = 0
         self.window = window
         self.callback = callback
 
@@ -92,9 +94,13 @@ class ItemButton:
         self.bottom_color = '#354B5E'
 
         # text
-        self.image = pygame.image.load(image)
-        self.image = pygame.transform.scale(self.image, (100, 80))
-        self.image_rect = self.image.get_rect(center=self.top_rect.center)
+        self.sprites = []
+        for sprite in sprites:
+            image = pygame.image.load(sprite)
+            size = (70, 50) if len(sprites) == 1 else (100, 80)
+            image = pygame.transform.scale(image, size)
+            self.sprites.append(image)
+        self.image_rect = self.sprites[0].get_rect(center=self.top_rect.center)
 
     def draw(self):
         # elevation logic
@@ -103,12 +109,19 @@ class ItemButton:
 
         self.bottom_rect.midtop = self.top_rect.midtop
         self.bottom_rect.height = self.top_rect.height + self.dynamic_elevation
-
-        pygame.draw.rect(self.window, self.bottom_color,
-                         self.bottom_rect, border_radius=12)
-        pygame.draw.rect(self.window, self.top_color,
-                         self.top_rect, border_radius=12)
-        self.window.blit(self.image, self.image_rect)
+        
+        if len(self.sprites) == 1:
+            pygame.draw.rect(self.window, self.bottom_color,
+                             self.bottom_rect, border_radius=12)
+            pygame.draw.rect(self.window, self.top_color,
+                             self.top_rect, border_radius=12)
+            self.window.blit(self.sprites[0], self.image_rect)
+        else:
+            image = self.sprites[int(self.current_sprite)]
+            self.current_sprite += self.speed
+            if self.current_sprite >= len(self.sprites):
+                self.current_sprite = 0
+            self.window.blit(image, self.image_rect)
 
         self.check_click()
 

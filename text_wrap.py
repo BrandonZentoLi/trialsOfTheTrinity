@@ -1,4 +1,4 @@
-def renderTextCenteredAt(text, font, colour, x, y, screen, allowed_width):
+def render_text(text, font, colour, x, y, screen, allowed_width):
     # splits the text into seperate words
     words = text.split()
 

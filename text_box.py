@@ -1,5 +1,6 @@
 import pygame
 
+# create input boxes
 class InputBox:
     def __init__(self, width, height, x, y, font, window, text, update_text, index):
         self.rect = pygame.Rect(width, height, x, y)
@@ -12,7 +13,7 @@ class InputBox:
         self.update_text = update_text
         self.index = index
 
-
+    
     def handle_event(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
             if self.rect.collidepoint(event.pos):
@@ -29,4 +30,4 @@ class InputBox:
     def draw_textbox(self):
         pygame.draw.rect(self.window, self.box_color, self.rect, 5)
         font_surface = self.font.render(self.text, True, self.color)
-        self.window.blit(font_surface, (self.rect.x + 75, self.rect.y + 8))
+        self.window.blit(font_surface, (self.rect.x + 75, self.rect.y + 14))
